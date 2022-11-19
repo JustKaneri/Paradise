@@ -3,8 +3,8 @@
     public class Subscription
     {
         public int Id { get; set; }
-        public ICollection<Users> Account { get; set; }
-        public ICollection<Users> Subscriber { get; set; }
+        public Users Account { get; set; }
+        public Users Subscriber { get; set; }
 
     }
 }
