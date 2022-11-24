@@ -1,4 +1,6 @@
-﻿namespace ParadiseApi.Models
+﻿using System.Text.Json.Serialization;
+
+namespace ParadiseApi.Models
 {
     public class Video
     {
@@ -10,7 +12,9 @@
         public int CountWatch { get; set;}
         public string PathVideo { get; set; }
         public string PathPoster { get; set; }
+        [JsonIgnore]
         public ICollection<ResponceVideo> ResponceVideos { get; set; }
+        [JsonIgnore]
         public ICollection<Comment> Comments { get; set; }
 
 
