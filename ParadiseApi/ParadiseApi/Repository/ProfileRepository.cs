@@ -1,4 +1,5 @@
-﻿using ParadiseApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 

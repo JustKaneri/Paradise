@@ -17,6 +17,10 @@ namespace ParadiseApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Users>()
+                       .HasOne<Profile>(s => s.Profile)
+                       .WithOne(ad => ad.User)
+                       .HasForeignKey<Profile>(ad => ad.IdUser);
         }
     }
 }
