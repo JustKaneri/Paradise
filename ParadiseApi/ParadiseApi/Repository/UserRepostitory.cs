@@ -1,4 +1,5 @@
-﻿using ParadiseApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 
@@ -29,7 +30,8 @@ namespace ParadiseApi.Repository
 
         public ICollection<Users> GetUser()
         {
-            var users = _context.Users.OrderBy(us => us.Id).ToList();
+            //var users = _context.Users.OrderBy(us => us.Id).ToList();
+            var users = _context.Users.Include(us => us.Profile).ToList();
 
             return users;
         }

@@ -15,6 +15,11 @@ namespace ParadiseApi.Controllers
             _profiles = profiles;
         }
 
+        /// <summary>
+        /// Get Profile by Id user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200,Type = typeof(Profile))]
         public IActionResult GetProfiles(int id)
