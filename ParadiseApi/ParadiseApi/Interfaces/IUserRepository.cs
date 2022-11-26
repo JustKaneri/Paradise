@@ -1,4 +1,5 @@
-﻿using ParadiseApi.Models;
+﻿using ParadiseApi.Dto;
+using ParadiseApi.Models;
 
 namespace ParadiseApi.Interfaces
 {
@@ -6,8 +7,10 @@ namespace ParadiseApi.Interfaces
     {
         public ICollection<Users> GetUser();
 
-        public bool CheckName(string name);
+        public bool CheckExistName(string name);
 
-        public bool CheckLogin(string login);
+        public bool CheckExistLogin(string login);
+
+        public Users Regestry(UserRegestryDto user);
     }
 }

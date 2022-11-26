@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ParadiseApi.Data;
+using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 
@@ -8,20 +10,22 @@ namespace ParadiseApi.Repository
     public class UserRepostitory : IUserRepository
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public UserRepostitory(DataContext context)
+        public UserRepostitory(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public bool CheckLogin(string login)
+        public bool CheckExistLogin(string login)
         {
             Users user = _context.Users.Where(us => us.Login == login).DefaultIfEmpty().First();
 
             return user != null;
         }
 
-        public bool CheckName(string name)
+        public bool CheckExistName(string name)
         {
             Users user = _context.Users.Where(us => us.Name == name).DefaultIfEmpty().First();
 
@@ -34,6 +38,29 @@ namespace ParadiseApi.Repository
             var users = _context.Users.Include(us => us.Profile).ToList();
 
             return users;
+        }
+
+        public Users Regestry(UserRegestryDto user)
+        {
+            if (user == null)
+                return null;
+
+            if (CheckExistLogin(user.Login))
+                return null;
+
+            if (CheckExistName(user.Name))
+                return null;
+
+            user.RoleId = 2;
+
+            user.Password = HashPassword.ComputeHash(user.Password, user.Name);
+
+            Users us = _mapper.Map<Users>(user); 
+
+            _context.Users.Add(us);
+            _context.SaveChanges();
+
+            return us;
         }
     }
 }

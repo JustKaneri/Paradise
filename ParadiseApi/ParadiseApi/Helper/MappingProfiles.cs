@@ -10,6 +10,7 @@ namespace ParadiseApi.Helper
         public MappingProfiles()
         {
             CreateMap<Users, UserDto>();
+            CreateMap<Users, UserRegestryDto>().ReverseMap();
         }
     }
 }

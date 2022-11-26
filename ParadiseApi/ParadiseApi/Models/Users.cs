@@ -7,11 +7,9 @@ namespace ParadiseApi.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public Profile Profile { get; set; }
-        [JsonIgnore]
         public string Login { get; set; }
-        [JsonIgnore]
         public string Password { get; set; }
-        [JsonIgnore]
+        public int RoleId { get; set; }
         public DateTime DateRegestry { get; set; }
         [JsonIgnore]
         public UserRole Role { get; set; }

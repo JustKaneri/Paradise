@@ -37,7 +37,7 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200)]
         public IActionResult CheckExistLogin(string login)
         {
-            var result = _userRepository.CheckLogin(login);
+            var result = _userRepository.CheckExistLogin(login);
 
             return Ok(result);
         }
@@ -46,11 +46,25 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200)]
         public IActionResult CheckExistName(string name)
         {
-            var result = _userRepository.CheckName(name);
+            var result = _userRepository.CheckExistName(name);
 
             return Ok(result);
         }
 
+        [HttpPost]
+        [ProducesResponseType(200,Type =typeof(Users))]
+        public IActionResult RegestryUser(UserRegestryDto user)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            Users us = _userRepository.Regestry(user);
+
+            if (us == null)
+                return BadRequest(ModelState);
+
+            return Ok(us);
+
+        }
     }
 }
