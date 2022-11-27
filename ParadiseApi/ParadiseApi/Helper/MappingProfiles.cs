@@ -11,6 +11,8 @@ namespace ParadiseApi.Helper
         {
             CreateMap<Users, UserDto>();
             CreateMap<Users, UserRegestryDto>().ReverseMap();
+            CreateMap<Subscription, SubscriptionsDto>().
+                ForMember(sub => sub.Subscriber, opt => opt.MapFrom(ps => ps.Account));
         }
     }
 }
