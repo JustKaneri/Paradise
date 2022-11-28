@@ -31,5 +31,14 @@ namespace ParadiseApi.Controllers
 
             return Ok(profile);
         }
+
+        [HttpPost("/Users/{idUser}/UploadAvatar")]
+        [ProducesResponseType(200)]
+        public IActionResult UploadAvatar(IFormFile file, int idUser)
+        {
+            var result = _profiles.UploadProfleAvatar(file, idUser);
+
+            return Ok(result);
+        }
     }
 }
