@@ -33,10 +33,25 @@ namespace ParadiseApi.Controllers
         }
 
         [HttpPost("/Users/{idUser}/UploadAvatar")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(Profile))]
         public IActionResult UploadAvatar(IFormFile file, int idUser)
         {
             var result = _profiles.UploadProfleAvatar(file, idUser);
+
+            if (result == null)
+                return BadRequest();
+
+            return Ok(result);
+        }
+
+        [HttpPost("/Users/{idUser}/UploadFon")]
+        [ProducesResponseType(200, Type=typeof(Profile))]
+        public IActionResult UploadFon(IFormFile file, int idUser)
+        {
+            var result = _profiles.UploadProfleFon(file, idUser);
+
+            if (result == null)
+                return BadRequest();
 
             return Ok(result);
         }

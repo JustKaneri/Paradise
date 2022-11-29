@@ -2,6 +2,7 @@
 using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository
 {
@@ -21,7 +22,7 @@ namespace ParadiseApi.Repository
             return profile;
         }
 
-        public bool UploadProfleAvatar(IFormFile file, int idUser)
+        public Profile UploadProfleAvatar(IFormFile file, int idUser)
         {
             Profile prof = _context.Profiles.Where(pr => pr.IdUser == idUser).DefaultIfEmpty().First();
             string oldAvatar = null;
@@ -33,32 +34,56 @@ namespace ParadiseApi.Repository
 
             try
             {
-                string fileName = idUser.ToString() + Guid.NewGuid() + DateTime.Now.ToString("yyyyMMddHHmmssfff")+ Path.GetExtension(file.FileName);
-                string patch = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//Avatars", fileName);
+                string fileName = RootFile.SaveFile(idUser, "Avatars", file);
 
-                using (Stream fs = new FileStream(patch,FileMode.Create))
-                {
-                    file.CopyTo(fs);
-                }
+                if (fileName == null)
+                    return null;
 
-                prof.PathAvatar = "Avatars//" + fileName;
-                _context.Profiles.Add(prof);
+                prof.PathAvatar = "Avatars/" + fileName;
+                _context.Profiles.Update(prof);
                 _context.SaveChanges();
 
-                if(oldAvatar!=null)
-                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", oldAvatar));
+                if (oldAvatar != null)
+                    RootFile.DeleteFile(oldAvatar);
             }
             catch 
-            {  
-                return false;
+            {
+                return null;
             }
 
-            return true;
+            return prof;
         }
 
         public Profile UploadProfleFon(IFormFile file, int idUser)
         {
-            throw new NotImplementedException();
+            Profile prof = _context.Profiles.Where(pr => pr.IdUser == idUser).DefaultIfEmpty().First();
+            string oldFon = null;
+
+            if (prof == null)
+                prof = CreateProfile(idUser);
+            else
+                oldFon = prof.PathFon;
+
+            try
+            {
+                string fileName = RootFile.SaveFile(idUser, "Fons", file);
+
+                if (fileName == null)
+                    return null;
+
+                prof.PathFon = "Fons/" + fileName;
+                _context.Profiles.Update(prof);
+                _context.SaveChanges();
+
+                if (oldFon != null)
+                    RootFile.DeleteFile(oldFon);
+            }
+            catch
+            {
+                return null;
+            }
+
+            return prof;
         }
 
         /// <summary>
