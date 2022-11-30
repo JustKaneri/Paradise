@@ -6,6 +6,7 @@ namespace ParadiseApi.Models
     {
         public int Id { get; set; }
         public Users User { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Discript { get; set; }
         public DateTime DateCreate { get; set; }
