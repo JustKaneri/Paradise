@@ -4,7 +4,11 @@ namespace ParadiseApi.Interfaces
 {
     public interface IVideoRepository
     {
-        public Video CreateVideo(IFormFile video, IFormFile poster, int idUser, Video videoInfo);
+        public Video CreateVideo(int idUser, Video videoInfo);
+
+        public Video AddVideoFile(IFormFile video, int idVideo);
+
+        public Video AddPosterFile(IFormFile poster, int idVideo);
 
         public ICollection<Video> GetVideos(int idUser);
 
@@ -12,6 +16,8 @@ namespace ParadiseApi.Interfaces
 
         public ICollection<Video> GetVideos();
 
-        public int AddWatch(int idVideo);
+        public Video AddViews(int idVideo);
+
+        public ICollection<Video> SearchVideo(string search);
     }
 }
