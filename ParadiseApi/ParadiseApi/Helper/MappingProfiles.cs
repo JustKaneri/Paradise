@@ -16,6 +16,7 @@ namespace ParadiseApi.Helper
             CreateMap<Video, VideoDto>().
                 ForMember(vid => vid.User, opt => opt.MapFrom(v => v.User));
             CreateMap<Video, CreateVideoDto>().ReverseMap();
+            CreateMap<ResponceVideo, ResponceVideoDto>();
         }
     }
 }

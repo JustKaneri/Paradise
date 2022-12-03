@@ -7,5 +7,8 @@ namespace ParadiseApi.Interfaces
         public ResponceVideo SetLike(int idVideo, int idUser);
 
         public ResponceVideo SetDisLike(int idVideo, int idUser);
+
+        public ResponceVideo AddResponce(ResponceVideo responce);
+        public ResponceVideo UpdateResponce(ResponceVideo responce);
     }
 }
