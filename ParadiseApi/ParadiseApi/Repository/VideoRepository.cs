@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
@@ -17,9 +18,16 @@ namespace ParadiseApi.Repository
 
         public Video AddPosterFile(IFormFile poster, int idVideo)
         {
-            Video vid = _context.Videos.Where(v => v.Id == idVideo).DefaultIfEmpty().First();
+            Video vid = _context.Videos.Include(v => v.User)
+                                       .Include(us => us.User.Profile)
+                                       .Where(v => v.Id == idVideo)
+                                       .DefaultIfEmpty()
+                                       .First();
 
             if (vid == null)
+                return null;
+
+            if (vid.PathPoster != null)
                 return null;
 
             try
@@ -40,15 +48,22 @@ namespace ParadiseApi.Repository
 
         public Video AddVideoFile(IFormFile video, int idVideo)
         {
-            Video vid = _context.Videos.Where(v => v.Id == idVideo).DefaultIfEmpty().First();
+            Video vid = _context.Videos.Include(v => v.User)
+                                       .Include(us => us.User.Profile)
+                                       .Where(v => v.Id == idVideo)
+                                       .DefaultIfEmpty()
+                                       .First();
 
             if (vid == null)
                 return null;
 
+            if (vid.PathVideo != null)
+                return null;
+
             try
             {
-                string pathPoster = RootFile.SaveFile(vid.UserId, "Videos", video);
-                vid.PathPoster = "Videos/" + pathPoster;
+                string patchVideo = RootFile.SaveFile(vid.UserId, "Videos", video);
+                vid.PathVideo = "Videos/" + patchVideo;
 
                 _context.Videos.Update(vid);
                 _context.SaveChanges();
@@ -63,7 +78,11 @@ namespace ParadiseApi.Repository
 
         public Video AddViews(int idVideo)
         {
-            Video v = _context.Videos.Where(v => v.Id == idVideo).DefaultIfEmpty().First();
+            Video v = _context.Videos.Include(v => v.User)
+                                     .Include(us => us.User.Profile)
+                                     .Where(v => v.Id == idVideo)
+                                     .DefaultIfEmpty()
+                                     .First();
 
             if (v == null)
                 return null;
@@ -94,15 +113,21 @@ namespace ParadiseApi.Repository
 
         public ICollection<Video> GetVideos(int idUser)
         {
-            List<Video> videos = _context.Videos.OrderBy(v => v.DateCreate).Where(v => v.UserId == idUser).ToList();
+            List<Video> videos = _context.Videos.Include(v => v.User)
+                                                .Include(us => us.User.Profile)
+                                                .OrderBy(v => v.DateCreate)
+                                                .Where(v => v.UserId == idUser)
+                                                .ToList();
 
             return videos;
         }
 
         public ICollection<Video> GetVideos(int count, int page)
         {
-            List<Video> videos = _context.Videos.OrderBy(v => v.DateCreate)
-                                                .Skip(count * page)
+            List<Video> videos = _context.Videos.Include(v => v.User)
+                                                .Include(us => us.User.Profile)
+                                                .OrderBy(v => v.DateCreate)
+                                                .Skip(count * (page-1))
                                                 .Take(count)
                                                 .ToList();
 
@@ -111,7 +136,10 @@ namespace ParadiseApi.Repository
 
         public ICollection<Video> GetVideos()
         {
-            List<Video> videos = _context.Videos.OrderBy(v => v.DateCreate).ToList();
+            List<Video> videos = _context.Videos.Include(v => v.User)
+                                                .Include(us => us.User.Profile)
+                                                .OrderBy(v => v.DateCreate)
+                                                .ToList();
 
             return videos;
         }
@@ -120,7 +148,9 @@ namespace ParadiseApi.Repository
         {
             search = search.ToLower();
 
-            List<Video> videos = _context.Videos.OrderBy(v => v.DateCreate)
+            List<Video> videos = _context.Videos.Include(v => v.User)
+                                                .Include(us => us.User.Profile)
+                                                .OrderBy(v => v.DateCreate)
                                                 .Where(v=> v.Name.ToLower().Contains(search) ||
                                                             v.User.Name.ToLower().Contains(search))                                
                                                 .ToList();
