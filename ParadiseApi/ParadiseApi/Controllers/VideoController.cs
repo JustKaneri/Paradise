@@ -36,6 +36,22 @@ namespace ParadiseApi.Controllers
         }
 
         /// <summary>
+        /// Get favorite video for user
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetFavoriteVideo")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
+        public IActionResult GetFavoriteVideo(int idUser)
+        {
+            var video = _mapper.Map<List<VideoDto>>(_repository.GetFavoriteVideo(idUser));
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            return Ok(video);
+        }
+
+        /// <summary>
         /// Get video of selected user 
         /// </summary>
         /// <param name="idUser"></param>

@@ -19,5 +19,7 @@ namespace ParadiseApi.Interfaces
         public Video AddViews(int idVideo);
 
         public ICollection<Video> SearchVideo(string search);
+
+        public ICollection<Video> GetFavoriteVideo(int idUser);
     }
 }

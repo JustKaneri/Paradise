@@ -111,6 +111,25 @@ namespace ParadiseApi.Repository
             return videoInfo;
         }
 
+        public ICollection<Video> GetFavoriteVideo(int idUser)
+        {
+            //List<Video> videos = _context.Videos.Include(v => v.User)
+            //                                    .Include(us => us.User.Profile)
+            //                                    .OrderBy(v => v.DateCreate)
+            //                                    .ToList();
+
+            List<Video> videos = (from video in _context.Videos
+                                  join resp in _context.ResponceVideos
+                                  on video.Id equals resp.VideoId
+                                  where resp.UserId == idUser && resp.IsLike == true
+                                  orderby resp.DateResponce
+                                  select video)
+                                  .Include(v => v.User)
+                                  .Include(us => us.User.Profile).ToList();
+
+            return videos;
+        }
+
         public ICollection<Video> GetVideos(int idUser)
         {
             List<Video> videos = _context.Videos.Include(v => v.User)
