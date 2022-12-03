@@ -150,9 +150,9 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("CreateVideo/{idVideo}/AddVideo")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
-        public IActionResult AddVideoFile(int idVideo, IFormFile video)
+        public IActionResult AddVideoFile(int idVideo, IFormFile file)
         {
-            var result = _mapper.Map<VideoDto>(_repository.AddVideoFile(video,idVideo));
+            var result = _mapper.Map<VideoDto>(_repository.AddVideoFile(file,idVideo));
 
             if (result == null)
                 return BadRequest();
@@ -169,9 +169,9 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("CreateVideo/{idVideo}/AddPoster")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
-        public IActionResult AddPosterFile(int idVideo, IFormFile poster)
+        public IActionResult AddPosterFile(int idVideo, IFormFile file)
         {
-            var result = _mapper.Map<VideoDto>(_repository.AddPosterFile(poster, idVideo));
+            var result = _mapper.Map<VideoDto>(_repository.AddPosterFile(file, idVideo));
 
             if (result == null)
                 return BadRequest();

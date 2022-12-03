@@ -35,7 +35,7 @@ namespace ParadiseApi.Repository
         public ICollection<Users> GetUser()
         {
             //var users = _context.Users.OrderBy(us => us.Id).ToList();
-            var users = _context.Users.Include(us => us.Profile).ToList();
+            var users = _context.Users.Include(us => us.Profile).OrderByDescending(us=>us.DateRegestry).ToList();
 
             return users;
         }
