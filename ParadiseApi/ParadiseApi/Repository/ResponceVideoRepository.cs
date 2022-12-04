@@ -114,5 +114,21 @@ namespace ParadiseApi.Repository
             return responce;
         }
 
+        public ResponceVideo ResetResponce(int idVideo, int idUser)
+        {
+            ResponceVideo responceVideo = _context.ResponceVideos
+                                                  .Where(rp => rp.UserId == idUser)
+                                                  .Where(rp => rp.VideoId == idVideo)
+                                                  .DefaultIfEmpty()
+                                                  .First();
+            if (responceVideo == null)
+                return null;
+
+            _context.ResponceVideos.Remove(responceVideo);
+            _context.SaveChanges();
+
+            return responceVideo;
+
+        }
     }
 }

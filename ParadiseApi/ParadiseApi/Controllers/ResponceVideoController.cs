@@ -42,5 +42,17 @@ namespace ParadiseApi.Controllers
 
             return Ok(res);
         }
+
+        [HttpDelete("Reset")]
+        [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
+        public IActionResult Reset(int idUser, int idVideo)
+        {
+            var res = _mapper.Map<ResponceVideoDto>(_responce.ResetResponce(idVideo, idUser));
+
+            if (res == null)
+                return BadRequest();
+
+            return Ok(res);
+        }
     }
 }
