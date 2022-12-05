@@ -1,12 +1,9 @@
-﻿namespace ParadiseApi.Models
+﻿namespace ParadiseApi.Dto
 {
-    public class Comment
+    public class CreateCommentDto
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public int VideoId { get; set; }
-        public Video Video { get; set; }
-        public Users User { get; set; }
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; }
     }
