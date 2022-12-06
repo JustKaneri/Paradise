@@ -47,7 +47,7 @@ namespace ParadiseApi.Repository
         public bool Unsubscribe(int idCanal,int idUser)
         {
             var Subscrib = _context.Subscriptions.Where(sb => sb.Account.Id == idCanal)
-                                                  .Where(sb => sb.Subscriber.Id == idUser).DefaultIfEmpty().First();
+                                                 .Where(sb => sb.Subscriber.Id == idUser).DefaultIfEmpty().First();
 
             if (Subscrib == null)
                 return false;
