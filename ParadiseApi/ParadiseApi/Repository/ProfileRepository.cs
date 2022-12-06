@@ -17,14 +17,14 @@ namespace ParadiseApi.Repository
 
         public Profile GetProfile(int idUser)
         {
-            Profile profile = _context.Profiles.Where(pr => pr.User.Id == idUser).DefaultIfEmpty().First();
+            Profile profile = ExistenceModel.Profiles(idUser, _context);
 
             return profile;
         }
 
         public Profile UploadProfleAvatar(IFormFile file, int idUser)
         {
-            Profile prof = _context.Profiles.Where(pr => pr.IdUser == idUser).DefaultIfEmpty().First();
+            Profile prof = ExistenceModel.Profiles(idUser, _context);
             string oldAvatar = null;
 
             if (prof == null)
@@ -56,7 +56,7 @@ namespace ParadiseApi.Repository
 
         public Profile UploadProfleFon(IFormFile file, int idUser)
         {
-            Profile prof = _context.Profiles.Where(pr => pr.IdUser == idUser).DefaultIfEmpty().First();
+            Profile prof = ExistenceModel.Profiles(idUser, _context);
             string oldFon = null;
 
             if (prof == null)
@@ -101,6 +101,5 @@ namespace ParadiseApi.Repository
             return profile;
         }
 
-        
     }
 }
