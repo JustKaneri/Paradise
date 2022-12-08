@@ -2,6 +2,7 @@
 using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository
 {
@@ -15,6 +16,13 @@ namespace ParadiseApi.Repository
         }
         public Comment CreateComment(Comment comment)
         {
+            if (ExistenceModel.User(comment.UserId, _context) == null)
+                return null;
+
+            if (ExistenceModel.Video(comment.VideoId, _context) == null)
+                return null;
+
+
             try
             {
                 _context.Comments.Add(comment);
@@ -39,3 +47,4 @@ namespace ParadiseApi.Repository
         }
     }
 }
+ 

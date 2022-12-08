@@ -9,7 +9,7 @@ namespace ParadiseApi.Controllers
     public class ProfileController:Controller
     {
         private readonly IProfileRepository _profiles;
-
+        
         public ProfileController(IProfileRepository profiles)
         {
             _profiles = profiles;
@@ -24,10 +24,12 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200,Type = typeof(Profile))]
         public IActionResult GetProfiles(int id)
         {
-            Profile profile = _profiles.GetProfile(id);
+            string error = "";
+
+            Profile profile = _profiles.GetProfile(id,ref error);
 
             if (profile == null || !ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest(error);
 
             return Ok(profile);
         }
@@ -36,10 +38,12 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(Profile))]
         public IActionResult UploadAvatar(IFormFile file, int idUser)
         {
-            var result = _profiles.UploadProfleAvatar(file, idUser);
+            string error = "";
+
+            var result = _profiles.UploadProfleAvatar(file, idUser,ref error);
 
             if (result == null)
-                return BadRequest();
+                return BadRequest(error);
 
             return Ok(result);
         }
@@ -48,10 +52,12 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type=typeof(Profile))]
         public IActionResult UploadFon(IFormFile file, int idUser)
         {
-            var result = _profiles.UploadProfleFon(file, idUser);
+            string error = "";
+
+            var result = _profiles.UploadProfleFon(file, idUser,ref error);
 
             if (result == null)
-                return BadRequest();
+                return BadRequest(error);
 
             return Ok(result);
         }

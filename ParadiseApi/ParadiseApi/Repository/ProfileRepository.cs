@@ -15,17 +15,29 @@ namespace ParadiseApi.Repository
             _context = context;
         }
 
-        public Profile GetProfile(int idUser)
+        public Profile GetProfile(int idUser,ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
             Profile profile = ExistenceModel.Profiles(idUser, _context);
 
             return profile;
         }
 
-        public Profile UploadProfleAvatar(IFormFile file, int idUser)
+        public Profile UploadProfleAvatar(IFormFile file, int idUser,ref string error)
         {
             Profile prof = ExistenceModel.Profiles(idUser, _context);
             string oldAvatar = null;
+
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
 
             if (prof == null)
                 prof = CreateProfile(idUser);
@@ -37,7 +49,11 @@ namespace ParadiseApi.Repository
                 string fileName = RootFile.SaveFile(idUser, "Avatars", file);
 
                 if (fileName == null)
+                {
+                    error = "Failed to save file";
                     return null;
+                }
+                    
 
                 prof.PathAvatar = "Avatars/" + fileName;
                 _context.Profiles.Update(prof);
@@ -48,16 +64,23 @@ namespace ParadiseApi.Repository
             }
             catch 
             {
+                error = $"Failed save avatar";
                 return null;
             }
 
             return prof;
         }
 
-        public Profile UploadProfleFon(IFormFile file, int idUser)
+        public Profile UploadProfleFon(IFormFile file, int idUser, ref string error)
         {
             Profile prof = ExistenceModel.Profiles(idUser, _context);
             string oldFon = null;
+
+            if(ExistenceModel.User(idUser,_context)==null)
+            {
+                error = "User not existence";
+                return null;
+            }
 
             if (prof == null)
                 prof = CreateProfile(idUser);
@@ -69,7 +92,10 @@ namespace ParadiseApi.Repository
                 string fileName = RootFile.SaveFile(idUser, "Fons", file);
 
                 if (fileName == null)
+                {
+                    error = "Failed to save file";
                     return null;
+                }
 
                 prof.PathFon = "Fons/" + fileName;
                 _context.Profiles.Update(prof);
@@ -80,6 +106,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
+                error = $"Failed save avatar";
                 return null;
             }
 
