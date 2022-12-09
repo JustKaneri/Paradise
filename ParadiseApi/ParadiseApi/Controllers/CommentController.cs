@@ -28,7 +28,15 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<CommentDto>))]
         public IActionResult GetComment(int idVideo)
         {
-            var result = _mapper.Map<List<CommentDto>>(_repository.GetComments(idVideo));
+            string error = "";
+
+            var list = _repository.GetComments(idVideo, ref error);
+
+            if (list == null)
+                return BadRequest(error);
+
+            var result = _mapper.Map<List<CommentDto>>(list);
+
 
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -45,15 +53,17 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(CommentDto))]
         public IActionResult GetComment(CreateCommentDto commentDt)
         {
+            string error = "";
+
             var comment = _mapper.Map<Comment>(commentDt);
 
-            var result = _mapper.Map<CommentDto>(_repository.CreateComment(comment));
+            var result = _mapper.Map<CommentDto>(_repository.CreateComment(comment,ref error));
 
             if (result == null)
-                return BadRequest();
+                return BadRequest(error);
 
             if (!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(error);
 
             return Ok(result);
         }
