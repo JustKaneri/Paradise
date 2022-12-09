@@ -4,10 +4,10 @@ namespace ParadiseApi.Interfaces
 {
     public interface IResponceVideoRepository
     {
-        public ResponceVideo SetLike(int idVideo, int idUser);
-        public ResponceVideo SetDisLike(int idVideo, int idUser);
-        public ResponceVideo ResetResponce(int idVideo, int idUser);
-        public ResponceVideo AddResponce(ResponceVideo responce);
-        public ResponceVideo UpdateResponce(ResponceVideo responce);
+        public ResponceVideo SetLike(int idVideo, int idUser,ref string error);
+        public ResponceVideo SetDisLike(int idVideo, int idUser, ref string error);
+        public ResponceVideo ResetResponce(int idVideo, int idUser, ref string error);
+        public ResponceVideo AddResponce(ResponceVideo responce,ref string error);
+        public ResponceVideo UpdateResponce(ResponceVideo responce, ref string error);
     }
 }

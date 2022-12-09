@@ -1,6 +1,7 @@
 ﻿using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository
 {
@@ -13,8 +14,21 @@ namespace ParadiseApi.Repository
             _context = context;
         }
 
-        public ResponceVideo SetDisLike(int idVideo, int idUser)
+        public ResponceVideo SetDisLike(int idVideo, int idUser, ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
+            if(ExistenceModel.Video(idVideo, _context) == null)
+            {
+                error = "Video not existence";
+                return null;
+            }
+
+
             ResponceVideo responceVideo = _context.ResponceVideos
                                                   .Where(rp => rp.UserId == idUser)
                                                   .Where(rp => rp.VideoId == idVideo)
@@ -29,19 +43,20 @@ namespace ParadiseApi.Repository
                 responceVideo.IsLike = false;
                 responceVideo.VideoId = idVideo;
                 responceVideo.DateResponce = DateTime.Now;
-                responceVideo = AddResponce(responceVideo);
+                responceVideo = AddResponce(responceVideo,ref error);
             }
             else
             {
                 if (responceVideo.IsDisLike)
                 {
+                    error = "Responce is existence";
                     return null;
                 }
                 else
                 {
                     responceVideo.IsDisLike = true;
                     responceVideo.IsLike = false;
-                    responceVideo = UpdateResponce(responceVideo);
+                    responceVideo = UpdateResponce(responceVideo,ref error);
                 }      
             }
 
@@ -49,8 +64,21 @@ namespace ParadiseApi.Repository
 
         }
 
-        public ResponceVideo SetLike(int idVideo, int idUser)
+        public ResponceVideo SetLike(int idVideo, int idUser, ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
+            if (ExistenceModel.Video(idVideo, _context) == null)
+            {
+                error = "Video not existence";
+                return null;
+            }
+
+
             ResponceVideo responceVideo = _context.ResponceVideos
                                                     .Where(rp => rp.UserId == idUser)
                                                     .Where(rp => rp.VideoId == idVideo)
@@ -65,26 +93,27 @@ namespace ParadiseApi.Repository
                 responceVideo.UserId = idUser;
                 responceVideo.VideoId = idVideo;
                 responceVideo.DateResponce = DateTime.Now;
-                responceVideo = AddResponce(responceVideo);
+                responceVideo = AddResponce(responceVideo, ref error);
             }
             else
             {
                 if (responceVideo.IsLike)
                 {
+                    error = "Responce is existence";
                     return null;
                 }
                 else
                 {
                     responceVideo.IsDisLike = false;
                     responceVideo.IsLike = true;
-                    responceVideo = UpdateResponce(responceVideo);
+                    responceVideo = UpdateResponce(responceVideo, ref error);
                 }
             }
 
             return responceVideo;
         }
 
-        public ResponceVideo UpdateResponce(ResponceVideo responce)
+        public ResponceVideo UpdateResponce(ResponceVideo responce,ref string error)
         {
             try
             {
@@ -93,13 +122,14 @@ namespace ParadiseApi.Repository
             }
             catch
             {
+                error = "Failde update responce";
                 return null;
             }
 
             return responce;
         }
 
-        public ResponceVideo AddResponce(ResponceVideo responce)
+        public ResponceVideo AddResponce(ResponceVideo responce, ref string error)
         {
             try
             {
@@ -108,24 +138,50 @@ namespace ParadiseApi.Repository
             }
             catch
             {
+                error = "Failde create responce";
                 return null;
             }
 
             return responce;
         }
 
-        public ResponceVideo ResetResponce(int idVideo, int idUser)
+        public ResponceVideo ResetResponce(int idVideo, int idUser, ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
+            if (ExistenceModel.Video(idVideo, _context) == null)
+            {
+                error = "Video not existence";
+                return null;
+            }
+
             ResponceVideo responceVideo = _context.ResponceVideos
                                                   .Where(rp => rp.UserId == idUser)
                                                   .Where(rp => rp.VideoId == idVideo)
                                                   .DefaultIfEmpty()
                                                   .First();
             if (responceVideo == null)
+            {
+                error = "Responce not existence";
                 return null;
+            }
+                
 
-            _context.ResponceVideos.Remove(responceVideo);
-            _context.SaveChanges();
+            try
+            {
+                _context.ResponceVideos.Remove(responceVideo);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                error = "Failde remove responce";
+                return null;
+            }
+           
 
             return responceVideo;
 

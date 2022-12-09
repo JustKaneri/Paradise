@@ -23,10 +23,12 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200,Type = typeof(ResponceVideoDto))]
         public IActionResult SetLike(int idUser, int idVideo)
         {
-            var res = _mapper.Map<ResponceVideoDto>(_responce.SetLike(idVideo,idUser));
+            string error = "";
+
+            var res = _mapper.Map<ResponceVideoDto>(_responce.SetLike(idVideo,idUser,ref error));
 
             if (res == null)
-                return BadRequest();
+                return BadRequest(error);
 
             return Ok(res);
         }
@@ -35,10 +37,12 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
         public IActionResult SetDisLike(int idUser, int idVideo)
         {
-            var res = _mapper.Map<ResponceVideoDto>(_responce.SetDisLike(idVideo,idUser));
+            string error = "";
+
+            var res = _mapper.Map<ResponceVideoDto>(_responce.SetDisLike(idVideo,idUser,ref error));
 
             if (res == null)
-                return BadRequest();
+                return BadRequest(error);
 
             return Ok(res);
         }
@@ -47,10 +51,12 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
         public IActionResult Reset(int idUser, int idVideo)
         {
-            var res = _mapper.Map<ResponceVideoDto>(_responce.ResetResponce(idVideo, idUser));
+            string error = "";
+
+            var res = _mapper.Map<ResponceVideoDto>(_responce.ResetResponce(idVideo, idUser,ref error));
 
             if (res == null)
-                return BadRequest();
+                return BadRequest(error);
 
             return Ok(res);
         }
