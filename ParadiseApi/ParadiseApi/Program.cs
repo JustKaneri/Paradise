@@ -3,6 +3,8 @@ using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Repository;
 using System;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,24 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Paradise API",
+        Description = "An ASP.NET Core Web API for video hosting ",
+        Contact = new OpenApiContact
+        {
+            Name = "JustKaneri",
+            Url = new Uri("https://github.com/JustKaneri")
+        }
+    });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 var app = builder.Build();

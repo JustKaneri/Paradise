@@ -19,6 +19,12 @@ namespace ParadiseApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Set like for current video
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <param name="idVideo"></param>
+        /// <returns></returns>
         [HttpPost("like")]
         [ProducesResponseType(200,Type = typeof(ResponceVideoDto))]
         public IActionResult SetLike(int idUser, int idVideo)
@@ -33,6 +39,12 @@ namespace ParadiseApi.Controllers
             return Ok(res);
         }
 
+        /// <summary>
+        /// Set dislike for current video
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <param name="idVideo"></param>
+        /// <returns></returns>
         [HttpPost("dislike")]
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
         public IActionResult SetDisLike(int idUser, int idVideo)
@@ -47,6 +59,12 @@ namespace ParadiseApi.Controllers
             return Ok(res);
         }
 
+        /// <summary>
+        /// Remove responce for current video
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <param name="idVideo"></param>
+        /// <returns></returns>
         [HttpDelete("reset")]
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
         public IActionResult Reset(int idUser, int idVideo)
