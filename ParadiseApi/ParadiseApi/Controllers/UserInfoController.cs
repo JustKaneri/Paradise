@@ -15,12 +15,16 @@ namespace ParadiseApi.Controllers
             _repository = repository;
         }
 
-        [HttpGet("GetInfo/User/{idUser}")]
+        /// <summary>
+        /// Get information about user ( count wathc, count subscib)
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        [HttpGet("detailed-information/User/{idUser}")]
         [ProducesResponseType(200, Type = typeof(UserInfoDto))]
         public IActionResult GetInfo(int idUser)
         {
             var resutl = _repository.GetUserInfo(idUser);
-
 
             return Ok(resutl);
         }

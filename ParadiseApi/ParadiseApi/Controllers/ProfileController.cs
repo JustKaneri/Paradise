@@ -20,7 +20,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("profile/user/{idUser}")]
         [ProducesResponseType(200,Type = typeof(Profile))]
         public IActionResult GetProfiles(int id)
         {
@@ -34,7 +34,13 @@ namespace ParadiseApi.Controllers
             return Ok(profile);
         }
 
-        [HttpPost("/Users/{idUser}/UploadAvatar")]
+        /// <summary>
+        /// Upload avatar for user
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        [HttpPost("profile/Users/{idUser}/upload-avatar")]
         [ProducesResponseType(200, Type = typeof(Profile))]
         public IActionResult UploadAvatar(IFormFile file, int idUser)
         {
@@ -48,7 +54,13 @@ namespace ParadiseApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("/Users/{idUser}/UploadFon")]
+        /// <summary>
+        /// Upload background for user
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        [HttpPost("profile/users/{idUser}/upload-fon")]
         [ProducesResponseType(200, Type=typeof(Profile))]
         public IActionResult UploadFon(IFormFile file, int idUser)
         {

@@ -19,7 +19,12 @@ namespace ParadiseApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Get all subscrib for user
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        [HttpGet("subscriptions")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<SubscriptionsDto>))]
         public IActionResult GetSubscription(int idUser)
         {
@@ -34,7 +39,13 @@ namespace ParadiseApi.Controllers
            return Ok(sub);
         }
 
-        [HttpGet("IsSubscrib")]
+        /// <summary>
+        /// Get status subscrib
+        /// </summary>
+        /// <param name="idCanal"></param>
+        /// <param name="idUser"></param>
+        /// <returns>True or false</returns>
+        [HttpGet("status/subscrib")]
         [ProducesResponseType(200)]
         public IActionResult IsSubscrib(int idCanal, int idUser)
         {
@@ -43,7 +54,13 @@ namespace ParadiseApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Subscribe")]
+        /// <summary>
+        /// Subscribe user on account
+        /// </summary>
+        /// <param name="idCanal"></param>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        [HttpPost("account/{idCanal}/subscribe")]
         [ProducesResponseType(200)]
         public IActionResult Subscribe(int idCanal,int idUser)
         {
@@ -52,7 +69,13 @@ namespace ParadiseApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Unsubscribe")]
+        /// <summary>
+        /// Unscrube user on account
+        /// </summary>
+        /// <param name="idCanal"></param>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        [HttpDelete("account/{idCanal}/unsubscribe")]
         [ProducesResponseType(200)]
         public IActionResult Unsubscribe(int idCanal, int idUser)
         {

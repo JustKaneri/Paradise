@@ -15,7 +15,11 @@ namespace ParadiseApi.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Get all roles
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("roles")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<UserRole>))]
         public IActionResult GetUserRoles()
         {

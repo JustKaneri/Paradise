@@ -23,7 +23,7 @@ namespace ParadiseApi.Controllers
         /// Get all video
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetAllVideo")]
+        [HttpGet("videos")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetAllVideo()
         {
@@ -39,7 +39,7 @@ namespace ParadiseApi.Controllers
         /// Get favorite video for user
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetFavoriteVideo")]
+        [HttpGet("video/favorite")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetFavoriteVideo(int idUser)
         {
@@ -56,7 +56,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="idUser"></param>
         /// <returns></returns>
-        [HttpGet("User/{idUser}")]
+        [HttpGet("user/video/{idUser}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetUserVideo(int idUser)
         {
@@ -74,7 +74,7 @@ namespace ParadiseApi.Controllers
         /// <param name="page"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        [HttpGet("GetVideo")]
+        [HttpGet("video")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetPageVideo(int page,int count)
         {
@@ -91,7 +91,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="search"></param>
         /// <returns></returns>
-        [HttpGet("SearchVideo")]
+        [HttpGet("video/{search}/search")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetSearchVideo(string search)
         {
@@ -108,7 +108,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="idVideo"></param>
         /// <returns></returns>
-        [HttpPost("AddViews")]
+        [HttpPost("video/{idVideo}/add-views")]
         [ProducesResponseType(200,Type = typeof(VideoDto))]
         public IActionResult AddViews(int idVideo)
         {
@@ -127,7 +127,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser">current user</param>
         /// <param name="video">All info about video</param>
         /// <returns></returns>
-        [HttpPost("CreateVideo")]
+        [HttpPost("video/user/{idUser}/create")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         public IActionResult AddVideo(int idUser, CreateVideoDto videoInfo)
         {
@@ -148,7 +148,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser">current user</param>
         /// <param name="video">All info about video</param>
         /// <returns></returns>
-        [HttpPost("CreateVideo/{idVideo}/AddVideo")]
+        [HttpPost("video/{idVideo}/upload-video")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         public IActionResult AddVideoFile(int idVideo, IFormFile file)
         {
@@ -167,7 +167,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser">current user</param>
         /// <param name="video">All info about video</param>
         /// <returns></returns>
-        [HttpPost("CreateVideo/{idVideo}/AddPoster")]
+        [HttpPost("video/{idVideo}/upload-poster")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         public IActionResult AddPosterFile(int idVideo, IFormFile file)
         {

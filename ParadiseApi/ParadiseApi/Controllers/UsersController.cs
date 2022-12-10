@@ -19,6 +19,10 @@ namespace ParadiseApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200,Type=typeof(IEnumerable<Users>))]
         public IActionResult GetUser()
@@ -33,7 +37,12 @@ namespace ParadiseApi.Controllers
             return Ok(users);
         }
 
-        [HttpGet("CheckExistLogin")]
+        /// <summary>
+        /// Check exist login in DB
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        [HttpGet("user/{login}/check-exist-Login")]
         [ProducesResponseType(200)]
         public IActionResult CheckExistLogin(string login)
         {
@@ -42,7 +51,12 @@ namespace ParadiseApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet("CheckExistName")]
+        /// <summary>
+        /// Check exist name in DB
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpGet("user/{login}/check-exist-name")]
         [ProducesResponseType(200)]
         public IActionResult CheckExistName(string name)
         {
@@ -51,7 +65,12 @@ namespace ParadiseApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Regestry new user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost("regestry")]
         [ProducesResponseType(200,Type =typeof(Users))]
         public IActionResult RegestryUser(UserRegestryDto user)
         {

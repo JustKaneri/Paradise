@@ -24,7 +24,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="idVideo"></param>
         /// <returns></returns>
-        [HttpGet("GetComment")]
+        [HttpGet("comments")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<CommentDto>))]
         public IActionResult GetComment(int idVideo)
         {
@@ -49,7 +49,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="commentDt"></param>
         /// <returns></returns>
-        [HttpPost("CreateComment")]
+        [HttpPost("new-comment")]
         [ProducesResponseType(200, Type = typeof(CommentDto))]
         public IActionResult GetComment(CreateCommentDto commentDt)
         {
