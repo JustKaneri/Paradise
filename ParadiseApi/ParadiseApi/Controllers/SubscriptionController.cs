@@ -28,15 +28,24 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200,Type = typeof(IEnumerable<SubscriptionsDto>))]
         public IActionResult GetSubscription(int idUser)
         {
-           var sub = _mapper.Map<List<SubscriptionsDto>>(_subscriptionRepository.GetSubscriptions(idUser));
+            string error = "";
+
+            var subscribts = _subscriptionRepository.GetSubscriptions(idUser,ref error);
+
+            if (subscribts == null)
+            {
+                return BadRequest(error);
+            }
+
+            var result = _mapper.Map<List<SubscriptionsDto>>(subscribts);
 
             if (!ModelState.IsValid)
-                return BadRequest(sub);
+                return BadRequest(error);
 
-            if (sub.Count==0)
+            if (result.Count==0)
                 return NotFound();
 
-           return Ok(sub);
+           return Ok(result);
         }
 
         /// <summary>
@@ -45,11 +54,16 @@ namespace ParadiseApi.Controllers
         /// <param name="idCanal"></param>
         /// <param name="idUser"></param>
         /// <returns>True or false</returns>
-        [HttpGet("status/subscrib")]
-        [ProducesResponseType(200)]
+        [HttpGet("subscrib/status")]
+        [ProducesResponseType(200,Type = typeof(bool))]
         public IActionResult IsSubscrib(int idCanal, int idUser)
         {
-            var result = _subscriptionRepository.IsSubscrib(idCanal, idUser);
+            string error = "";
+
+            var result = _subscriptionRepository.IsSubscrib(idCanal, idUser,ref error);
+
+            if (error != "")
+                return BadRequest(error);
 
             return Ok(result);
         }
@@ -61,10 +75,15 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpPost("account/{idCanal}/subscribe")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
         public IActionResult Subscribe(int idCanal,int idUser)
         {
-            var result = _subscriptionRepository.Subscribe(idCanal, idUser);
+            string error = "";
+
+            var result = _mapper.Map<SubscriptionsDto>(_subscriptionRepository.Subscribe(idCanal, idUser,ref error));
+
+            if (result == null)
+                return BadRequest(error);
 
             return Ok(result);
         }
@@ -76,10 +95,15 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpDelete("account/{idCanal}/unsubscribe")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
         public IActionResult Unsubscribe(int idCanal, int idUser)
         {
-            var result = _subscriptionRepository.Unsubscribe(idCanal, idUser);
+            string error = "";
+
+            var result = _mapper.Map<SubscriptionsDto>(_subscriptionRepository.Unsubscribe(idCanal, idUser,ref error));
+
+            if (result == null)
+                return BadRequest(error);
 
             return Ok(result);
         }

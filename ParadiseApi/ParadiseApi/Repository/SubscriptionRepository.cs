@@ -2,6 +2,7 @@
 using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository
 {
@@ -14,8 +15,14 @@ namespace ParadiseApi.Repository
             _context = context;
         }
 
-        public ICollection<Subscription> GetSubscriptions(int idUser)
+        public ICollection<Subscription> GetSubscriptions(int idUser, ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
             List<Subscription> users = _context.Subscriptions
                                                .Include(sub=>sub.Account.Profile)
                                                .Include(sub=>sub.Account)
@@ -25,44 +32,87 @@ namespace ParadiseApi.Repository
             return users;
         }
 
-        public bool Subscribe(int idCanal,int idUser)
+        public Subscription Subscribe(int idAutor, int idSubscrib, ref string error)
         {
-            var Subscrib = _context.Subscriptions.Where(sb => sb.Account.Id == idCanal)
-                                                 .Where(sb => sb.Subscriber.Id == idUser).DefaultIfEmpty().First();
+            if(idAutor == idSubscrib)
+            {
+                error = "Not correct Id";
+                return null;
+            }
+
+            if (ExistenceModel.User(idAutor, _context) == null || ExistenceModel.User(idSubscrib, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
+            var Subscrib = ExistenceModel.Subscribt(idAutor, idSubscrib, _context);
 
             if (Subscrib != null)
-                return false;
+            {
+                error = "Subscription exist";
+                return null;
+            }
 
             Subscription subscription = new Subscription();
+            subscription.AccountId = idAutor;
+            subscription.SubscriberId = idSubscrib;
 
-            subscription.AccountId = idCanal;
-            subscription.SubscriberId = idUser;
-            _context.Subscriptions.Add(subscription);
+            try
+            {
+                _context.Subscriptions.Add(subscription);
+                Save();
+            }
+            catch 
+            {
+                error = "Failde subscribe";
+                return null;
+            }
 
-            Save();
-
-            return true;
+            return subscription;
         }
 
-        public bool Unsubscribe(int idCanal,int idUser)
+        public Subscription Unsubscribe(int idAutor,int idSubscrib, ref string error)
         {
-            var Subscrib = _context.Subscriptions.Where(sb => sb.Account.Id == idCanal)
-                                                 .Where(sb => sb.Subscriber.Id == idUser).DefaultIfEmpty().First();
+            if (ExistenceModel.User(idAutor, _context) == null || ExistenceModel.User(idSubscrib, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
+            var Subscrib = ExistenceModel.Subscribt(idAutor, idSubscrib,_context);
 
             if (Subscrib == null)
-                return false;
+            {
+                error = "Subscription does not exist";
+                return null;
+            }
 
-            _context.Subscriptions.Remove(Subscrib);
+            try
+            {
+                _context.Subscriptions.Remove(Subscrib);
 
-            Save();
+                Save();
+            }
+            catch
+            {
+                error = "Failde unsubscribe";
+                return null;
+            }
+            
 
-            return true;
+            return Subscrib;
         }
 
-        public bool IsSubscrib(int idCanal, int idUser)
+        public bool IsSubscrib(int idAutor, int idSubscrib, ref string error)
         {
-            var Subscrib = _context.Subscriptions.Where(sb => sb.Account.Id == idCanal)
-                                                  .Where(sb => sb.Subscriber.Id == idUser).DefaultIfEmpty().First();
+            if(ExistenceModel.User(idAutor ,_context) == null || ExistenceModel.User(idSubscrib, _context) == null)
+            {
+                error = "User not existence";
+                return false;
+            }
+
+            var Subscrib = ExistenceModel.Subscribt(idAutor, idSubscrib, _context);
 
             return Subscrib != null;
         }
