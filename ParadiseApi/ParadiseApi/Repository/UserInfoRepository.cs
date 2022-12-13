@@ -1,6 +1,7 @@
 ﻿using ParadiseApi.Data;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
+using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository
 {
@@ -13,8 +14,14 @@ namespace ParadiseApi.Repository
            _context = context;
         }
 
-        public UserInfoDto GetUserInfo(int idUser)
+        public UserInfoDto GetUserInfo(int idUser,ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not exsistenc";
+                return null;
+            }
+
             UserInfoDto dto = new UserInfoDto();
 
             int countWatch = _context.Videos.Where(v => v.UserId == idUser).Sum(v => v.CountWatch);

@@ -24,7 +24,12 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(UserInfoDto))]
         public IActionResult GetInfo(int idUser)
         {
-            var resutl = _repository.GetUserInfo(idUser);
+            string error = "";
+
+            var resutl = _repository.GetUserInfo(idUser,ref error);
+
+            if (resutl == null)
+                BadRequest(error);
 
             return Ok(resutl);
         }
