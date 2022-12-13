@@ -24,7 +24,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(200,Type=typeof(IEnumerable<Users>))]
+        [ProducesResponseType(200,Type=typeof(IEnumerable<UserDto>))]
         public IActionResult GetUser()
         {
             var users = _mapper.Map<List<UserDto>>(_userRepository.GetUser());
@@ -71,16 +71,18 @@ namespace ParadiseApi.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost("regestry")]
-        [ProducesResponseType(200,Type =typeof(Users))]
+        [ProducesResponseType(200,Type =typeof(UserDto))]
         public IActionResult RegestryUser(UserRegestryDto user)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Users us = _userRepository.Regestry(user);
+            string error = "";
+
+            var us = _mapper.Map<UserDto>(_userRepository.Regestry(user,ref error));
 
             if (us == null)
-                return BadRequest(ModelState);
+                return BadRequest(error);
 
             return Ok(us);
 

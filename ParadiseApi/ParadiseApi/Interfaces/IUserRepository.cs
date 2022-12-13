@@ -11,6 +11,6 @@ namespace ParadiseApi.Interfaces
 
         public bool CheckExistLogin(string login);
 
-        public Users Regestry(UserRegestryDto user);
+        public Users Regestry(UserRegestryDto user, ref string error);
     }
 }
