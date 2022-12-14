@@ -21,20 +21,23 @@ namespace ParadiseApi.Repository
         /// </summary>
         /// <param name="poster"></param>
         /// <param name="idVideo"></param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public Video AddPosterFile(IFormFile poster, int idVideo)
+        public Video AddPosterFile(IFormFile poster, int idVideo, ref string error)
         {
-            Video vid = _context.Videos.Include(v => v.User)
-                                       .Include(us => us.User.Profile)
-                                       .Where(v => v.Id == idVideo)
-                                       .DefaultIfEmpty()
-                                       .First();
+            Video vid = ExistenceModel.Video(idVideo, _context);
 
             if (vid == null)
+            {
+                error = "Video not existence";
                 return null;
+            }
 
             if (vid.PathPoster != null)
+            {
+                error = "Poster is existence";
                 return null;
+            }
 
             try
             {
@@ -46,6 +49,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
+                error = "Failde upload poster file";
                 return null;
             }
 
@@ -57,31 +61,35 @@ namespace ParadiseApi.Repository
         /// </summary>
         /// <param name="video"></param>
         /// <param name="idVideo"></param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public Video AddVideoFile(IFormFile video, int idVideo)
+        public Video AddVideoFile(IFormFile video, int idVideo, ref string error)
         {
-            Video vid = _context.Videos.Include(v => v.User)
-                                       .Include(us => us.User.Profile)
-                                       .Where(v => v.Id == idVideo)
-                                       .DefaultIfEmpty()
-                                       .First();
+            Video vid = ExistenceModel.Video(idVideo, _context);
 
             if (vid == null)
+            {
+                error = "Video not existence";
                 return null;
+            }
 
             if (vid.PathVideo != null)
+            {
+                error = "Video file existence";
                 return null;
+            }
 
             try
             {
                 string patchVideo = RootFile.SaveFile(vid.UserId, "Videos", video);
                 vid.PathVideo = "Videos/" + patchVideo;
-
                 _context.Videos.Update(vid);
                 _context.SaveChanges();
             }
             catch
             {
+                RemoveVideo(idVideo,ref error);
+                error = "Failde upload file video";
                 return null;
             }
 
@@ -92,22 +100,31 @@ namespace ParadiseApi.Repository
         /// Add count watch for video
         /// </summary>
         /// <param name="idVideo"></param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public Video AddViews(int idVideo)
+        public Video AddViews(int idVideo, ref string error)
         {
-            Video v = _context.Videos.Include(v => v.User)
-                                     .Include(us => us.User.Profile)
-                                     .Where(v => v.Id == idVideo)
-                                     .DefaultIfEmpty()
-                                     .First();
+            Video v = ExistenceModel.Video(idVideo, _context);
 
             if (v == null)
+            {
+                error = "Video not existence";
                 return null;
+            }
 
             v.CountWatch += 1;
-            _context.Videos.Update(v);
-            _context.SaveChanges();
 
+            try
+            {
+                _context.Videos.Update(v);
+                _context.SaveChanges();
+            }
+            catch 
+            {
+                error = "Failed update view";
+                return null;
+            }
+            
             return v;
         }
 
@@ -116,9 +133,16 @@ namespace ParadiseApi.Repository
         /// </summary>
         /// <param name="idUser"></param>
         /// <param name="videoInfo"></param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public Video CreateVideo(int idUser, Video videoInfo)
+        public Video CreateVideo(int idUser, Video videoInfo, ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
             videoInfo.UserId = idUser;
 
             try
@@ -128,6 +152,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
+                error = "Failed create new video";
                 return null;
             }
 
@@ -138,9 +163,16 @@ namespace ParadiseApi.Repository
         /// get favorite video for user
         /// </summary>
         /// <param name="idUser"></param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public ICollection<Video> GetFavoriteVideo(int idUser)
+        public ICollection<Video> GetFavoriteVideo(int idUser, ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
             List<Video> videos = (from video in _context.Videos
                                   join resp in _context.ResponceVideos
                                   on video.Id equals resp.VideoId
@@ -157,9 +189,16 @@ namespace ParadiseApi.Repository
         /// get video current user
         /// </summary>
         /// <param name="idUser">id user</param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public ICollection<Video> GetVideos(int idUser)
+        public ICollection<Video> GetVideos(int idUser, ref string error)
         {
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                error = "User not existence";
+                return null;
+            }
+
             List<Video> videos = _context.Videos.Include(v => v.User)
                                                 .Include(us => us.User.Profile)
                                                 .OrderByDescending(v => v.DateCreate)
@@ -174,9 +213,16 @@ namespace ParadiseApi.Repository
         /// </summary>
         /// <param name="count">count note</param>
         /// <param name="page">number page</param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public ICollection<Video> GetVideos(int count, int page)
+        public ICollection<Video> GetVideos(int count, int page,ref string error)
         {
+            if(page == 0)
+            {
+                error = "Not correct page";
+                return null;
+            }
+
             List<Video> videos = _context.Videos.Include(v => v.User)
                                                 .Include(us => us.User.Profile)
                                                 .OrderByDescending(v => v.DateCreate)
@@ -202,12 +248,50 @@ namespace ParadiseApi.Repository
         }
 
         /// <summary>
+        /// Remove object Video from DB by id
+        /// </summary>
+        /// <param name="idVideo"></param>
+        /// <param name="error"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Video RemoveVideo(int idVideo,ref string error)
+        {
+            Video video = ExistenceModel.Video(idVideo, _context);
+
+            if (video == null)
+            {
+                error = "Video not existence";
+                return null;
+            }
+
+            try
+            {
+                _context.Videos.Remove(video);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                error = "Failde remove video " + idVideo;
+                return null;
+            }
+
+            return video;
+        }
+
+        /// <summary>
         /// Search video by name video or name user
         /// </summary>
         /// <param name="search"></param>
+        /// <param name="error"></param>
         /// <returns></returns>
-        public ICollection<Video> SearchVideo(string search)
+        public ICollection<Video> SearchVideo(string search,ref string error)
         {
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                error = "The search cannot be null";
+                return null;
+            }
+
             search = search.ToLower();
 
             List<Video> videos = _context.Videos.Include(v => v.User)

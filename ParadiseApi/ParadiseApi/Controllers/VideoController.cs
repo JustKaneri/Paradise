@@ -43,7 +43,14 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetFavoriteVideo(int idUser)
         {
-            var video = _mapper.Map<List<VideoDto>>(_repository.GetFavoriteVideo(idUser));
+            string error = "";
+
+            var videoDB = _repository.GetFavoriteVideo(idUser, ref error);
+
+            if (videoDB == null)
+                return BadRequest(error);
+
+            var video = _mapper.Map<List<VideoDto>>(videoDB);
 
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -56,11 +63,18 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="idUser"></param>
         /// <returns></returns>
-        [HttpGet("user/video/{idUser}")]
+        [HttpGet("user/{idUser}/video")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetUserVideo(int idUser)
         {
-            var video = _mapper.Map<List<VideoDto>>(_repository.GetVideos(idUser));
+            string error = "";
+
+            var videoDb = _repository.GetVideos(idUser, ref error);
+
+            if (videoDb == null)
+                return BadRequest(error);
+
+            var video = _mapper.Map<List<VideoDto>>(videoDb);
 
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -78,7 +92,14 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetPageVideo(int page,int count)
         {
-            var video = _mapper.Map<List<VideoDto>>(_repository.GetVideos(count,page));
+            string error = "";
+
+            var videoDb = _repository.GetVideos(count, page,ref error);
+
+            if (videoDb == null)
+                return BadRequest(error);
+
+            var video = _mapper.Map<List<VideoDto>>(videoDb);
 
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -95,7 +116,14 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200,Type = typeof(IEnumerable<VideoDto>))]
         public IActionResult GetSearchVideo(string search)
         {
-            var result = _mapper.Map<List<VideoDto>>(_repository.SearchVideo(search));
+            string error = "";
+
+            var videoDb = _repository.SearchVideo(search,ref error);
+
+            if (videoDb == null)
+                return BadRequest(error);
+
+            var result = _mapper.Map<List<VideoDto>>(videoDb);
 
             if (result.Count == 0)
                 return NotFound();
@@ -112,7 +140,14 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200,Type = typeof(VideoDto))]
         public IActionResult AddViews(int idVideo)
         {
-            var result = _mapper.Map<VideoDto>(_repository.AddViews(idVideo));
+            string error = "";
+
+            var videoDb = _repository.AddViews(idVideo,ref error);
+
+            if (videoDb == null)
+                return BadRequest(error);
+
+            var result = _mapper.Map<VideoDto>(videoDb);
 
             if (result == null)
                 return NotFound();
@@ -123,20 +158,21 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Create video
         /// </summary>
-        /// <param name="files">video and poster</param>
         /// <param name="idUser">current user</param>
-        /// <param name="video">All info about video</param>
+        /// <param name="videoInfo"></param>
         /// <returns></returns>
         [HttpPost("video/user/{idUser}/create")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         public IActionResult AddVideo(int idUser, CreateVideoDto videoInfo)
         {
+            string error = "";
+
             Video video = _mapper.Map<Video>(videoInfo);
 
-            var result = _mapper.Map<VideoDto>(_repository.CreateVideo(idUser, video));
+            var result = _mapper.Map<VideoDto>(_repository.CreateVideo(idUser, video,ref error));
 
-            if (result == null)
-                return BadRequest();
+            if (video == null)
+                return BadRequest(error);
 
             return Ok(result);
         }
@@ -152,7 +188,14 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         public IActionResult AddVideoFile(int idVideo, IFormFile file)
         {
-            var result = _mapper.Map<VideoDto>(_repository.AddVideoFile(file,idVideo));
+            string error = "";
+
+            var videoDb = _repository.AddVideoFile(file, idVideo,ref error);
+
+            if (videoDb == null)
+                return BadRequest(error);
+
+            var result = _mapper.Map<VideoDto>(videoDb);
 
             if (result == null)
                 return BadRequest();
@@ -171,10 +214,14 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         public IActionResult AddPosterFile(int idVideo, IFormFile file)
         {
-            var result = _mapper.Map<VideoDto>(_repository.AddPosterFile(file, idVideo));
+            string error = "";
 
-            if (result == null)
-                return BadRequest();
+            var videoDb = _repository.AddPosterFile(file, idVideo,ref error);
+
+            if (videoDb == null)
+                return BadRequest(error);
+
+            var result = _mapper.Map<VideoDto>(videoDb);
 
             return Ok(result);
         }

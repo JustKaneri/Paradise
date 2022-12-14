@@ -44,7 +44,7 @@ namespace ParadiseApi.Repository
         {
             if (user == null)
             {
-                error = "The user cannot be empty";
+                error = "The user cannot be null";
                 return null;
             }
                 
