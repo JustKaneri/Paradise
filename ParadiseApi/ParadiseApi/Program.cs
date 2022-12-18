@@ -5,6 +5,7 @@ using ParadiseApi.Repository;
 using System;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using ParadiseApi.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+
+
 
 builder.Services.AddSwaggerGen(options =>
 {
