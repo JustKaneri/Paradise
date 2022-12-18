@@ -46,7 +46,7 @@ namespace ParadiseApi.Repository
 
             try
             {
-                string fileName = RootFile.SaveFile(idUser, "Avatars", file);
+                string fileName = RootFile.SaveFile(idUser, "avatars", file);
 
                 if (fileName == null)
                 {
@@ -55,7 +55,7 @@ namespace ParadiseApi.Repository
                 }
                     
 
-                prof.PathAvatar = "Avatars/" + fileName;
+                prof.PathAvatar = "avatars/" + fileName;
                 _context.Profiles.Update(prof);
                 _context.SaveChanges();
 
@@ -89,7 +89,7 @@ namespace ParadiseApi.Repository
 
             try
             {
-                string fileName = RootFile.SaveFile(idUser, "Fons", file);
+                string fileName = RootFile.SaveFile(idUser, "fons", file);
 
                 if (fileName == null)
                 {
@@ -97,7 +97,7 @@ namespace ParadiseApi.Repository
                     return null;
                 }
 
-                prof.PathFon = "Fons/" + fileName;
+                prof.PathFon = "fons/" + fileName;
                 _context.Profiles.Update(prof);
                 _context.SaveChanges();
 
