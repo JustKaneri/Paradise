@@ -20,3 +20,6 @@
 
 
 > Microsoft.EntityFrameworkCore.Tools Version="7.0.0"
+
+
+> Microsoft.AspNetCore.Authentication.JwtBearer Version="6.0.12"
