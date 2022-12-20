@@ -40,45 +40,6 @@ namespace ParadiseApi.Repository
             return users;
         }
 
-        public Users Regestry(UserRegestryDto user, ref string error)
-        {
-            if (user == null)
-            {
-                error = "The user cannot be null";
-                return null;
-            }
-                
-
-            if (CheckExistLogin(user.Login))
-            {
-                error = "The login is occupied by another user";
-                return null;
-            }
-               
-            if (CheckExistName(user.Name))
-            {
-                error = "The name is occupied by another user";
-                return null;
-            }
-
-            user.RoleId = 2;
-
-            user.Password = HashPassword.ComputeHash(user.Password, user.Name);
-
-            Users us = _mapper.Map<Users>(user);
-
-            try
-            {
-                _context.Users.Add(us);
-                _context.SaveChanges();
-            }
-            catch
-            {
-                error = "Failde regestry new user";
-                return null;
-            }
-
-            return us;
-        }
+      
     }
 }

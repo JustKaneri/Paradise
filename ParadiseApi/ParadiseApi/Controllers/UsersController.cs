@@ -65,27 +65,5 @@ namespace ParadiseApi.Controllers
             return Ok(result);
         }
 
-        /// <summary>
-        /// Regestry new user
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        [HttpPost("regestry")]
-        [ProducesResponseType(200,Type =typeof(UserDto))]
-        public IActionResult RegestryUser(UserRegestryDto user)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            string error = "";
-
-            var us = _mapper.Map<UserDto>(_userRepository.Regestry(user,ref error));
-
-            if (us == null)
-                return BadRequest(error);
-
-            return Ok(us);
-
-        }
     }
 }

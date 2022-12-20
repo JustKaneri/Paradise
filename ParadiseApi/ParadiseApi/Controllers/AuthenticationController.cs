@@ -7,6 +7,9 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using ParadiseApi.Models;
+using AutoMapper;
+using ParadiseApi.Interfaces;
+using ParadiseApi.Dto;
 
 namespace ParadiseApi.Controllers
 {
@@ -14,41 +17,53 @@ namespace ParadiseApi.Controllers
     [ApiController]
     public class AuthenticationController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly JwtConfig _jwtConfig;
+        private readonly IAuthenticationRepository _authenticationRepository;
+        private readonly IMapper _mapper;
 
-        public AuthenticationController(UserManager<IdentityUser> userManager, JwtConfig jwtConfig)
+        public AuthenticationController(IAuthenticationRepository authenticationRepository, IMapper mapper)
         {
-            _userManager = userManager;
-            _jwtConfig = jwtConfig;
+            _authenticationRepository = authenticationRepository;
+            _mapper = mapper;
         }
 
-        private string GenerateJwtToken(Users user)
+        /// <summary>
+        /// Regestry new user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost("regestry")]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
+        public IActionResult RegestryUser(UserRegestryDto user)
         {
-            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var key = Encoding.UTF8.GetBytes(_jwtConfig.Secret);
+            string error = "";
 
-            //Token descriptor
+            var us = _mapper.Map<UserDto>(_authenticationRepository.Regestry(_mapper.Map<Users>(user), ref error));
 
-            var tokenDescriptor = new SecurityTokenDescriptor()
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("id", user.Id.ToString()),
-                    new Claim("role", user.Role.Name),
-                    new Claim(JwtRegisteredClaimNames.Name, user.Name),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToUniversalTime().ToString())
-                }),
-                Expires = DateTime.Now.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
-            };
+            if (us == null)
+                return BadRequest(error);
 
-            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+            return Ok(us);
 
-            var jwtToken = jwtTokenHandler.WriteToken(token);
+        }
 
-            return jwtToken;
+        [HttpPost("login")]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
+        public IActionResult LoginUser(UserLoginDto user)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            string error = "";
+
+            var token = _mapper.Map<UserDto>(_authenticationRepository.LogIn(user, ref error));
+
+            if (token == null)
+                return BadRequest(error);
+
+            return Ok(token);
         }
 
     }
