@@ -13,16 +13,16 @@ namespace ParadiseApi.Repository
     public class AuthenticationRepository : IAuthenticationRepository
     {
         private readonly DataContext _context;
-        private readonly JwtConfig _jwtConfig;
-        public AuthenticationRepository(DataContext context, JwtConfig jwtConfig)
+        //private readonly JwtConfig _jwtConfig;
+        public AuthenticationRepository(DataContext context /*, JwtConfig jwtConfig */)
         {
             _context = context;
-            _jwtConfig = jwtConfig;
+           // _jwtConfig = jwtConfig;
         }
 
-        public string LogIn(UserLoginDto user, ref string error)
+        public string LogIn(UserLoginDto user,string key, ref string error)
         {
-            Users userM = _context.Users.Where(us => us.Login == user.Login).FirstOrDefault();
+            Users userM = _context.Users.Include(r => r.Role).Where(us => us.Login == user.Login).FirstOrDefault();
 
             if(userM == null)
             {
@@ -36,7 +36,7 @@ namespace ParadiseApi.Repository
                 return null;
             }
 
-            string Token = JwtTokenHelper.GenerateJwtToken(userM, _jwtConfig);
+            string Token = JwtTokenHelper.GenerateJwtToken(userM, key);
 
             return Token;
         }

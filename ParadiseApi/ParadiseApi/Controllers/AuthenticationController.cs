@@ -18,11 +18,16 @@ namespace ParadiseApi.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IAuthenticationRepository _authenticationRepository;
+        private readonly IConfiguration _configuration;
+        //private readonly JwtConfig _jwtConfig;
         private readonly IMapper _mapper;
 
-        public AuthenticationController(IAuthenticationRepository authenticationRepository, IMapper mapper)
+        public AuthenticationController(IAuthenticationRepository authenticationRepository, 
+                                        IConfiguration configuration, 
+                                        IMapper mapper)
         {
             _authenticationRepository = authenticationRepository;
+            _configuration = configuration;
             _mapper = mapper;
         }
 
@@ -32,7 +37,7 @@ namespace ParadiseApi.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost("regestry")]
-        [ProducesResponseType(200, Type = typeof(UserDto))]
+        [ProducesResponseType(201, Type = typeof(UserDto))]
         public IActionResult RegestryUser(UserRegestryDto user)
         {
             if (!ModelState.IsValid)
@@ -49,8 +54,13 @@ namespace ParadiseApi.Controllers
 
         }
 
+        /// <summary>
+        /// Authentication user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost("login")]
-        [ProducesResponseType(200, Type = typeof(UserDto))]
+        [ProducesResponseType(200, Type = typeof(string))]
         public IActionResult LoginUser(UserLoginDto user)
         {
             if (!ModelState.IsValid)
@@ -58,7 +68,7 @@ namespace ParadiseApi.Controllers
 
             string error = "";
 
-            var token = _mapper.Map<UserDto>(_authenticationRepository.LogIn(user, ref error));
+            var token = _authenticationRepository.LogIn(user, _configuration.GetSection("JwtConfig:Secret").Value , ref error);
 
             if (token == null)
                 return BadRequest(error);

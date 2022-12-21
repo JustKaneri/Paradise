@@ -180,9 +180,8 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Add video file
         /// </summary>
-        /// <param name="files">video and poster</param>
-        /// <param name="idUser">current user</param>
-        /// <param name="video">All info about video</param>
+        /// <param name="file">video</param>
+        /// <param name="idVideo">current user</param>
         /// <returns></returns>
         [HttpPost("video/{idVideo}/upload-video")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
@@ -206,9 +205,8 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Add poster file
         /// </summary>
-        /// <param name="files">video and poster</param>
-        /// <param name="idUser">current user</param>
-        /// <param name="video">All info about video</param>
+        /// <param name="file">poster</param>
+        /// <param name="idVideo">current user</param>
         /// <returns></returns>
         [HttpPost("video/{idVideo}/upload-poster")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]

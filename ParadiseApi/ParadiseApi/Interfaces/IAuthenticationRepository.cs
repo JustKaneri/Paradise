@@ -1,4 +1,5 @@
-﻿using ParadiseApi.Dto;
+﻿using ParadiseApi.Configurations;
+using ParadiseApi.Dto;
 using ParadiseApi.Models;
 
 namespace ParadiseApi.Interfaces
@@ -7,6 +8,6 @@ namespace ParadiseApi.Interfaces
     {
         public Users Regestry(Users user, ref string error);
 
-        public string LogIn(UserLoginDto user, ref string error);
+        public string LogIn(UserLoginDto user, string key, ref string error);
     }
 }
