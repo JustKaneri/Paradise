@@ -9,11 +9,18 @@ namespace ParadiseApi.Helper
 {
     public class JwtTokenHelper
     {
-        public static string GenerateJwtToken(Users user, string keySecret)
+        private readonly IConfiguration _configuration;
+
+        public JwtTokenHelper(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public string GenerateJwtToken(Users user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
-            var key = Encoding.UTF8.GetBytes(keySecret);
+            var key = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:Secret").Value);
 
             //Token descriptor
 
@@ -26,7 +33,7 @@ namespace ParadiseApi.Helper
                     new Claim(JwtRegisteredClaimNames.Name, user.Name),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToUniversalTime().ToString())
                 });
-            tokenDescriptor.Expires = DateTime.Now.AddHours(1);
+            tokenDescriptor.Expires = DateTime.Now.Add(TimeSpan.Parse(_configuration.GetSection("JwtConfig:ExpireTimeFrame").Value));
             tokenDescriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);

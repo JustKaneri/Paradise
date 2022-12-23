@@ -10,6 +10,7 @@ using ParadiseApi.Models;
 using AutoMapper;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Dto;
+using ParadiseApi.Helper;
 
 namespace ParadiseApi.Controllers
 {
@@ -68,10 +69,14 @@ namespace ParadiseApi.Controllers
 
             string error = "";
 
-            var token = _authenticationRepository.LogIn(user, _configuration.GetSection("JwtConfig:Secret").Value , ref error);
+            var userAut = _authenticationRepository.LogIn(user, ref error);
 
-            if (token == null)
+            if (userAut == null)
                 return BadRequest(error);
+
+            JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration);
+
+            string token = tokenHelper.GenerateJwtToken(userAut);
 
             return Ok(token);
         }

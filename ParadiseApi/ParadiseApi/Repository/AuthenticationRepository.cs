@@ -20,7 +20,7 @@ namespace ParadiseApi.Repository
            // _jwtConfig = jwtConfig;
         }
 
-        public string LogIn(UserLoginDto user,string key, ref string error)
+        public Users LogIn(UserLoginDto user, ref string error)
         {
             Users userM = _context.Users.Include(r => r.Role).Where(us => us.Login == user.Login).FirstOrDefault();
 
@@ -35,10 +35,8 @@ namespace ParadiseApi.Repository
                 error = "Password not correct";
                 return null;
             }
-
-            string Token = JwtTokenHelper.GenerateJwtToken(userM, key);
-
-            return Token;
+;
+            return userM;
         }
 
         public Users Regestry(Users user, ref string error)

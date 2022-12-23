@@ -14,6 +14,7 @@ namespace ParadiseApi.Data
         public DbSet<Video> Videos { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ResponceVideo> ResponceVideos { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
