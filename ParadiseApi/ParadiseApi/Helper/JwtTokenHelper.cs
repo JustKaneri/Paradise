@@ -16,7 +16,7 @@ namespace ParadiseApi.Helper
             _configuration = configuration;
         }
 
-        public string GenerateJwtToken(Users user)
+        public AuthResult GenerateJwtToken(Users user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -31,16 +31,20 @@ namespace ParadiseApi.Helper
                     new Claim("id", user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Role.Name),
                     new Claim(JwtRegisteredClaimNames.Name, user.Name),
+                    new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToUniversalTime().ToString())
                 });
             tokenDescriptor.Expires = DateTime.Now.Add(TimeSpan.Parse(_configuration.GetSection("JwtConfig:ExpireTimeFrame").Value));
             tokenDescriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
-
             var jwtToken = jwtTokenHandler.WriteToken(token);
 
-            return jwtToken;
+            return new AuthResult()
+            {
+                Token = jwtToken,
+                RefreshToken = ""
+            };
         }
     }
 }

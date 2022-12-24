@@ -20,16 +20,18 @@ namespace ParadiseApi.Controllers
     {
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IConfiguration _configuration;
-        //private readonly JwtConfig _jwtConfig;
         private readonly IMapper _mapper;
+        private readonly TokenValidationParameters _tokenValidationParameters;
 
         public AuthenticationController(IAuthenticationRepository authenticationRepository, 
                                         IConfiguration configuration, 
-                                        IMapper mapper)
+                                        IMapper mapper,
+                                        TokenValidationParameters tokenValidationParameters)
         {
             _authenticationRepository = authenticationRepository;
             _configuration = configuration;
             _mapper = mapper;
+            _tokenValidationParameters = tokenValidationParameters;
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace ParadiseApi.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost("login")]
-        [ProducesResponseType(200, Type = typeof(string))]
+        [ProducesResponseType(200, Type = typeof(AuthResult))]
         public IActionResult LoginUser(UserLoginDto user)
         {
             if (!ModelState.IsValid)
@@ -76,7 +78,7 @@ namespace ParadiseApi.Controllers
 
             JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration);
 
-            string token = tokenHelper.GenerateJwtToken(userAut);
+            var token = tokenHelper.GenerateJwtToken(userAut);
 
             return Ok(token);
         }
