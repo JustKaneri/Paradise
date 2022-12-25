@@ -18,16 +18,19 @@ namespace ParadiseApi.Controllers
     [ApiController]
     public class AuthenticationController : Controller
     {
+        private readonly IRefreshTokenRepository _tokenRepository;
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly TokenValidationParameters _tokenValidationParameters;
 
-        public AuthenticationController(IAuthenticationRepository authenticationRepository, 
+        public AuthenticationController(IRefreshTokenRepository tokenRepository,
+                                        IAuthenticationRepository authenticationRepository, 
                                         IConfiguration configuration, 
                                         IMapper mapper,
                                         TokenValidationParameters tokenValidationParameters)
         {
+            _tokenRepository = tokenRepository;
             _authenticationRepository = authenticationRepository;
             _configuration = configuration;
             _mapper = mapper;
