@@ -63,6 +63,8 @@ builder.Services.AddAuthentication( options => {
 
 });
 
+builder.Services.AddSingleton(tokenValidationParamers);
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo

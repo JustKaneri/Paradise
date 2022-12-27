@@ -79,7 +79,7 @@ namespace ParadiseApi.Controllers
             if (userAut == null)
                 return BadRequest(error);
 
-            JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration);
+            JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
 
             var token = tokenHelper.GenerateJwtToken(userAut);
 

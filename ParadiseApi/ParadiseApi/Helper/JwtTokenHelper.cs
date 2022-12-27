@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using ParadiseApi.Configurations;
+using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,10 +11,12 @@ namespace ParadiseApi.Helper
     public class JwtTokenHelper
     {
         private readonly IConfiguration _configuration;
+        private readonly IRefreshTokenRepository _tokenRepository;
 
-        public JwtTokenHelper(IConfiguration configuration)
+        public JwtTokenHelper(IConfiguration configuration, IRefreshTokenRepository tokenRepository)
         {
             _configuration = configuration;
+            _tokenRepository = tokenRepository;
         }
 
         public AuthResult GenerateJwtToken(Users user)
@@ -40,11 +43,40 @@ namespace ParadiseApi.Helper
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
             var jwtToken = jwtTokenHandler.WriteToken(token);
 
+            var refreshToken = new RefreshToken()
+            {
+                JwtId = token.Id,
+                Token = GenerateRandomString(23),
+                AddeDate = DateTime.Now,
+                ExpireDate = DateTime.Now.AddMonths(6),
+                IsRevoked = false,
+                IsUsed = false,
+                UserId = user.Id
+
+            };
+
+            var resAdd = _tokenRepository.CreateToken(refreshToken);
+
             return new AuthResult()
             {
                 Token = jwtToken,
-                RefreshToken = ""
+                RefreshToken = refreshToken.Token
             };
+        }
+
+        private string GenerateRandomString(int len)
+        {
+            Random rnd = new Random();
+
+            string chars = "";
+
+            for (char i = 'a'; i <= 'z'; i++)
+                chars += i;
+
+            chars += chars.ToUpper();
+            chars += "1234567890";
+
+            return new string(Enumerable.Repeat(chars,len).Select(s => s[rnd.Next(s.Length)]).ToArray());
         }
     }
 }
