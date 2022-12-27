@@ -86,5 +86,19 @@ namespace ParadiseApi.Controllers
             return Ok(token);
         }
 
+
+        [HttpPost("refresh-token")]
+        [ProducesResponseType(200, Type = typeof(AuthResult))]
+        public IActionResult RefreshToken([FromBody] TokenRequest tokenRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
+
+                var result = tokenHelper.VerifyAndGenerareToken(tokenRequest);
+            }
+
+            return BadRequest("Invalid parameters");
+        }
     }
 }

@@ -64,6 +64,11 @@ namespace ParadiseApi.Helper
             };
         }
 
+        internal object VerifyAndGenerareToken(TokenRequest tokenRequest)
+        {
+            throw new NotImplementedException();
+        }
+
         private string GenerateRandomString(int len)
         {
             Random rnd = new Random();
