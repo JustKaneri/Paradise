@@ -9,5 +9,7 @@ namespace ParadiseApi.Interfaces
         public RequestResult<RefreshToken> FindToken(string refreshToken);
 
         public RequestResult<RefreshToken> UpdateToken(RefreshToken refreshToken);
+
+        public RequestResult<Users> GetAuthUser(RefreshToken refreshToken);
     }
 }

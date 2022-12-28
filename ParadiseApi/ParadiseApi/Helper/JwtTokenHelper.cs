@@ -94,7 +94,7 @@ namespace ParadiseApi.Helper
 
                 var expiryDate = UnixTimeSmapToDate(utcExpiryDate);
 
-                if(expiryDate > DateTime.UtcNow)
+                if(expiryDate > DateTime.Now)
                 {
                     return new AuthResult()
                     {
@@ -133,12 +133,16 @@ namespace ParadiseApi.Helper
                 if(storageToken.ExpireDate < DateTime.UtcNow)
                     return new AuthResult()
                     {
-                        Error = "Expired tokens"
+                        Error = "Expired refresh token"
                     };
 
                 storageToken.IsUsed = true;
 
                 _tokenRepository.UpdateToken(storageToken);
+
+                var authUser = _tokenRepository.GetAuthUser(storageToken).Result;
+
+                return GenerateJwtToken(authUser);
 
             }
             catch (Exception e)
@@ -154,7 +158,6 @@ namespace ParadiseApi.Helper
             dateTimeVal = dateTimeVal.AddSeconds(expiryDate).ToUniversalTime();
 
             return dateTimeVal;
-
         }
 
         private string GenerateRandomString(int len)

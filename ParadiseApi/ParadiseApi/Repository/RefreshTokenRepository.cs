@@ -1,4 +1,5 @@
-﻿using ParadiseApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 
@@ -39,6 +40,18 @@ namespace ParadiseApi.Repository
 
             if (requestResult.Result == null)
                 requestResult.Error = "Token not exist";
+
+            return requestResult;
+        }
+
+        public RequestResult<Users> GetAuthUser(RefreshToken refreshToken)
+        {
+            RequestResult<Users> requestResult = new RequestResult<Users>();
+
+            requestResult.Result = _context.Users.Include(us => us.Role).FirstOrDefault(us => us.Id == refreshToken.UserId);
+
+            if (requestResult.Result == null)
+                requestResult.Error = "User not found";
 
             return requestResult;
         }
