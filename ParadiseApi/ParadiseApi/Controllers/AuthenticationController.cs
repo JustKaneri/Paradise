@@ -93,9 +93,14 @@ namespace ParadiseApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
+                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository, _tokenValidationParameters);
 
                 var result = tokenHelper.VerifyAndGenerareToken(tokenRequest);
+
+                if(result == null)
+                    return BadRequest("Invalid token");
+
+                return Ok(result);
             }
 
             return BadRequest("Invalid parameters");

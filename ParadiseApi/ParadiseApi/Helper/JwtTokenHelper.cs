@@ -12,11 +12,19 @@ namespace ParadiseApi.Helper
     {
         private readonly IConfiguration _configuration;
         private readonly IRefreshTokenRepository _tokenRepository;
+        private readonly TokenValidationParameters _tokenValidationParameters;
 
         public JwtTokenHelper(IConfiguration configuration, IRefreshTokenRepository tokenRepository)
         {
             _configuration = configuration;
             _tokenRepository = tokenRepository;
+        }
+
+        public JwtTokenHelper(IConfiguration configuration, IRefreshTokenRepository tokenRepository, TokenValidationParameters tokenValidationParameters)
+        {
+            _configuration = configuration;
+            _tokenRepository = tokenRepository;
+            _tokenValidationParameters = tokenValidationParameters;
         }
 
         public AuthResult GenerateJwtToken(Users user)
@@ -35,9 +43,9 @@ namespace ParadiseApi.Helper
                     new Claim(ClaimTypes.Role, user.Role.Name),
                     new Claim(JwtRegisteredClaimNames.Name, user.Name),
                     new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToUniversalTime().ToString())
+                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToUniversalTime().ToString())
                 });
-            tokenDescriptor.Expires = DateTime.Now.Add(TimeSpan.Parse(_configuration.GetSection("JwtConfig:ExpireTimeFrame").Value));
+            tokenDescriptor.Expires = DateTime.UtcNow.Add(TimeSpan.Parse(_configuration.GetSection("JwtConfig:ExpireTimeFrame").Value));
             tokenDescriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
@@ -47,8 +55,8 @@ namespace ParadiseApi.Helper
             {
                 JwtId = token.Id,
                 Token = GenerateRandomString(23),
-                AddeDate = DateTime.Now,
-                ExpireDate = DateTime.Now.AddMonths(6),
+                AddeDate = DateTime.UtcNow,
+                ExpireDate = DateTime.UtcNow.AddMonths(6),
                 IsRevoked = false,
                 IsUsed = false,
                 UserId = user.Id
@@ -64,9 +72,89 @@ namespace ParadiseApi.Helper
             };
         }
 
-        internal object VerifyAndGenerareToken(TokenRequest tokenRequest)
+        internal AuthResult VerifyAndGenerareToken(TokenRequest tokenRequest)
         {
-            throw new NotImplementedException();
+            var jwtTokenHandeler = new JwtSecurityTokenHandler();
+
+            try
+            {
+                _tokenValidationParameters.ValidateLifetime = false; // for testing, for dev = true
+
+                var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token,_tokenValidationParameters,out var validToken);
+
+                if(validToken is JwtSecurityToken jwtSecurityToken)
+                {
+                    var result = jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
+
+                    if (result == false)
+                        return null;
+                }
+
+                var utcExpiryDate = long.Parse(tokenInVerification.Claims.FirstOrDefault(ed => ed.Type == JwtRegisteredClaimNames.Exp).Value);
+
+                var expiryDate = UnixTimeSmapToDate(utcExpiryDate);
+
+                if(expiryDate > DateTime.UtcNow)
+                {
+                    return new AuthResult()
+                    {
+                        Error = "Expired token"
+                    };
+                }
+
+                var storageToken = _tokenRepository.FindToken(tokenRequest.RefreshToken).Result;
+
+                if (storageToken == null)
+                    return new AuthResult()
+                    {
+                        Error = "Invalid tokens"
+                    };
+
+                if(storageToken.IsUsed)
+                    return new AuthResult()
+                    {
+                        Error = "Invalid tokens"
+                    };
+
+                if (storageToken.IsRevoked)
+                    return new AuthResult()
+                    {
+                        Error = "Invalid tokens"
+                    };
+
+                var jti = tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+
+                if(storageToken.JwtId != jti)
+                    return new AuthResult()
+                    {
+                        Error = "Invalid tokens"
+                    };
+
+                if(storageToken.ExpireDate < DateTime.UtcNow)
+                    return new AuthResult()
+                    {
+                        Error = "Expired tokens"
+                    };
+
+                storageToken.IsUsed = true;
+
+                _tokenRepository.UpdateToken(storageToken);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        private DateTime UnixTimeSmapToDate(long expiryDate)
+        {
+            var dateTimeVal = new DateTime(1970, 1, 1, 0, 0, 0,DateTimeKind.Utc);
+            dateTimeVal = dateTimeVal.AddSeconds(expiryDate).ToUniversalTime();
+
+            return dateTimeVal;
+
         }
 
         private string GenerateRandomString(int len)
