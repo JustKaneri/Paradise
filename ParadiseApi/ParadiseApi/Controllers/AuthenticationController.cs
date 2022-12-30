@@ -86,7 +86,11 @@ namespace ParadiseApi.Controllers
             return Ok(token);
         }
 
-
+        /// <summary>
+        /// Update refresh and jwt token
+        /// </summary>
+        /// <param name="tokenRequest"></param>
+        /// <returns></returns>
         [HttpPost("refresh-token")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
         public IActionResult RefreshToken([FromBody] TokenRequest tokenRequest)
@@ -98,6 +102,30 @@ namespace ParadiseApi.Controllers
                 var result = tokenHelper.VerifyAndGenerareToken(tokenRequest);
 
                 if(result == null)
+                    return BadRequest("Invalid token");
+
+                return Ok(result);
+            }
+
+            return BadRequest("Invalid parameters");
+        }
+
+        /// <summary>
+        /// Revoked refresh and jwt token
+        /// </summary>
+        /// <param name="tokenRequest"></param>
+        /// <returns></returns>
+        [HttpPost("revoked-token")]
+        [ProducesResponseType(200, Type = typeof(AuthResult))]
+        public IActionResult RevokedToken([FromBody] TokenRequest tokenRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository, _tokenValidationParameters);
+
+                var result = tokenHelper.RevokedToken(tokenRequest);
+
+                if (result == null)
                     return BadRequest("Invalid token");
 
                 return Ok(result);

@@ -72,7 +72,7 @@ namespace ParadiseApi.Helper
             };
         }
 
-        internal AuthResult VerifyAndGenerareToken(TokenRequest tokenRequest)
+        public AuthResult VerifyAndGenerareToken(TokenRequest tokenRequest)
         {
             var jwtTokenHandeler = new JwtSecurityTokenHandler();
 
@@ -94,13 +94,13 @@ namespace ParadiseApi.Helper
 
                 var expiryDate = UnixTimeSmapToDate(utcExpiryDate);
 
-                if(expiryDate > DateTime.Now)
-                {
-                    return new AuthResult()
-                    {
-                        Error = "Expired token"
-                    };
-                }
+                //if(expiryDate > DateTime.Now)
+                //{
+                //    return new AuthResult()
+                //    {
+                //        Error = "Expired token"
+                //    };
+                //}
 
                 var storageToken = _tokenRepository.FindToken(tokenRequest.RefreshToken).Result;
 
@@ -143,6 +143,76 @@ namespace ParadiseApi.Helper
                 var authUser = _tokenRepository.GetAuthUser(storageToken).Result;
 
                 return GenerateJwtToken(authUser);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public AuthResult RevokedToken(TokenRequest tokenRequest)
+        {
+            var jwtTokenHandeler = new JwtSecurityTokenHandler();
+
+            try
+            {
+                _tokenValidationParameters.ValidateLifetime = false; // for testing, for dev = true
+
+                var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token, _tokenValidationParameters, out var validToken);
+
+                if (validToken is JwtSecurityToken jwtSecurityToken)
+                {
+                    var result = jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
+
+                    if (result == false)
+                        return null;
+                }
+
+                var utcExpiryDate = long.Parse(tokenInVerification.Claims.FirstOrDefault(ed => ed.Type == JwtRegisteredClaimNames.Exp).Value);
+
+                var expiryDate = UnixTimeSmapToDate(utcExpiryDate);
+
+                var storageToken = _tokenRepository.FindToken(tokenRequest.RefreshToken).Result;
+
+                if (storageToken == null)
+                    return new AuthResult()
+                    {
+                        Error = "Invalid tokens"
+                    };
+
+                if (storageToken.IsUsed)
+                    return new AuthResult()
+                    {
+                        Error = "Invalid tokens"
+                    };
+
+                if (storageToken.IsRevoked)
+                    return new AuthResult()
+                    {
+                        Error = "Invalid tokens"
+                    };
+
+                var jti = tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+
+                if (storageToken.JwtId != jti)
+                    return new AuthResult()
+                    {
+                        Error = "Invalid tokens"
+                    };
+
+                storageToken.IsRevoked = true;
+
+                _tokenRepository.UpdateToken(storageToken);
+
+                var authUser = _tokenRepository.GetAuthUser(storageToken).Result;
+
+                return new AuthResult()
+                {
+                    RefreshToken = tokenRequest.RefreshToken,
+                    Token = tokenRequest.Token
+                };
 
             }
             catch (Exception e)
