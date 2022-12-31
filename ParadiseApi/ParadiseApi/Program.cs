@@ -19,16 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //pattern Repository
-builder.Services.AddScoped<IUserRoles, UserRoleRepository>();
-builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepostitory>();
-builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
-builder.Services.AddScoped<IVideoRepository, VideoRepository>();
-builder.Services.AddScoped<IResponceVideoRepository, ResponceVideoRepository>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<IUserInfoRepository, UserInfoRepository>();
-builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
-builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.ConnectPaternRepository();
 
 builder.Services.AddEndpointsApiExplorer();
 
