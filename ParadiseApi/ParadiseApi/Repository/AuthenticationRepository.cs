@@ -13,51 +13,60 @@ namespace ParadiseApi.Repository
     public class AuthenticationRepository : IAuthenticationRepository
     {
         private readonly DataContext _context;
-        //private readonly JwtConfig _jwtConfig;
-        public AuthenticationRepository(DataContext context /*, JwtConfig jwtConfig */)
+        public AuthenticationRepository(DataContext context)
         {
             _context = context;
-           // _jwtConfig = jwtConfig;
         }
 
-        public Users LogIn(UserLoginDto user, ref string error)
+        public async Task<RequestResult<Users>> LogIn(UserLoginDto user)
         {
-            Users userM = _context.Users.Include(r => r.Role).Where(us => us.Login == user.Login).FirstOrDefault();
+            RequestResult<Users> requestResult = new RequestResult<Users>();
 
-            if(userM == null)
+            Users userAuth = await _context.Users.Include(r => r.Role).Where(us => us.Login == user.Login).FirstOrDefaultAsync();
+
+            if(userAuth == null)
             {
-                error = "Login not correct";
-                return null;
+                requestResult.Error = "Login not correct";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
-            if (!HashPassword.Verifications(userM.Password, user.Password, userM.Name))
+            if (!HashPassword.Verifications(userAuth.Password, user.Password, userAuth.Name))
             {
-                error = "Password not correct";
-                return null;
+                requestResult.Error = "Password not correct";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 ;
-            return userM;
+            requestResult.Result = userAuth;
+
+            return requestResult;
         }
 
-        public Users Regestry(Users user, ref string error)
+        public async Task<RequestResult<Users>> Regestry(Users user)
         {
+            RequestResult<Users> requestResult = new RequestResult<Users>();
+
             if (user == null)
             {
-                error = "The user cannot be null";
-                return null;
+                requestResult.Error  = "The user cannot be null";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
 
             if (CheckExistLogin(user.Login))
             {
-                error = "The login is occupied by another user";
-                return null;
+                requestResult.Error = "The login is occupied by another user";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
             if (CheckExistName(user.Name))
             {
-                error = "The name is occupied by another user";
-                return null;
+                requestResult.Error = "The name is occupied by another user";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
             user.RoleId = 2;
@@ -67,15 +76,18 @@ namespace ParadiseApi.Repository
             try
             {
                 _context.Users.Add(user);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+
+                requestResult.Result = user;
             }
             catch
             {
-                error = "Failde regestry new user";
-                return null;
+                requestResult.Error = "Failed regestry";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
-            return user;
+            return requestResult;
         }
 
         public bool CheckExistLogin(string login)

@@ -6,8 +6,8 @@ namespace ParadiseApi.Interfaces
 {
     public interface IAuthenticationRepository
     {
-        public Users Regestry(Users user, ref string error);
+        public Task<RequestResult<Users>> Regestry(Users user);
 
-        public Users LogIn(UserLoginDto user, ref string error);
+        public Task<RequestResult<Users>> LogIn(UserLoginDto user);
     }
 }

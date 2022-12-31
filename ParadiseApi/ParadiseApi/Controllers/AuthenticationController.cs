@@ -14,7 +14,7 @@ using ParadiseApi.Helper;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class AuthenticationController : Controller
     {
@@ -44,17 +44,17 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("regestry")]
         [ProducesResponseType(201, Type = typeof(UserDto))]
-        public IActionResult RegestryUser(UserRegestryDto user)
+        public async Task<IActionResult> RegestryUser([FromBody] UserRegestryDto user)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            string error = "";
+            RequestResult<Users> request = await _authenticationRepository.Regestry(_mapper.Map<Users>(user));
 
-            var us = _mapper.Map<UserDto>(_authenticationRepository.Regestry(_mapper.Map<Users>(user), ref error));
+            if (request.Status == StatusRequest.Error)
+                return BadRequest(request.Error);
 
-            if (us == null)
-                return BadRequest(error);
+            var us = _mapper.Map<UserDto>(request.Result);
 
             return Ok(us);
 
@@ -67,21 +67,19 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("login")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
-        public IActionResult LoginUser(UserLoginDto user)
+        public async Task<IActionResult> LoginUser([FromBody] UserLoginDto user)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            string error = "";
+            RequestResult<Users> userAut = await _authenticationRepository.LogIn(user);
 
-            var userAut = _authenticationRepository.LogIn(user, ref error);
-
-            if (userAut == null)
-                return BadRequest(error);
+            if (userAut.Status == StatusRequest.Error)
+                return BadRequest(userAut.Error);
 
             JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
 
-            var token = tokenHelper.GenerateJwtToken(userAut);
+            var token = tokenHelper.GenerateJwtToken(userAut.Result);
 
             return Ok(token);
         }
