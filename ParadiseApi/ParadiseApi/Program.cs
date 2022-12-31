@@ -31,7 +31,7 @@ builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>(
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -65,23 +65,7 @@ builder.Services.AddAuthentication( options => {
 
 builder.Services.AddSingleton(tokenValidationParamers);
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v1",
-        Title = "Paradise API",
-        Description = "An ASP.NET Core Web API for video hosting ",
-        Contact = new OpenApiContact
-        {
-            Name = "JustKaneri",
-            Url = new Uri("https://github.com/JustKaneri")
-        }
-    });
-
-    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-});
+builder.Services.AddSwaggerGen(options => SwaggerConfig.AddConfig(options));
 
 var app = builder.Build();
 
