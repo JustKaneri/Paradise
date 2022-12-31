@@ -13,9 +13,13 @@ namespace ParadiseApi.Repository
             _context = context;
         }
 
-        public ICollection<UserRole> GetUserRoles()
+        public RequestResult<ICollection<UserRole>> GetUserRoles()
         {
-            return _context.UserRoles.OrderBy(p=>p.Id).ToList();
+            RequestResult<ICollection<UserRole>> result = new RequestResult<ICollection<UserRole>>();
+
+            result.Result =  _context.UserRoles.OrderBy(x => x.Id).ToList();
+
+            return result;
         }
     }
 }
