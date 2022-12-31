@@ -15,115 +15,140 @@ namespace ParadiseApi.Repository
             _context = context;
         }
 
-        public Profile GetProfile(int idUser,ref string error)
+        public async Task<RequestResult<Profile>> GetProfile(int idUser)
         {
+            RequestResult<Profile> requestResult = new RequestResult<Profile>();
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                requestResult.Error = "User not existence";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
-            Profile profile = ExistenceModel.Profiles(idUser, _context);
+            requestResult.Result = await _context.Profiles.FirstOrDefaultAsync(pr => pr.IdUser == idUser);
 
-            return profile;
+            return requestResult;
         }
 
-        public Profile UploadProfleAvatar(IFormFile file, int idUser,ref string error)
+        public async Task<RequestResult<Profile>> UploadProfleAvatar(IFormFile file, int idUser)
         {
+            RequestResult<Profile> requestResult = new RequestResult<Profile>();
+
             Profile prof = ExistenceModel.Profiles(idUser, _context);
             string oldAvatar = null;
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                requestResult.Error = "User not existence";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
             if (prof == null)
-                prof = CreateProfile(idUser);
+                prof = await CreateProfile(idUser);
             else
                 oldAvatar = prof.PathAvatar;
 
             try
             {
-                string fileName = RootFile.SaveFile(idUser, "avatars", file);
+                string fileName = await RootFile.SaveFile(idUser, "avatars", file);
 
                 if (fileName == null)
                 {
-                    error = "Failed to save file";
-                    return null;
+                    requestResult.Error = "Failed to save file";
+                    requestResult.Status = StatusRequest.Error;
+                    return requestResult;
                 }
                     
 
                 prof.PathAvatar = "avatars/" + fileName;
+
                 _context.Profiles.Update(prof);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 if (oldAvatar != null)
                     RootFile.DeleteFile(oldAvatar);
+
+                requestResult.Result = prof;
             }
             catch 
             {
-                error = $"Failed save avatar";
-                return null;
+                requestResult.Error = $"Failed save avatar";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
-            return prof;
+            return requestResult;
         }
 
-        public Profile UploadProfleFon(IFormFile file, int idUser, ref string error)
+        public async Task<RequestResult<Profile>> UploadProfleFon(IFormFile file, int idUser)
         {
+            RequestResult<Profile> requestResult = new RequestResult<Profile>();
+
             Profile prof = ExistenceModel.Profiles(idUser, _context);
             string oldFon = null;
 
-            if(ExistenceModel.User(idUser,_context)==null)
+            if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                requestResult.Error = "User not existence";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
             if (prof == null)
-                prof = CreateProfile(idUser);
+                prof = await CreateProfile(idUser);
             else
                 oldFon = prof.PathFon;
 
             try
             {
-                string fileName = RootFile.SaveFile(idUser, "fons", file);
+                string fileName = await RootFile.SaveFile(idUser, "fons", file);
 
                 if (fileName == null)
                 {
-                    error = "Failed to save file";
-                    return null;
+                    requestResult.Error = "Failed to save file";
+                    requestResult.Status = StatusRequest.Error;
+                    return requestResult;
                 }
 
                 prof.PathFon = "fons/" + fileName;
                 _context.Profiles.Update(prof);
-                _context.SaveChanges();
+                await  _context.SaveChangesAsync();
 
                 if (oldFon != null)
                     RootFile.DeleteFile(oldFon);
+
+                requestResult.Result = prof;
             }
             catch
             {
-                error = $"Failed save avatar";
-                return null;
+                requestResult.Error = $"Failed save avatar";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
-            return prof;
+            return requestResult;
         }
 
         /// <summary>
         /// Create new profile for user
         /// </summary>
         /// <param name="IdUser"></param>
-        private Profile CreateProfile(int IdUser)
+        public async Task<Profile> CreateProfile(int IdUser)
         {
             Profile profile = new Profile();
             profile.IdUser = IdUser;
 
-            _context.Profiles.Add(profile);
-            _context.SaveChanges();
+            try
+            {
+                _context.Profiles.Add(profile);
+                await _context.SaveChangesAsync();
+            }
+            catch 
+            {
+
+            }
 
             return profile;
         }

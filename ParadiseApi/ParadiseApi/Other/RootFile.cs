@@ -2,7 +2,7 @@
 {
     public static class RootFile
     {
-        public static string SaveFile(int idUser, string directoryName, IFormFile file)
+        public static async Task<string> SaveFile(int idUser, string directoryName, IFormFile file)
         {
             string fileName = null;
 
@@ -13,7 +13,7 @@
 
                 using (Stream fs = new FileStream(patch, FileMode.Create))
                 {
-                    file.CopyTo(fs);
+                    await file.CopyToAsync(fs);
                 }
             }
             catch

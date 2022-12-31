@@ -41,8 +41,8 @@ namespace ParadiseApi.Repository
 
             try
             {
-                string pathPoster = RootFile.SaveFile(vid.UserId, "posters", poster);
-                vid.PathPoster = "posters/" + pathPoster;
+               // string pathPoster =  RootFile.SaveFile(vid.UserId, "posters", poster);
+                //vid.PathPoster = "posters/" + pathPoster;
 
                 _context.Videos.Update(vid);
                 _context.SaveChanges();
@@ -81,8 +81,8 @@ namespace ParadiseApi.Repository
 
             try
             {
-                string patchVideo = RootFile.SaveFile(vid.UserId, "videos", video);
-                vid.PathVideo = "videos/" + patchVideo;
+               // string patchVideo = RootFile.SaveFile(vid.UserId, "videos", video);
+                //vid.PathVideo = "videos/" + patchVideo;
                 _context.Videos.Update(vid);
                 _context.SaveChanges();
             }

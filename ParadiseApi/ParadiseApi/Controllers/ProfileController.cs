@@ -4,7 +4,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ProfileController:Controller
     {
@@ -20,18 +20,16 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("profile/user/{idUser}")]
+        [HttpGet("user/{idUser}/profile")]
         [ProducesResponseType(200,Type = typeof(Profile))]
-        public IActionResult GetProfiles(int id)
+        public async Task<IActionResult> GetProfiles(int idUser)
         {
-            string error = "";
+            var request = await _profiles.GetProfile(idUser);
 
-            Profile profile = _profiles.GetProfile(id,ref error);
+            if (request.Status == StatusRequest.Error)
+                return BadRequest(request.Error);
 
-            if (profile == null || !ModelState.IsValid)
-                return BadRequest(error);
-
-            return Ok(profile);
+            return Ok(request.Result);
         }
 
         /// <summary>
@@ -40,18 +38,16 @@ namespace ParadiseApi.Controllers
         /// <param name="file"></param>
         /// <param name="idUser"></param>
         /// <returns></returns>
-        [HttpPost("profile/Users/{idUser}/upload-avatar")]
+        [HttpPost("user/{idUser}/profile/upload-avatar")]
         [ProducesResponseType(200, Type = typeof(Profile))]
-        public IActionResult UploadAvatar(IFormFile file, int idUser)
+        public async Task<IActionResult> UploadAvatar([FromBody]IFormFile file, int idUser)
         {
-            string error = "";
+            var result = await _profiles.UploadProfleAvatar(file, idUser);
 
-            var result = _profiles.UploadProfleAvatar(file, idUser,ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (result == null)
-                return BadRequest(error);
-
-            return Ok(result);
+            return Ok(result.Result);
         }
 
         /// <summary>
@@ -60,18 +56,16 @@ namespace ParadiseApi.Controllers
         /// <param name="file"></param>
         /// <param name="idUser"></param>
         /// <returns></returns>
-        [HttpPost("profile/users/{idUser}/upload-fon")]
+        [HttpPost("user/{idUser}/profile/upload-fon")]
         [ProducesResponseType(200, Type=typeof(Profile))]
-        public IActionResult UploadFon(IFormFile file, int idUser)
+        public async Task<IActionResult> UploadFon([FromBody]IFormFile file, int idUser)
         {
-            string error = "";
+            var result = await _profiles.UploadProfleFon(file, idUser);
 
-            var result = _profiles.UploadProfleFon(file, idUser,ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (result == null)
-                return BadRequest(error);
-
-            return Ok(result);
+            return Ok(result.Result);
         }
     }
 }
