@@ -14,50 +14,60 @@ namespace ParadiseApi.Repository
         {
             _context = context;
         }
-        public Comment CreateComment(Comment comment,ref string error)
+        public async Task<RequestResult<Comment>> CreateComment(Comment comment)
         {
+            RequestResult<Comment> requestResult = new RequestResult<Comment>();
+
             if (ExistenceModel.User(comment.UserId, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                requestResult.Error = "User not existence";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
 
             if (ExistenceModel.Video(comment.VideoId, _context) == null)
             {
-                error = "Video not existence";
-                return null;
+                requestResult.Error = "Video not existence";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
-
 
             try
             {
                 _context.Comments.Add(comment);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                requestResult.Result = comment;
             }
             catch 
             {
-                error = "Failed save comment";
-                return null;
+                requestResult.Error = "Failed save comment";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
-            return comment;
+            return requestResult;
         }
 
-        public ICollection<Comment> GetComments(int idVideo, ref string error)
+        public async Task<RequestResult<ICollection<Comment>>> GetComments(int idVideo)
         {
+            RequestResult<ICollection<Comment>> requestResult = new RequestResult<ICollection<Comment>>();
+
             if (ExistenceModel.Video(idVideo, _context) == null)
             {
-                error = "Video not existence";
-                return null;
+                requestResult.Error = "Video not existence";
+                requestResult.Status = StatusRequest.Error;
+                return requestResult;
             }
 
-            List<Comment> comments = _context.Comments
+            List<Comment> comments = await _context.Comments
                                              .Include(ic => ic.User)
                                              .Include(ic => ic.User.Profile)
-                                             .Where(cm => cm.VideoId == idVideo).ToList();
+                                             .Where(cm => cm.VideoId == idVideo).ToListAsync();
 
-            return comments;
+            requestResult.Result = comments;
+
+            return requestResult;
         }
     }
 }

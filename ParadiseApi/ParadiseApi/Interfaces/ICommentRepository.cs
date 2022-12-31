@@ -4,8 +4,8 @@ namespace ParadiseApi.Interfaces
 {
     public interface ICommentRepository
     {
-        public ICollection<Comment> GetComments(int idVideo, ref string error);
+        public Task<RequestResult<ICollection<Comment>>> GetComments(int idVideo);
 
-        public Comment CreateComment(Comment comment, ref string error);
+        public Task<RequestResult<Comment>> CreateComment(Comment comment);
     }
 }

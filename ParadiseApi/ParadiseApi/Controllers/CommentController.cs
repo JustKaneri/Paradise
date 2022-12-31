@@ -6,7 +6,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CommentController : Controller
     {
@@ -26,20 +26,14 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("comments")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<CommentDto>))]
-        public IActionResult GetComment(int idVideo)
+        public async Task<IActionResult> GetComment(int idVideo)
         {
-            string error = "";
+            var request = await _repository.GetComments(idVideo);
 
-            var list = _repository.GetComments(idVideo, ref error);
+            if (request.Status == StatusRequest.Error)
+                return BadRequest(request.Error);
 
-            if (list == null)
-                return BadRequest(error);
-
-            var result = _mapper.Map<List<CommentDto>>(list);
-
-
-            if (!ModelState.IsValid)
-                return BadRequest();
+            var result = _mapper.Map<List<CommentDto>>(request.Result);
 
             return Ok(result);
         }
@@ -51,19 +45,16 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("new-comment")]
         [ProducesResponseType(200, Type = typeof(CommentDto))]
-        public IActionResult GetComment(CreateCommentDto commentDt)
+        public async Task<IActionResult> GetComment(CreateCommentDto commentDt)
         {
-            string error = "";
-
             var comment = _mapper.Map<Comment>(commentDt);
 
-            var result = _mapper.Map<CommentDto>(_repository.CreateComment(comment,ref error));
+            var request = await _repository.CreateComment(comment);
 
-            if (result == null)
-                return BadRequest(error);
+            if (request.Status == StatusRequest.Error)
+                return BadRequest(request.Error);
 
-            if (!ModelState.IsValid)
-                return BadRequest(error);
+            var result = _mapper.Map<CommentDto>(request.Result);
 
             return Ok(result);
         }
