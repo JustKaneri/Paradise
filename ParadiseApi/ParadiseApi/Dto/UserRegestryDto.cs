@@ -10,6 +10,5 @@ namespace ParadiseApi.Dto
         public string Login { get; set; }
         [Required]
         public string Password { get; set; }
-        public DateTime DateRegestry { get; set; }
     }
 }

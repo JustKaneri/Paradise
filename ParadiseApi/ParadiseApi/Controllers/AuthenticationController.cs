@@ -79,7 +79,7 @@ namespace ParadiseApi.Controllers
 
             JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
 
-            var token = tokenHelper.GenerateJwtToken(userAut.Result);
+            var token = await tokenHelper.GenerateJwtToken(userAut.Result);
 
             return Ok(token);
         }
@@ -91,13 +91,13 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("refresh-token")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
-        public IActionResult RefreshToken([FromBody] TokenRequest tokenRequest)
+        public async Task<IActionResult> RefreshToken([FromBody] TokenRequest tokenRequest)
         {
             if (ModelState.IsValid)
             {
                 JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository, _tokenValidationParameters);
 
-                var result = tokenHelper.VerifyAndGenerareToken(tokenRequest);
+                var result = await tokenHelper.VerifyAndGenerareToken(tokenRequest);
 
                 if(result == null)
                     return BadRequest("Invalid token");
@@ -115,13 +115,13 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("revoked-token")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
-        public IActionResult RevokedToken([FromBody] TokenRequest tokenRequest)
+        public async Task<IActionResult> RevokedToken([FromBody] TokenRequest tokenRequest)
         {
             if (ModelState.IsValid)
             {
                 JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository, _tokenValidationParameters);
 
-                var result = tokenHelper.RevokedToken(tokenRequest);
+                var result = await tokenHelper.RevokedToken(tokenRequest);
 
                 if (result == null)
                     return BadRequest("Invalid token");

@@ -4,12 +4,12 @@ namespace ParadiseApi.Interfaces
 {
     public interface IRefreshTokenRepository
     {
-        public RequestResult<RefreshToken> CreateToken(RefreshToken refreshToken);
+        public Task<RequestResult<RefreshToken>> CreateToken(RefreshToken refreshToken);
 
-        public RequestResult<RefreshToken> FindToken(string refreshToken);
+        public Task<RequestResult<RefreshToken>> FindToken(string refreshToken);
 
-        public RequestResult<RefreshToken> UpdateToken(RefreshToken refreshToken);
+        public Task<RequestResult<RefreshToken>> UpdateToken(RefreshToken refreshToken);
 
-        public RequestResult<Users> GetAuthUser(RefreshToken refreshToken);
+        public Task<RequestResult<Users>> GetAuthUser(RefreshToken refreshToken);
     }
 }

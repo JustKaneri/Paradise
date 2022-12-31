@@ -13,65 +13,70 @@ namespace ParadiseApi.Repository
         {
             _context = context;
         }
-        public RequestResult<RefreshToken> CreateToken(RefreshToken refreshToken)
+        public async Task<RequestResult<RefreshToken>> CreateToken(RefreshToken refreshToken)
         {
             RequestResult<RefreshToken> requestResult = new RequestResult<RefreshToken>();
 
             try
             {
                _context.RefreshTokens.Add(refreshToken);
-               _context.SaveChanges();
+               await _context.SaveChangesAsync();
                requestResult.Result = refreshToken;
             }
             catch
             {
                 requestResult.Error = "Failde add refresh token";
+                requestResult.Status = StatusRequest.Error;
             }
             
-
             return requestResult;
         }
 
-        public RequestResult<RefreshToken> FindToken(string refreshToken)
+        public async Task<RequestResult<RefreshToken>> FindToken(string refreshToken)
         {
             RequestResult<RefreshToken> requestResult = new RequestResult<RefreshToken>();
 
-            requestResult.Result = _context.RefreshTokens.FirstOrDefault(tk => tk.Token == refreshToken);
+            requestResult.Result = await _context.RefreshTokens.FirstOrDefaultAsync(tk => tk.Token == refreshToken);
 
             if (requestResult.Result == null)
+            {
                 requestResult.Error = "Token not exist";
+                requestResult.Status = StatusRequest.Error;
+            }
 
             return requestResult;
         }
 
-        public RequestResult<Users> GetAuthUser(RefreshToken refreshToken)
+        public async Task<RequestResult<Users>> GetAuthUser(RefreshToken refreshToken)
         {
             RequestResult<Users> requestResult = new RequestResult<Users>();
 
-            requestResult.Result = _context.Users.Include(us => us.Role).FirstOrDefault(us => us.Id == refreshToken.UserId);
+            requestResult.Result = await _context.Users.Include(us => us.Role).FirstOrDefaultAsync(us => us.Id == refreshToken.UserId);
 
             if (requestResult.Result == null)
+            {
                 requestResult.Error = "User not found";
+                requestResult.Status = StatusRequest.Error;
+            }
 
             return requestResult;
         }
 
-        public RequestResult<RefreshToken> UpdateToken(RefreshToken refreshToken)
+        public async Task<RequestResult<RefreshToken>> UpdateToken(RefreshToken refreshToken)
         {
             RequestResult<RefreshToken> requestResult = new RequestResult<RefreshToken>();
 
             try
             {
                 _context.RefreshTokens.Update(refreshToken);
-                _context.SaveChanges();
-
+                await _context.SaveChangesAsync();
                 requestResult.Result = refreshToken;
             }
             catch
             {
+                requestResult.Status = StatusRequest.Error;
                 requestResult.Error = "Failde update refresh token";
             }
-
 
             return requestResult;
         }

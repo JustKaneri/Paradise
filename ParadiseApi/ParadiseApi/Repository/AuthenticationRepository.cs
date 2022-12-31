@@ -54,7 +54,6 @@ namespace ParadiseApi.Repository
                 return requestResult;
             }
 
-
             if (CheckExistLogin(user.Login))
             {
                 requestResult.Error = "The login is occupied by another user";
@@ -70,6 +69,7 @@ namespace ParadiseApi.Repository
             }
 
             user.RoleId = 2;
+            user.DateRegestry = DateTime.UtcNow;
 
             user.Password = HashPassword.ComputeHash(user.Password, user.Name);
 

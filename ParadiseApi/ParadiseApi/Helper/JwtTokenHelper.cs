@@ -27,7 +27,7 @@ namespace ParadiseApi.Helper
             _tokenValidationParameters = tokenValidationParameters;
         }
 
-        public AuthResult GenerateJwtToken(Users user)
+        public async Task<AuthResult> GenerateJwtToken(Users user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -63,7 +63,7 @@ namespace ParadiseApi.Helper
 
             };
 
-            var resAdd = _tokenRepository.CreateToken(refreshToken);
+            var resAdd = await _tokenRepository.CreateToken(refreshToken);
 
             return new AuthResult()
             {
@@ -72,7 +72,7 @@ namespace ParadiseApi.Helper
             };
         }
 
-        public AuthResult VerifyAndGenerareToken(TokenRequest tokenRequest)
+        public async Task<AuthResult> VerifyAndGenerareToken(TokenRequest tokenRequest)
         {
             var jwtTokenHandeler = new JwtSecurityTokenHandler();
 
@@ -94,15 +94,17 @@ namespace ParadiseApi.Helper
 
                 var expiryDate = UnixTimeSmapToDate(utcExpiryDate);
 
-                //if(expiryDate > DateTime.Now)
-                //{
-                //    return new AuthResult()
-                //    {
-                //        Error = "Expired token"
-                //    };
-                //}
+                RequestResult<RefreshToken> request = await _tokenRepository.FindToken(tokenRequest.RefreshToken);
 
-                var storageToken = _tokenRepository.FindToken(tokenRequest.RefreshToken).Result;
+                if(request.Status == StatusRequest.Error)
+                {
+                    return new AuthResult()
+                    {
+                        Error = request.Error
+                    };
+                }
+
+                var storageToken = request.Result;
 
                 if (storageToken == null)
                     return new AuthResult()
@@ -110,7 +112,7 @@ namespace ParadiseApi.Helper
                         Error = "Invalid tokens"
                     };
 
-                if(storageToken.IsUsed)
+                if (storageToken.IsUsed)
                     return new AuthResult()
                     {
                         Error = "Invalid tokens"
@@ -138,11 +140,11 @@ namespace ParadiseApi.Helper
 
                 storageToken.IsUsed = true;
 
-                _tokenRepository.UpdateToken(storageToken);
+                await _tokenRepository.UpdateToken(storageToken);
 
-                var authUser = _tokenRepository.GetAuthUser(storageToken).Result;
+                var authUser =  await _tokenRepository.GetAuthUser(storageToken);
 
-                return GenerateJwtToken(authUser);
+                return await GenerateJwtToken(authUser.Result);
 
             }
             catch (Exception e)
@@ -152,7 +154,7 @@ namespace ParadiseApi.Helper
             }
         }
 
-        public AuthResult RevokedToken(TokenRequest tokenRequest)
+        public async Task<AuthResult> RevokedToken(TokenRequest tokenRequest)
         {
             var jwtTokenHandeler = new JwtSecurityTokenHandler();
 
@@ -174,7 +176,17 @@ namespace ParadiseApi.Helper
 
                 var expiryDate = UnixTimeSmapToDate(utcExpiryDate);
 
-                var storageToken = _tokenRepository.FindToken(tokenRequest.RefreshToken).Result;
+                RequestResult<RefreshToken> request = await _tokenRepository.FindToken(tokenRequest.RefreshToken);
+
+                if (request.Status == StatusRequest.Error)
+                {
+                    return new AuthResult()
+                    {
+                        Error = request.Error
+                    };
+                }
+
+                var storageToken = request.Result;
 
                 if (storageToken == null)
                     return new AuthResult()
@@ -204,9 +216,7 @@ namespace ParadiseApi.Helper
 
                 storageToken.IsRevoked = true;
 
-                _tokenRepository.UpdateToken(storageToken);
-
-                var authUser = _tokenRepository.GetAuthUser(storageToken).Result;
+                await _tokenRepository.UpdateToken(storageToken);
 
                 return new AuthResult()
                 {
