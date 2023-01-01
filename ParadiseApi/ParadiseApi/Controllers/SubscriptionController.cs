@@ -6,7 +6,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class SubscriptionController : Controller
     {
@@ -26,21 +26,18 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("subscriptions")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<SubscriptionsDto>))]
-        public IActionResult GetSubscription(int idUser)
+        public async Task<IActionResult> GetSubscription(int idUser)
         {
             string error = "";
 
-            var subscribts = _subscriptionRepository.GetSubscriptions(idUser,ref error);
+            var request = await _subscriptionRepository.GetSubscriptions(idUser);
 
-            if (subscribts == null)
+            if (request.Status == StatusRequest.Error)
             {
-                return BadRequest(error);
+                return BadRequest(request.Error);
             }
 
-            var result = _mapper.Map<List<SubscriptionsDto>>(subscribts);
-
-            if (!ModelState.IsValid)
-                return BadRequest(error);
+            var result = _mapper.Map<List<SubscriptionsDto>>(request.Result);
 
             if (result.Count==0)
                 return NotFound();
@@ -54,18 +51,16 @@ namespace ParadiseApi.Controllers
         /// <param name="idCanal"></param>
         /// <param name="idUser"></param>
         /// <returns>True or false</returns>
-        [HttpGet("subscrib/status")]
+        [HttpGet("user/{idCanal}/subscription/status")]
         [ProducesResponseType(200,Type = typeof(bool))]
-        public IActionResult IsSubscrib(int idCanal, int idUser)
+        public async Task<IActionResult> IsSubscrib(int idCanal, int idUser)
         {
-            string error = "";
+            var result = await _subscriptionRepository.IsSubscrib(idCanal, idUser);
 
-            var result = _subscriptionRepository.IsSubscrib(idCanal, idUser,ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (error != "")
-                return BadRequest(error);
-
-            return Ok(result);
+            return Ok(result.Result);
         }
 
         /// <summary>
@@ -74,16 +69,16 @@ namespace ParadiseApi.Controllers
         /// <param name="idCanal"></param>
         /// <param name="idUser"></param>
         /// <returns></returns>
-        [HttpPost("account/{idCanal}/subscribe")]
+        [HttpPost("user/{idCanal}/subscribe")]
         [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
-        public IActionResult Subscribe(int idCanal,int idUser)
+        public async Task<IActionResult> Subscribe(int idCanal,int idUser)
         {
-            string error = "";
+            RequestResult<Subscription> requestResult = await _subscriptionRepository.Subscribe(idCanal, idUser);
 
-            var result = _mapper.Map<SubscriptionsDto>(_subscriptionRepository.Subscribe(idCanal, idUser,ref error));
+            if (requestResult.Status == StatusRequest.Error)
+                return BadRequest(requestResult.Error);
 
-            if (result == null)
-                return BadRequest(error);
+            var result = _mapper.Map<SubscriptionsDto>(requestResult.Result);
 
             return Ok(result);
         }
@@ -94,16 +89,16 @@ namespace ParadiseApi.Controllers
         /// <param name="idCanal"></param>
         /// <param name="idUser"></param>
         /// <returns></returns>
-        [HttpDelete("account/{idCanal}/unsubscribe")]
+        [HttpDelete("user/{idCanal}/unsubscribe")]
         [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
-        public IActionResult Unsubscribe(int idCanal, int idUser)
+        public async Task<IActionResult> Unsubscribe(int idCanal, int idUser)
         {
-            string error = "";
+            RequestResult<Subscription> requestResult = await _subscriptionRepository.Unsubscribe(idCanal, idUser);
 
-            var result = _mapper.Map<SubscriptionsDto>(_subscriptionRepository.Unsubscribe(idCanal, idUser,ref error));
+            if (requestResult.Status == StatusRequest.Error)
+                return BadRequest(requestResult.Error);
 
-            if (result == null)
-                return BadRequest(error);
+            var result = _mapper.Map<SubscriptionsDto>(requestResult.Result);
 
             return Ok(result);
         }

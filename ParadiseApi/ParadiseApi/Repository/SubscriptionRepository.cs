@@ -15,43 +15,53 @@ namespace ParadiseApi.Repository
             _context = context;
         }
 
-        public ICollection<Subscription> GetSubscriptions(int idUser, ref string error)
+        public async Task<RequestResult<ICollection<Subscription>>> GetSubscriptions(int idUser)
         {
+            RequestResult<ICollection<Subscription>> request = new RequestResult<ICollection<Subscription>>();
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not existence";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
-            List<Subscription> users = _context.Subscriptions
-                                               .Include(sub=>sub.Account.Profile)
-                                               .Include(sub=>sub.Account)
+            List<Subscription> users = await _context.Subscriptions
+                                               .Include(sub => sub.Account.Profile)
+                                               .Include(sub => sub.Account)
                                                .Include(sub => sub.Subscriber)
-                                               .Where(sb => sb.Subscriber.Id == idUser).ToList();
+                                               .Where(sb => sb.Subscriber.Id == idUser).ToListAsync();
 
-            return users;
+            request.Result = users;
+
+            return request;
         }
 
-        public Subscription Subscribe(int idAutor, int idSubscrib, ref string error)
+        public async Task<RequestResult<Subscription>> Subscribe(int idAutor, int idSubscrib)
         {
-            if(idAutor == idSubscrib)
+            RequestResult<Subscription> request = new RequestResult<Subscription>();
+
+            if (idAutor == idSubscrib)
             {
-                error = "Not correct Id";
-                return null;
+                request.Error = "Not correct id";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             if (ExistenceModel.User(idAutor, _context) == null || ExistenceModel.User(idSubscrib, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not exist";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             var Subscrib = ExistenceModel.Subscribt(idAutor, idSubscrib, _context);
 
             if (Subscrib != null)
             {
-                error = "Subscription exist";
-                return null;
+                request.Error = "Subscription exist";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             Subscription subscription = new Subscription();
@@ -61,65 +71,76 @@ namespace ParadiseApi.Repository
             try
             {
                 _context.Subscriptions.Add(subscription);
-                Save();
+                await _context.SaveChangesAsync();
             }
             catch 
             {
-                error = "Failde subscribe";
-                return null;
+                request.Error =  "Failde subscribe";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
-            return subscription;
+            request.Result = subscription;
+
+            return request;
         }
 
-        public Subscription Unsubscribe(int idAutor,int idSubscrib, ref string error)
+        public async Task<RequestResult<Subscription>> Unsubscribe(int idAutor,int idSubscrib)
         {
+            RequestResult<Subscription> request = new RequestResult<Subscription>();
+
             if (ExistenceModel.User(idAutor, _context) == null || ExistenceModel.User(idSubscrib, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not exist";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             var Subscrib = ExistenceModel.Subscribt(idAutor, idSubscrib,_context);
 
             if (Subscrib == null)
             {
-                error = "Subscription does not exist";
-                return null;
+                request.Error = "Subscription not exist";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             try
             {
                 _context.Subscriptions.Remove(Subscrib);
-
-                Save();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                error = "Failde unsubscribe";
-                return null;
+                request.Error = "Failde unsubscribe";
+                request.Status = StatusRequest.Error;
+                return request;
             }
-            
 
-            return Subscrib;
+            request.Result = Subscrib;
+
+            return request;
         }
 
-        public bool IsSubscrib(int idAutor, int idSubscrib, ref string error)
+        public async Task<RequestResult<bool>> IsSubscrib(int idAutor, int idSubscrib)
         {
-            if(ExistenceModel.User(idAutor ,_context) == null || ExistenceModel.User(idSubscrib, _context) == null)
+            RequestResult<bool> request = new RequestResult<bool>();
+
+            if (ExistenceModel.User(idAutor ,_context) == null || ExistenceModel.User(idSubscrib, _context) == null)
             {
-                error = "User not existence";
-                return false;
+                request.Error = "User not existence";
+                request.Status= StatusRequest.Error;
+                return request;
             }
 
-            var Subscrib = ExistenceModel.Subscribt(idAutor, idSubscrib, _context);
+            var Subscrib = await _context.Subscriptions
+                                  .Where(us => us.AccountId == idAutor)
+                                  .Where(sb => sb.SubscriberId == idSubscrib)
+                                  .FirstOrDefaultAsync();
 
-            return Subscrib != null;
-        }
+            request.Result = Subscrib != null;
 
-        public void Save()
-        {
-            _context.SaveChanges();
+            return request;
         }
     }
 }
