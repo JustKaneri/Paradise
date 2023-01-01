@@ -1,4 +1,7 @@
-﻿using ParadiseApi.Data;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
+using ParadiseApi.Data;
+using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 using ParadiseApi.Other;
@@ -14,26 +17,28 @@ namespace ParadiseApi.Repository
             _context = context;
         }
 
-        public ResponceVideo SetDisLike(int idVideo, int idUser, ref string error)
+        public async Task<RequestResult<ResponceVideo>> SetDisLike(int idVideo, int idUser)
         {
+            RequestResult<ResponceVideo> request = new RequestResult<ResponceVideo>(); 
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not existence";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             if(ExistenceModel.Video(idVideo, _context) == null)
             {
-                error = "Video not existence";
-                return null;
+                request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
 
-            ResponceVideo responceVideo = _context.ResponceVideos
-                                                  .Where(rp => rp.UserId == idUser)
+            var responceVideo = _context.ResponceVideos.Where(rp => rp.UserId == idUser)
                                                   .Where(rp => rp.VideoId == idVideo)
-                                                  .DefaultIfEmpty()
-                                                  .First();
+                                                  .FirstOrDefault();
 
             if (responceVideo == null)
             {
@@ -42,42 +47,48 @@ namespace ParadiseApi.Repository
                 responceVideo.IsDisLike = true;
                 responceVideo.IsLike = false;
                 responceVideo.VideoId = idVideo;
-                responceVideo.DateResponce = DateTime.Now;
-                responceVideo = AddResponce(responceVideo,ref error);
+                responceVideo.DateResponce = DateTime.UtcNow;
+                responceVideo = (await AddResponce(responceVideo)).Result;
             }
             else
             {
                 if (responceVideo.IsDisLike)
                 {
-                    error = "Responce is existence";
-                    return null;
+                    request.Error = "Responce is existence";
+                    request.Status = StatusRequest.Error;
+                    return request;
                 }
                 else
                 {
                     responceVideo.IsDisLike = true;
                     responceVideo.IsLike = false;
-                    responceVideo = UpdateResponce(responceVideo,ref error);
+                    responceVideo = (await UpdateResponce(responceVideo)).Result;
                 }      
             }
 
-            return responceVideo;
+            request.Result = responceVideo;
+
+            return request;
 
         }
 
-        public ResponceVideo SetLike(int idVideo, int idUser, ref string error)
+        public async Task<RequestResult<ResponceVideo>> SetLike(int idVideo, int idUser)
         {
+            RequestResult<ResponceVideo> request = new RequestResult<ResponceVideo>();
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not existence";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             if (ExistenceModel.Video(idVideo, _context) == null)
             {
-                error = "Video not existence";
-                return null;
+                request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
+                return request;
             }
-
 
             ResponceVideo responceVideo = _context.ResponceVideos
                                                     .Where(rp => rp.UserId == idUser)
@@ -93,70 +104,87 @@ namespace ParadiseApi.Repository
                 responceVideo.UserId = idUser;
                 responceVideo.VideoId = idVideo;
                 responceVideo.DateResponce = DateTime.Now;
-                responceVideo = AddResponce(responceVideo, ref error);
+                responceVideo = (await AddResponce(responceVideo)).Result;
             }
             else
             {
                 if (responceVideo.IsLike)
                 {
-                    error = "Responce is existence";
-                    return null;
+                    request.Error = "Responce is existence";
+                    request.Status = StatusRequest.Error;
+                    return request;
                 }
                 else
                 {
                     responceVideo.IsDisLike = false;
                     responceVideo.IsLike = true;
-                    responceVideo = UpdateResponce(responceVideo, ref error);
+                    responceVideo = (await UpdateResponce(responceVideo)).Result;
                 }
             }
 
-            return responceVideo;
+            request.Result = responceVideo;
+
+            return request;
         }
 
-        public ResponceVideo UpdateResponce(ResponceVideo responce,ref string error)
+        public async Task<RequestResult<ResponceVideo>> UpdateResponce(ResponceVideo responce)
         {
+            RequestResult<ResponceVideo> request = new RequestResult<ResponceVideo>();
+
             try
             {
                 _context.ResponceVideos.Update(responce);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                error = "Failde update responce";
-                return null;
+                request.Error = "Failde update responce";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
-            return responce;
+            request.Result = responce;
+
+            return request;
         }
 
-        public ResponceVideo AddResponce(ResponceVideo responce, ref string error)
+        public async Task<RequestResult<ResponceVideo>> AddResponce(ResponceVideo responce)
         {
+            RequestResult<ResponceVideo> request = new RequestResult<ResponceVideo>();
+
             try
             {
                 _context.ResponceVideos.Add(responce);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                error = "Failde create responce";
-                return null;
+                request.Error = "Failde create responce";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
-            return responce;
+            request.Result = responce;
+
+            return request;
         }
 
-        public ResponceVideo ResetResponce(int idVideo, int idUser, ref string error)
+        public async Task<RequestResult<ResponceVideo>> ResetResponce(int idVideo, int idUser)
         {
+            RequestResult<ResponceVideo> request = new RequestResult<ResponceVideo>();
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not existence";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             if (ExistenceModel.Video(idVideo, _context) == null)
             {
-                error = "Video not existence";
-                return null;
+                request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             ResponceVideo responceVideo = _context.ResponceVideos
@@ -166,25 +194,52 @@ namespace ParadiseApi.Repository
                                                   .First();
             if (responceVideo == null)
             {
-                error = "Responce not existence";
-                return null;
+                request.Error = "Responce not existence";
+                request.Status = StatusRequest.Error;
+                return request;
             }
                 
 
             try
             {
                 _context.ResponceVideos.Remove(responceVideo);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                error = "Failde remove responce";
-                return null;
+                request.Error = "Failde remove responce";
+                request.Status = StatusRequest.Error;
+                return request;
             }
-           
 
-            return responceVideo;
+            request.Result = responceVideo;
 
+            return request;
+
+        }
+
+        public async Task<RequestResult<ResponceInfoDto>> GetResponceInfo(int idVideo)
+        {
+            RequestResult<ResponceInfoDto> request = new RequestResult<ResponceInfoDto>();
+
+            if (ExistenceModel.Video(idVideo, _context) == null)
+            {
+                request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
+                return request;
+            }
+
+            ResponceInfoDto responceInfo = new ResponceInfoDto();
+
+            var listVideoResponce = await _context.ResponceVideos.Where(rp => rp.VideoId == idVideo).ToListAsync();
+
+            responceInfo.CountLike = listVideoResponce.Where(rp => rp.IsLike == true).Count();
+
+            responceInfo.CountDisLike = listVideoResponce.Where(rp => rp.IsDisLike == true).Count();
+
+            request.Result = responceInfo;
+
+            return request;
         }
     }
 }

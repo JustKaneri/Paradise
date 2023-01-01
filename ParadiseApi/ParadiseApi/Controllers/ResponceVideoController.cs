@@ -20,6 +20,23 @@ namespace ParadiseApi.Controllers
         }
 
         /// <summary>
+        /// Get responce for current video
+        /// </summary>
+        /// <param name="idVideo"></param>
+        /// <returns></returns>
+        [HttpGet("video/{idVideo}/info-responce")]
+        [ProducesResponseType(200, Type = typeof(ResponceInfoDto))]
+        public async Task<IActionResult> Reset(int idVideo)
+        {
+            RequestResult<ResponceInfoDto> requestRes = await _responce.GetResponceInfo(idVideo);
+
+            if (requestRes.Status == StatusRequest.Error)
+                return BadRequest(requestRes.Error);
+
+            return Ok(requestRes.Result);
+        }
+
+        /// <summary>
         /// Set like for current video
         /// </summary>
         /// <param name="idUser"></param>
@@ -27,14 +44,14 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("like")]
         [ProducesResponseType(200,Type = typeof(ResponceVideoDto))]
-        public IActionResult SetLike(int idUser, int idVideo)
+        public async Task<IActionResult> SetLike(int idUser, int idVideo)
         {
-            string error = "";
+            RequestResult<ResponceVideo> requestRes = await _responce.SetLike(idVideo, idUser);
 
-            var res = _mapper.Map<ResponceVideoDto>(_responce.SetLike(idVideo,idUser,ref error));
+            if (requestRes.Status == StatusRequest.Error)
+                return BadRequest(requestRes.Error);
 
-            if (res == null)
-                return BadRequest(error);
+            var res = _mapper.Map<ResponceVideoDto>(requestRes.Result);
 
             return Ok(res);
         }
@@ -47,14 +64,14 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("dislike")]
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
-        public IActionResult SetDisLike(int idUser, int idVideo)
+        public async Task<IActionResult> SetDisLike(int idUser, int idVideo)
         {
-            string error = "";
+            RequestResult<ResponceVideo> requestRes = await _responce.SetDisLike(idVideo, idUser);
 
-            var res = _mapper.Map<ResponceVideoDto>(_responce.SetDisLike(idVideo,idUser,ref error));
+            if (requestRes.Status == StatusRequest.Error)
+                return BadRequest(requestRes.Error);
 
-            if (res == null)
-                return BadRequest(error);
+            var res = _mapper.Map<ResponceVideoDto>(requestRes.Result);
 
             return Ok(res);
         }
@@ -67,14 +84,14 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpDelete("reset")]
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
-        public IActionResult Reset(int idUser, int idVideo)
+        public async Task<IActionResult> Reset(int idUser, int idVideo)
         {
-            string error = "";
+            RequestResult<ResponceVideo> requestRes = await _responce.ResetResponce(idVideo, idUser);
 
-            var res = _mapper.Map<ResponceVideoDto>(_responce.ResetResponce(idVideo, idUser,ref error));
+            if (requestRes.Status == StatusRequest.Error)
+                return BadRequest(requestRes.Error);
 
-            if (res == null)
-                return BadRequest(error);
+            var res = _mapper.Map<ResponceVideoDto>(requestRes.Result);
 
             return Ok(res);
         }
