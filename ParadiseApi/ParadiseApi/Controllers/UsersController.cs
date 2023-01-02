@@ -6,7 +6,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/users")]
     [ApiController]
     public class UsersController:Controller
     {
@@ -25,14 +25,11 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200,Type=typeof(IEnumerable<UserDto>))]
-        public IActionResult GetUser()
+        public async Task<IActionResult> GetUser()
         {
-            var users = _mapper.Map<List<UserDto>>(_userRepository.GetUser());
+            var request = await _userRepository.GetUser();
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var users = _mapper.Map<List<UserDto>>(request.Result);
 
             return Ok(users);
         }
@@ -43,10 +40,14 @@ namespace ParadiseApi.Controllers
         /// <param name="login"></param>
         /// <returns></returns>
         [HttpGet("user/{login}/check-exist-Login")]
-        [ProducesResponseType(200)]
-        public IActionResult CheckExistLogin(string login)
+        [ProducesResponseType(200, Type = typeof(bool))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CheckExistLogin(string login)
         {
-            var result = _userRepository.CheckExistLogin(login);
+            var result = await _userRepository.CheckExistLogin(login);
+
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
             return Ok(result);
         }
@@ -57,10 +58,14 @@ namespace ParadiseApi.Controllers
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("user/{login}/check-exist-name")]
-        [ProducesResponseType(200)]
-        public IActionResult CheckExistName(string name)
+        [ProducesResponseType(200,Type =typeof(bool))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CheckExistName(string name)
         {
-            var result = _userRepository.CheckExistName(name);
+            var result = await _userRepository.CheckExistName(name);
+
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
             return Ok(result);
         }

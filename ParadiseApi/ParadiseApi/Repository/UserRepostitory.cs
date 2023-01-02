@@ -18,26 +18,51 @@ namespace ParadiseApi.Repository
             _mapper = mapper;
         }
 
-        public bool CheckExistLogin(string login)
+        public async Task<RequestResult<bool>> CheckExistLogin(string login)
         {
-            Users user = _context.Users.Where(us => us.Login == login).DefaultIfEmpty().First();
+            RequestResult<bool> request = new RequestResult<bool>();
 
-            return user != null;
+            if(string.IsNullOrWhiteSpace(login))
+            {
+                request.Error = "Login is null";
+                request.Status = StatusRequest.Error;
+                return request;
+            }
+
+            Users user = await _context.Users.Where(us => us.Login == login).FirstOrDefaultAsync();
+
+            request.Result = user != null;
+
+            return request;
         }
 
-        public bool CheckExistName(string name)
+        public async Task<RequestResult<bool>> CheckExistName(string name)
         {
-            Users user = _context.Users.Where(us => us.Name == name).DefaultIfEmpty().First();
+            RequestResult<bool> request = new RequestResult<bool>();
 
-            return user != null;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                request.Error = "Login is null";
+                request.Status = StatusRequest.Error;
+                return request;
+            }
+
+            Users user = await _context.Users.Where(us => us.Name == name).FirstOrDefaultAsync();
+
+            request.Result = user != null;
+
+            return request;
         }
 
-        public ICollection<Users> GetUser()
+        public async Task<RequestResult<ICollection<Users>>> GetUser()
         {
-            //var users = _context.Users.OrderBy(us => us.Id).ToList();
-            var users = _context.Users.Include(us => us.Profile).OrderByDescending(us=>us.DateRegestry).ToList();
+            RequestResult<ICollection<Users>> request = new RequestResult<ICollection<Users>>();
 
-            return users;
+            var users = await _context.Users.Include(us => us.Profile).OrderByDescending(us => us.DateRegestry).ToListAsync();
+
+            request.Result = users;
+
+            return request;
         }
 
       

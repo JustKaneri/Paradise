@@ -5,10 +5,10 @@ namespace ParadiseApi.Interfaces
 {
     public interface IUserRepository
     {
-        public ICollection<Users> GetUser();
+        public Task<RequestResult<ICollection<Users>>> GetUser();
 
-        public bool CheckExistName(string name);
+        public Task<RequestResult<bool>> CheckExistName(string name);
 
-        public bool CheckExistLogin(string login);
+        public Task<RequestResult<bool>> CheckExistLogin(string login);
     }
 }
