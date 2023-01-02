@@ -4,7 +4,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/user-role")]
     [ApiController]
     public class UserRoleController : Controller
     {
@@ -21,11 +21,11 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("roles")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<UserRole>))]
-        public IActionResult GetUserRoles()
+        public async Task<IActionResult> GetUserRoles()
         {
-            var roles = _userRepository.GetUserRoles().Result;
+            var roles = await _userRepository.GetUserRoles();
 
-            return Ok(roles);
+            return Ok(roles.Result);
         }
     }
 }

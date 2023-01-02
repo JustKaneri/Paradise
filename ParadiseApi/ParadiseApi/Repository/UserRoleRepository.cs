@@ -1,4 +1,5 @@
-﻿using ParadiseApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ParadiseApi.Data;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 
@@ -13,11 +14,11 @@ namespace ParadiseApi.Repository
             _context = context;
         }
 
-        public RequestResult<ICollection<UserRole>> GetUserRoles()
+        public async Task<RequestResult<ICollection<UserRole>>> GetUserRoles()
         {
             RequestResult<ICollection<UserRole>> result = new RequestResult<ICollection<UserRole>>();
 
-            result.Result =  _context.UserRoles.OrderBy(x => x.Id).ToList();
+            result.Result = await _context.UserRoles.OrderBy(x => x.Id).ToListAsync();
 
             return result;
         }

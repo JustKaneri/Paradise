@@ -4,6 +4,6 @@ namespace ParadiseApi.Interfaces
 {
     public interface IUserRoles
     {
-        public RequestResult<ICollection<UserRole>> GetUserRoles();
+        public Task<RequestResult<ICollection<UserRole>>> GetUserRoles();
     }
 }
