@@ -6,7 +6,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/responce-video")]
     [ApiController]
     public class ResponceVideoController:Controller
     {
@@ -26,6 +26,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("video/{idVideo}/info-responce")]
         [ProducesResponseType(200, Type = typeof(ResponceInfoDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Reset(int idVideo)
         {
             RequestResult<ResponceInfoDto> requestRes = await _responce.GetResponceInfo(idVideo);
@@ -44,6 +45,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("like")]
         [ProducesResponseType(200,Type = typeof(ResponceVideoDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetLike(int idUser, int idVideo)
         {
             RequestResult<ResponceVideo> requestRes = await _responce.SetLike(idVideo, idUser);
@@ -64,6 +66,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("dislike")]
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetDisLike(int idUser, int idVideo)
         {
             RequestResult<ResponceVideo> requestRes = await _responce.SetDisLike(idVideo, idUser);
@@ -84,6 +87,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpDelete("reset")]
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Reset(int idUser, int idVideo)
         {
             RequestResult<ResponceVideo> requestRes = await _responce.ResetResponce(idVideo, idUser);

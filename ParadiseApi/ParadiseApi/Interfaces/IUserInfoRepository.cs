@@ -1,9 +1,10 @@
 ﻿using ParadiseApi.Dto;
+using ParadiseApi.Models;
 
 namespace ParadiseApi.Interfaces
 {
     public interface IUserInfoRepository
     {
-        public UserInfoDto GetUserInfo(int idUser,ref string error);
+        public Task<RequestResult<UserInfoDto>> GetUserInfo(int idUser);
     }
 }

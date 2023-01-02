@@ -14,7 +14,7 @@ using ParadiseApi.Helper;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/authentication")]
     [ApiController]
     public class AuthenticationController : Controller
     {
@@ -44,6 +44,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("regestry")]
         [ProducesResponseType(201, Type = typeof(UserDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegestryUser([FromBody] UserRegestryDto user)
         {
             if (!ModelState.IsValid)
@@ -67,6 +68,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("login")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LoginUser([FromBody] UserLoginDto user)
         {
             if (!ModelState.IsValid)
@@ -91,6 +93,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("refresh-token")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RefreshToken([FromBody] TokenRequest tokenRequest)
         {
             if (ModelState.IsValid)
@@ -115,6 +118,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("revoked-token")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RevokedToken([FromBody] TokenRequest tokenRequest)
         {
             if (ModelState.IsValid)

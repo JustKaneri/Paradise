@@ -6,7 +6,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/comment")]
     [ApiController]
     public class CommentController : Controller
     {
@@ -26,6 +26,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("comments")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<CommentDto>))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetComment(int idVideo)
         {
             var request = await _repository.GetComments(idVideo);
@@ -45,6 +46,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("new-comment")]
         [ProducesResponseType(200, Type = typeof(CommentDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetComment(CreateCommentDto commentDt)
         {
             var comment = _mapper.Map<Comment>(commentDt);

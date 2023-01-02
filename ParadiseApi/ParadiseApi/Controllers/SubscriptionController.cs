@@ -6,7 +6,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/subscription")]
     [ApiController]
     public class SubscriptionController : Controller
     {
@@ -26,6 +26,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("subscriptions")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<SubscriptionsDto>))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetSubscription(int idUser)
         {
             string error = "";
@@ -53,6 +54,7 @@ namespace ParadiseApi.Controllers
         /// <returns>True or false</returns>
         [HttpGet("user/{idCanal}/subscription/status")]
         [ProducesResponseType(200,Type = typeof(bool))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> IsSubscrib(int idCanal, int idUser)
         {
             var result = await _subscriptionRepository.IsSubscrib(idCanal, idUser);
@@ -71,6 +73,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("user/{idCanal}/subscribe")]
         [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Subscribe(int idCanal,int idUser)
         {
             RequestResult<Subscription> requestResult = await _subscriptionRepository.Subscribe(idCanal, idUser);
@@ -91,6 +94,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpDelete("user/{idCanal}/unsubscribe")]
         [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Unsubscribe(int idCanal, int idUser)
         {
             RequestResult<Subscription> requestResult = await _subscriptionRepository.Unsubscribe(idCanal, idUser);

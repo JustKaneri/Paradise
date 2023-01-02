@@ -4,7 +4,7 @@ using ParadiseApi.Models;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/profile")]
     [ApiController]
     public class ProfileController:Controller
     {
@@ -22,6 +22,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("user/{idUser}/profile")]
         [ProducesResponseType(200,Type = typeof(Profile))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetProfiles(int idUser)
         {
             var request = await _profiles.GetProfile(idUser);
@@ -40,6 +41,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("user/{idUser}/profile/upload-avatar")]
         [ProducesResponseType(200, Type = typeof(Profile))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UploadAvatar([FromBody]IFormFile file, int idUser)
         {
             var result = await _profiles.UploadProfleAvatar(file, idUser);
@@ -58,6 +60,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("user/{idUser}/profile/upload-fon")]
         [ProducesResponseType(200, Type=typeof(Profile))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UploadFon([FromBody]IFormFile file, int idUser)
         {
             var result = await _profiles.UploadProfleFon(file, idUser);

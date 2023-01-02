@@ -4,7 +4,7 @@ using ParadiseApi.Interfaces;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/user-information")]
     [ApiController]
     public class UserInfoController : Controller
     {
@@ -20,18 +20,17 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="idUser"></param>
         /// <returns></returns>
-        [HttpGet("detailed-information/User/{idUser}")]
+        [HttpGet("user/{idUser}/detailed-information")]
         [ProducesResponseType(200, Type = typeof(UserInfoDto))]
-        public IActionResult GetInfo(int idUser)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetInfo(int idUser)
         {
-            string error = "";
+            var resutl = await _repository.GetUserInfo(idUser);
 
-            var resutl = _repository.GetUserInfo(idUser,ref error);
+            if (resutl.Status == Models.StatusRequest.Error)
+               return  BadRequest(resutl.Error);
 
-            if (resutl == null)
-                BadRequest(error);
-
-            return Ok(resutl);
+            return Ok(resutl.Result);
         }
     }
 }

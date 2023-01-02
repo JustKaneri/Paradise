@@ -1,6 +1,8 @@
-﻿using ParadiseApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ParadiseApi.Data;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
+using ParadiseApi.Models;
 using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository
@@ -14,24 +16,29 @@ namespace ParadiseApi.Repository
            _context = context;
         }
 
-        public UserInfoDto GetUserInfo(int idUser,ref string error)
+        public async Task<RequestResult<UserInfoDto>> GetUserInfo(int idUser)
         {
+            RequestResult<UserInfoDto> request = new RequestResult<UserInfoDto>();
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not exsistenc";
-                return null;
+                request.Error = "User not exsistenc";
+                request.Status = StatusRequest.Error;
+                return request;
             }
 
             UserInfoDto dto = new UserInfoDto();
 
-            int countWatch = _context.Videos.Where(v => v.UserId == idUser).Sum(v => v.CountWatch);
+            var listWatch = await _context.Videos.Where(v => v.UserId == idUser).ToListAsync();
 
-            int countSubscrib = _context.Subscriptions.Where(sb => sb.AccountId == idUser).Sum(sb => sb.Id);
+            var listSubsrcrib = await _context.Subscriptions.Where(sb => sb.AccountId == idUser).ToListAsync();
 
-            dto.CountSubscrib = countSubscrib;
-            dto.CountWatch = countWatch;
+            dto.CountSubscrib = listSubsrcrib.Sum(sb => sb.Id);
+            dto.CountWatch = listWatch.Sum(v => v.CountWatch);
 
-            return dto;
+            request.Result = dto;
+
+            return request;
         }
     }
 }
