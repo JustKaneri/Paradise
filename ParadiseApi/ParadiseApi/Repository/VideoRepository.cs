@@ -23,37 +23,41 @@ namespace ParadiseApi.Repository
         /// <param name="idVideo"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public Video AddPosterFile(IFormFile poster, int idVideo, ref string error)
+        public async Task<RequestResult<Video>> AddPosterFile(IFormFile poster, int idVideo)
         {
+            RequestResult<Video> request = new RequestResult<Video>();
+
             Video vid = ExistenceModel.Video(idVideo, _context);
 
             if (vid == null)
             {
-                error = "Video not existence";
-                return null;
+                request.Error = "Video not existence";
+                return request;
             }
 
             if (vid.PathPoster != null)
             {
-                error = "Poster is existence";
-                return null;
+                request.Error = "Poster is existence";
+                return request;
             }
 
             try
             {
-               // string pathPoster =  RootFile.SaveFile(vid.UserId, "posters", poster);
-                //vid.PathPoster = "posters/" + pathPoster;
+                string pathPoster =  await RootFile.SaveFile(vid.UserId, "posters", poster);
+                vid.PathPoster = "posters/" + pathPoster;
 
                 _context.Videos.Update(vid);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                error = "Failde upload poster file";
-                return null;
+                request.Error = "Failde upload poster file";
+                return request;
             }
 
-            return vid;
+            request.Result = vid;
+
+            return request;
         }
 
         /// <summary>
@@ -63,37 +67,41 @@ namespace ParadiseApi.Repository
         /// <param name="idVideo"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public Video AddVideoFile(IFormFile video, int idVideo, ref string error)
+        public async Task<RequestResult<Video>> AddVideoFile(IFormFile video, int idVideo)
         {
+            RequestResult<Video> request = new RequestResult<Video>();
+
             Video vid = ExistenceModel.Video(idVideo, _context);
 
             if (vid == null)
             {
-                error = "Video not existence";
-                return null;
+                request.Error = "Video not existence";
+                return request;
             }
 
             if (vid.PathVideo != null)
             {
-                error = "Video file existence";
-                return null;
+                request.Error = "Video file existence";
+                return request;
             }
 
             try
             {
-               // string patchVideo = RootFile.SaveFile(vid.UserId, "videos", video);
-                //vid.PathVideo = "videos/" + patchVideo;
+                string patchVideo = await RootFile.SaveFile(vid.UserId, "videos", video);
+                vid.PathVideo = "videos/" + patchVideo;
                 _context.Videos.Update(vid);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                RemoveVideo(idVideo,ref error);
-                error = "Failde upload file video";
-                return null;
+                await RemoveVideo(vid);
+                request.Error = "Failde upload file video";
+                return request;
             }
 
-            return vid;
+            request.Result = vid;
+
+            return request;
         }
 
         /// <summary>
@@ -102,14 +110,16 @@ namespace ParadiseApi.Repository
         /// <param name="idVideo"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public Video AddViews(int idVideo, ref string error)
+        public async Task<RequestResult<Video>> AddViews(int idVideo)
         {
+            RequestResult<Video> request = new RequestResult<Video>();
+
             Video v = ExistenceModel.Video(idVideo, _context);
 
             if (v == null)
             {
-                error = "Video not existence";
-                return null;
+                request.Error = "Video not existence";
+                return request;
             }
 
             v.CountWatch += 1;
@@ -117,15 +127,17 @@ namespace ParadiseApi.Repository
             try
             {
                 _context.Videos.Update(v);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch 
             {
-                error = "Failed update view";
-                return null;
+                request.Error = "Failed update view";
+                return request;
             }
-            
-            return v;
+
+            request.Result = v;
+
+            return request;
         }
 
         /// <summary>
@@ -135,12 +147,14 @@ namespace ParadiseApi.Repository
         /// <param name="videoInfo"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public Video CreateVideo(int idUser, Video videoInfo, ref string error)
+        public async Task<RequestResult<Video>> CreateVideo(int idUser, Video videoInfo)
         {
+            RequestResult<Video> request = new RequestResult<Video>();
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not existence";
+                return request;
             }
 
             videoInfo.UserId = idUser;
@@ -148,15 +162,17 @@ namespace ParadiseApi.Repository
             try
             {
                 _context.Videos.Update(videoInfo);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                error = "Failed create new video";
-                return null;
+                request.Error = "Failed create new video";
+                return request;
             }
 
-            return videoInfo;
+            request.Result = videoInfo;
+
+            return request;
         }
 
         /// <summary>
@@ -165,24 +181,26 @@ namespace ParadiseApi.Repository
         /// <param name="idUser"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public ICollection<Video> GetFavoriteVideo(int idUser, ref string error)
+        public async Task<RequestResult<ICollection<Video>>> GetFavoriteVideo(int idUser)
         {
+            RequestResult<ICollection<Video>> request = new RequestResult<ICollection<Video>>();
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not existence";
+                return request;
             }
 
-            List<Video> videos = (from video in _context.Videos
+            request.Result  = await (from video in _context.Videos
                                   join resp in _context.ResponceVideos
                                   on video.Id equals resp.VideoId
                                   where resp.UserId == idUser && resp.IsLike == true
                                   orderby resp.DateResponce descending
                                   select video)
                                   .Include(v => v.User)
-                                  .Include(us => us.User.Profile).ToList();
+                                  .Include(us => us.User.Profile).ToListAsync();
 
-            return videos;
+            return request;
         }
 
         /// <summary>
@@ -191,21 +209,23 @@ namespace ParadiseApi.Repository
         /// <param name="idUser">id user</param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public ICollection<Video> GetVideos(int idUser, ref string error)
+        public async Task<RequestResult<ICollection<Video>>> GetVideosByUser(int idUser)
         {
+            RequestResult<ICollection<Video>> request = new RequestResult<ICollection<Video>>();
+
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                error = "User not existence";
-                return null;
+                request.Error = "User not existence";
+                return request;
             }
 
-            List<Video> videos = _context.Videos.Include(v => v.User)
+            request.Result = await _context.Videos.Include(v => v.User)
                                                 .Include(us => us.User.Profile)
                                                 .OrderByDescending(v => v.DateCreate)
                                                 .Where(v => v.UserId == idUser)
-                                                .ToList();
+                                                .ToListAsync();
 
-            return videos;
+            return request;
         }
 
         /// <summary>
@@ -215,36 +235,40 @@ namespace ParadiseApi.Repository
         /// <param name="page">number page</param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public ICollection<Video> GetVideos(int count, int page,ref string error)
+        public async Task<RequestResult<ICollection<Video>>> GetVideosByPage(int count, int page)
         {
-            if(page == 0)
+            RequestResult<ICollection<Video>> request = new RequestResult<ICollection<Video>>();
+
+            if (page == 0)
             {
-                error = "Not correct page";
-                return null;
+                request.Error = "Not correct page";
+                return request;
             }
 
-            List<Video> videos = _context.Videos.Include(v => v.User)
+            request.Result = await _context.Videos.Include(v => v.User)
                                                 .Include(us => us.User.Profile)
                                                 .OrderByDescending(v => v.DateCreate)
-                                                .Skip(count * (page-1))
+                                                .Skip(count * (page - 1))
                                                 .Take(count)
-                                                .ToList();
+                                                .ToListAsync();
 
-            return videos;
+            return request;
         }
 
         /// <summary>
         /// get all video
         /// </summary>
         /// <returns></returns>
-        public ICollection<Video> GetVideos()
+        public async Task<RequestResult<ICollection<Video>>> GetAllVideos()
         {
-            List<Video> videos = _context.Videos.Include(v => v.User)
+            RequestResult<ICollection<Video>> request = new RequestResult<ICollection<Video>>();
+
+            request.Result = await _context.Videos.Include(v => v.User)
                                                 .Include(us => us.User.Profile)
                                                 .OrderByDescending(v => v.DateCreate)
-                                                .ToList();
+                                                .ToListAsync();
 
-            return videos;
+            return request;
         }
 
         /// <summary>
@@ -254,28 +278,30 @@ namespace ParadiseApi.Repository
         /// <param name="error"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Video RemoveVideo(int idVideo,ref string error)
+        public async Task<RequestResult<Video>> RemoveVideo(Video video)
         {
-            Video video = ExistenceModel.Video(idVideo, _context);
+            RequestResult<Video> request = new RequestResult<Video>();
 
             if (video == null)
             {
-                error = "Video not existence";
-                return null;
+                request.Error = "Video not existence";
+                return request;
             }
 
             try
             {
                 _context.Videos.Remove(video);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                error = "Failde remove video " + idVideo;
-                return null;
+                request.Error = "Failde remove video " + request.Result.Id;
+                return request;
             }
 
-            return video;
+            request.Result = video;
+
+            return request;
         }
 
         /// <summary>
@@ -284,24 +310,34 @@ namespace ParadiseApi.Repository
         /// <param name="search"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public ICollection<Video> SearchVideo(string search,ref string error)
+        public async Task<RequestResult<ICollection<Video>>> FindVideosByPage(int count, int page, string search)
         {
+            RequestResult<ICollection<Video>> request = new RequestResult<ICollection<Video>>();
+
+            if (page == 0)
+            {
+                request.Error = "Not correct page";
+                return request;
+            }
+
             if (string.IsNullOrWhiteSpace(search))
             {
-                error = "The search cannot be null";
-                return null;
+                request.Error = "The search cannot be null";
+                return request;
             }
 
             search = search.ToLower();
 
-            List<Video> videos = _context.Videos.Include(v => v.User)
+            request.Result = await _context.Videos.Include(v => v.User)
                                                 .Include(us => us.User.Profile)
                                                 .OrderByDescending(v => v.DateCreate)
-                                                .Where(v=> v.Name.ToLower().Contains(search) ||
-                                                            v.User.Name.ToLower().Contains(search))                                
-                                                .ToList();
+                                                .Where(v => v.Name.ToLower().Contains(search) ||
+                                                            v.User.Name.ToLower().Contains(search))
+                                                .Skip(count * (page - 1))
+                                                .Take(count)
+                                                .ToListAsync();
 
-            return videos;
+            return request;
         }
     }
 }

@@ -25,12 +25,18 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("videos")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<VideoDto>))]
-        public IActionResult GetAllVideo()
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAllVideo()
         {
-            var video = _mapper.Map<List<VideoDto>>(_repository.GetVideos());
+            var result = await _repository.GetAllVideos();
 
-            if (!ModelState.IsValid)
-                return BadRequest();
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
+
+            var video = _mapper.Map<List<VideoDto>>(result.Result);
+
+            if(video.Count == 0)
+                return NotFound();
 
             return Ok(video);
         }
@@ -41,19 +47,18 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("video/favorite")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
-        public IActionResult GetFavoriteVideo(int idUser)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetFavoriteVideo(int idUser)
         {
-            string error = "";
+            var result = await _repository.GetFavoriteVideo(idUser);
 
-            var videoDB = _repository.GetFavoriteVideo(idUser, ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (videoDB == null)
-                return BadRequest(error);
+            var video = _mapper.Map<List<VideoDto>>(result.Result);
 
-            var video = _mapper.Map<List<VideoDto>>(videoDB);
-
-            if (!ModelState.IsValid)
-                return BadRequest();
+            if (video.Count == 0)
+                return NotFound();
 
             return Ok(video);
         }
@@ -65,19 +70,18 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("user/{idUser}/video")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
-        public IActionResult GetUserVideo(int idUser)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetUserVideo(int idUser)
         {
-            string error = "";
+            var result = await _repository.GetVideosByUser(idUser);
 
-            var videoDb = _repository.GetVideos(idUser, ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (videoDb == null)
-                return BadRequest(error);
+            var video = _mapper.Map<List<VideoDto>>(result.Result);
 
-            var video = _mapper.Map<List<VideoDto>>(videoDb);
-
-            if (!ModelState.IsValid)
-                return BadRequest();
+            if (video.Count == 0)
+                return NotFound();
 
             return Ok(video);
         }
@@ -88,21 +92,20 @@ namespace ParadiseApi.Controllers
         /// <param name="page"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        [HttpGet("video")]
+        [HttpGet("video-page")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
-        public IActionResult GetPageVideo(int page,int count)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetPageVideo(int page,int count)
         {
-            string error = "";
+            var resultReq = await _repository.GetVideosByPage(count, page);
 
-            var videoDb = _repository.GetVideos(count, page,ref error);
+            if (resultReq.Status == StatusRequest.Error)
+                return BadRequest(resultReq.Error);
 
-            if (videoDb == null)
-                return BadRequest(error);
+            var video = _mapper.Map<List<VideoDto>>(resultReq.Result);
 
-            var video = _mapper.Map<List<VideoDto>>(videoDb);
-
-            if (!ModelState.IsValid)
-                return BadRequest();
+            if (video.Count == 0)
+                return NotFound();
 
             return Ok(video);
         }
@@ -110,25 +113,26 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Search video by name video or creator
         /// </summary>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        [HttpGet("video/{search}/search")]
+        [HttpGet("video-page-search")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<VideoDto>))]
-        public IActionResult GetSearchVideo(string search)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetSearchVideo(int page, int count,string search)
         {
-            string error = "";
+            var result = await _repository.FindVideosByPage(count, page, search);
 
-            var videoDb = _repository.SearchVideo(search,ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (videoDb == null)
-                return BadRequest(error);
+            var lstVideo = _mapper.Map<List<VideoDto>>(result.Result);
 
-            var result = _mapper.Map<List<VideoDto>>(videoDb);
-
-            if (result.Count == 0)
+            if (lstVideo.Count == 0)
                 return NotFound();
 
-            return Ok(result);
+            return Ok(lstVideo);
         }
 
         /// <summary>
@@ -138,21 +142,17 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("video/{idVideo}/add-views")]
         [ProducesResponseType(200,Type = typeof(VideoDto))]
-        public IActionResult AddViews(int idVideo)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddViews(int idVideo)
         {
-            string error = "";
+            var result = await _repository.AddViews(idVideo);
 
-            var videoDb = _repository.AddViews(idVideo,ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (videoDb == null)
-                return BadRequest(error);
+            var video = _mapper.Map<VideoDto>(result.Result);
 
-            var result = _mapper.Map<VideoDto>(videoDb);
-
-            if (result == null)
-                return NotFound();
-
-            return Ok(result);
+            return Ok(video);
         }
 
         /// <summary>
@@ -161,20 +161,24 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser">current user</param>
         /// <param name="videoInfo"></param>
         /// <returns></returns>
-        [HttpPost("video/user/{idUser}/create")]
+        [HttpPost("user/{idUser}/video/create")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
-        public IActionResult AddVideo(int idUser, CreateVideoDto videoInfo)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddVideo([FromBody]CreateVideoDto videoInfo, int idUser)
         {
-            string error = "";
-
             Video video = _mapper.Map<Video>(videoInfo);
 
-            var result = _mapper.Map<VideoDto>(_repository.CreateVideo(idUser, video,ref error));
+            if (!ModelState.IsValid)
+                return BadRequest(videoInfo);
 
-            if (video == null)
-                return BadRequest(error);
+            var result = await _repository.CreateVideo(idUser, video);
 
-            return Ok(result);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
+
+            var createVideo = _mapper.Map<VideoDto>(result.Result);
+
+            return Ok(createVideo);
         }
 
         /// <summary>
@@ -185,21 +189,17 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("video/{idVideo}/upload-video")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
-        public IActionResult AddVideoFile(int idVideo, IFormFile file)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddVideoFile([FromBody]IFormFile file, int idVideo)
         {
-            string error = "";
+            var result = await _repository.AddVideoFile(file,idVideo);
 
-            var videoDb = _repository.AddVideoFile(file, idVideo,ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (videoDb == null)
-                return BadRequest(error);
+            var video = _mapper.Map<VideoDto>(result.Result);
 
-            var result = _mapper.Map<VideoDto>(videoDb);
-
-            if (result == null)
-                return BadRequest();
-
-            return Ok(result);
+            return Ok(video);
         }
 
         /// <summary>
@@ -210,18 +210,17 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("video/{idVideo}/upload-poster")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
-        public IActionResult AddPosterFile(int idVideo, IFormFile file)
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddPosterFile([FromBody]IFormFile file, int idVideo)
         {
-            string error = "";
+            var result = await _repository.AddPosterFile(file, idVideo);
 
-            var videoDb = _repository.AddPosterFile(file, idVideo,ref error);
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
 
-            if (videoDb == null)
-                return BadRequest(error);
+            var video = _mapper.Map<VideoDto>(result.Result);
 
-            var result = _mapper.Map<VideoDto>(videoDb);
-
-            return Ok(result);
+            return Ok(video);
         }
 
     }

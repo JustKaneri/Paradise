@@ -4,24 +4,24 @@ namespace ParadiseApi.Interfaces
 {
     public interface IVideoRepository
     {
-        public Video CreateVideo(int idUser, Video videoInfo,ref string error);
+        public Task<RequestResult<Video>> CreateVideo(int idUser, Video videoInfo);
 
-        public Video AddVideoFile(IFormFile video, int idVideo,ref string error);
+        public Task<RequestResult<Video>> AddVideoFile(IFormFile video, int idVideo);
 
-        public Video AddPosterFile(IFormFile poster, int idVideo,ref string error);
+        public Task<RequestResult<Video>> AddPosterFile(IFormFile poster, int idVideo);
 
-        public ICollection<Video> GetVideos(int idUser,ref string error);
+        public Task<RequestResult<ICollection<Video>>> GetVideosByUser(int idUser);
 
-        public ICollection<Video> GetVideos(int count, int page, ref string error);
+        public Task<RequestResult<ICollection<Video>>> GetVideosByPage(int count, int page);
 
-        public ICollection<Video> GetVideos();
+        public Task<RequestResult<ICollection<Video>>> FindVideosByPage(int count, int page,string search);
 
-        public Video AddViews(int idVideo,ref string error);
+        public Task<RequestResult<ICollection<Video>>> GetAllVideos();
 
-        public ICollection<Video> SearchVideo(string search, ref string error);
+        public Task<RequestResult<Video>> AddViews(int idVideo);
 
-        public ICollection<Video> GetFavoriteVideo(int idUser, ref string error);
+        public Task<RequestResult<ICollection<Video>>> GetFavoriteVideo(int idUser);
 
-        public Video RemoveVideo(int idVideo,ref string error);
+        public Task<RequestResult<Video>> RemoveVideo(Video video);
     }
 }
