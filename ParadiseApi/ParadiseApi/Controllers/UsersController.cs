@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using System.Data;
 
 namespace ParadiseApi.Controllers
 {
@@ -24,6 +26,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(200,Type=typeof(IEnumerable<UserDto>))]
         public async Task<IActionResult> GetUser()
         {

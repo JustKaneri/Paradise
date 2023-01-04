@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using System.Data;
 
 namespace ParadiseApi.Controllers
 {
@@ -45,6 +47,7 @@ namespace ParadiseApi.Controllers
         /// <param name="commentDt"></param>
         /// <returns></returns>
         [HttpPost("new-comment")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(CommentDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetComment(CreateCommentDto commentDt)

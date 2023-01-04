@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using System.Data;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/video")]
     [ApiController]
     public class VideoController : Controller 
     {
@@ -46,6 +48,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("video/favorite")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetFavoriteVideo(int idUser)
@@ -162,6 +165,7 @@ namespace ParadiseApi.Controllers
         /// <param name="videoInfo"></param>
         /// <returns></returns>
         [HttpPost("user/{idUser}/video/create")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddVideo([FromBody]CreateVideoDto videoInfo, int idUser)
@@ -188,6 +192,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idVideo">current user</param>
         /// <returns></returns>
         [HttpPost("video/{idVideo}/upload-video")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddVideoFile([FromBody]IFormFile file, int idVideo)
@@ -209,6 +214,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idVideo">current user</param>
         /// <returns></returns>
         [HttpPost("video/{idVideo}/upload-poster")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddPosterFile([FromBody]IFormFile file, int idVideo)

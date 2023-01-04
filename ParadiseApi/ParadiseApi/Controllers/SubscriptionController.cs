@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using System.Data;
 
 namespace ParadiseApi.Controllers
 {
@@ -25,6 +27,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpGet("subscriptions")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<SubscriptionsDto>))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetSubscription(int idUser)
@@ -72,6 +75,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpPost("user/{idCanal}/subscribe")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Subscribe(int idCanal,int idUser)
@@ -93,6 +97,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpDelete("user/{idCanal}/unsubscribe")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Unsubscribe(int idCanal, int idUser)

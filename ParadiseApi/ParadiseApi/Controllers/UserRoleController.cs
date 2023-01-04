@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using System.Data;
 
 namespace ParadiseApi.Controllers
 {
@@ -20,6 +22,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("roles")]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<UserRole>))]
         public async Task<IActionResult> GetUserRoles()
         {

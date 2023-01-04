@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using System.Data;
 
 namespace ParadiseApi.Controllers
 {
@@ -40,6 +42,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpPost("user/{idUser}/profile/upload-avatar")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(Profile))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UploadAvatar([FromBody]IFormFile file, int idUser)
@@ -59,6 +62,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpPost("user/{idUser}/profile/upload-fon")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type=typeof(Profile))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UploadFon([FromBody]IFormFile file, int idUser)
