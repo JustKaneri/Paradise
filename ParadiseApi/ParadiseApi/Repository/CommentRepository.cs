@@ -25,7 +25,6 @@ namespace ParadiseApi.Repository
                 return requestResult;
             }
 
-
             if (ExistenceModel.Video(comment.VideoId, _context) == null)
             {
                 requestResult.Error = "Video not existence";

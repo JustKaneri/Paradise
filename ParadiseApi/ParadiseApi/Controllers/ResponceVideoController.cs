@@ -5,6 +5,7 @@ using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 using System.Data;
+using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
@@ -29,7 +30,7 @@ namespace ParadiseApi.Controllers
         [HttpGet("video/{idVideo}/info-responce")]
         [ProducesResponseType(200, Type = typeof(ResponceInfoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Reset(int idVideo)
+        public async Task<IActionResult> ResponceInfo(int idVideo)
         {
             RequestResult<ResponceInfoDto> requestRes = await _responce.GetResponceInfo(idVideo);
 
@@ -49,8 +50,15 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200,Type = typeof(ResponceVideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SetLike(int idUser, int idVideo)
+        public async Task<IActionResult> SetLike(int idVideo)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             RequestResult<ResponceVideo> requestRes = await _responce.SetLike(idVideo, idUser);
 
             if (requestRes.Status == StatusRequest.Error)
@@ -71,8 +79,15 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SetDisLike(int idUser, int idVideo)
+        public async Task<IActionResult> SetDisLike( int idVideo)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             RequestResult<ResponceVideo> requestRes = await _responce.SetDisLike(idVideo, idUser);
 
             if (requestRes.Status == StatusRequest.Error)
@@ -93,8 +108,15 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Reset(int idUser, int idVideo)
+        public async Task<IActionResult> Reset(int idVideo)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             RequestResult<ResponceVideo> requestRes = await _responce.ResetResponce(idVideo, idUser);
 
             if (requestRes.Status == StatusRequest.Error)

@@ -5,6 +5,7 @@ using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 using System.Data;
+using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
@@ -52,7 +53,16 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetComment(CreateCommentDto commentDt)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+               idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             var comment = _mapper.Map<Comment>(commentDt);
+
+            comment.UserId = idUser;
 
             var request = await _repository.CreateComment(comment);
 

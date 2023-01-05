@@ -5,6 +5,7 @@ using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 using System.Data;
+using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
@@ -30,9 +31,14 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200,Type = typeof(IEnumerable<SubscriptionsDto>))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetSubscription(int idUser)
+        public async Task<IActionResult> GetSubscription()
         {
-            string error = "";
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
 
             var request = await _subscriptionRepository.GetSubscriptions(idUser);
 
@@ -58,8 +64,15 @@ namespace ParadiseApi.Controllers
         [HttpGet("user/{idCanal}/subscription/status")]
         [ProducesResponseType(200,Type = typeof(bool))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> IsSubscrib(int idCanal, int idUser)
+        public async Task<IActionResult> IsSubscrib(int idCanal)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             var result = await _subscriptionRepository.IsSubscrib(idCanal, idUser);
 
             if (result.Status == StatusRequest.Error)
@@ -78,8 +91,15 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Subscribe(int idCanal,int idUser)
+        public async Task<IActionResult> Subscribe(int idCanal)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             RequestResult<Subscription> requestResult = await _subscriptionRepository.Subscribe(idCanal, idUser);
 
             if (requestResult.Status == StatusRequest.Error)
@@ -100,8 +120,15 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Unsubscribe(int idCanal, int idUser)
+        public async Task<IActionResult> Unsubscribe(int idCanal)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             RequestResult<Subscription> requestResult = await _subscriptionRepository.Unsubscribe(idCanal, idUser);
 
             if (requestResult.Status == StatusRequest.Error)

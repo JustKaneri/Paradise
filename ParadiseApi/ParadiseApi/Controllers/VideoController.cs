@@ -5,6 +5,7 @@ using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 using System.Data;
+using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
@@ -51,8 +52,15 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<VideoDto>))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetFavoriteVideo(int idUser)
+        public async Task<IActionResult> GetFavoriteVideo()
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             var result = await _repository.GetFavoriteVideo(idUser);
 
             if (result.Status == StatusRequest.Error)
@@ -168,8 +176,15 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddVideo([FromBody]CreateVideoDto videoInfo, int idUser)
+        public async Task<IActionResult> AddVideo([FromBody]CreateVideoDto videoInfo)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             Video video = _mapper.Map<Video>(videoInfo);
 
             if (!ModelState.IsValid)
