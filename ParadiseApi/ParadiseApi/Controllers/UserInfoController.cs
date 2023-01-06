@@ -21,18 +21,11 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="idUser"></param>
         /// <returns></returns>
-        [HttpGet("user/detailed-information")]
+        [HttpGet("user/{idUser}/detailed-information")]
         [ProducesResponseType(200, Type = typeof(UserInfoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetInfo()
+        public async Task<IActionResult> GetInfo(int idUser)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            int idUser = -1;
-            if (identity != null)
-            {
-                idUser = int.Parse(identity.FindFirst("id").Value);
-            }
-
             var resutl = await _repository.GetUserInfo(idUser);
 
             if (resutl.Status == Models.StatusRequest.Error)

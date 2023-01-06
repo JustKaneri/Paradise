@@ -42,7 +42,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        [HttpGet("user/{login}/check-exist-Login")]
+        [HttpGet("user/{login}/check-exist-login")]
         [ProducesResponseType(200, Type = typeof(bool))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckExistLogin(string login)
@@ -52,7 +52,7 @@ namespace ParadiseApi.Controllers
             if (result.Status == StatusRequest.Error)
                 return BadRequest(result.Error);
 
-            return Ok(result);
+            return Ok(result.Result);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace ParadiseApi.Controllers
             if (result.Status == StatusRequest.Error)
                 return BadRequest(result.Error);
 
-            return Ok(result);
+            return Ok(result.Result);
         }
 
     }

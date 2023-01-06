@@ -32,12 +32,14 @@ namespace ParadiseApi.Repository
             if (vid == null)
             {
                 request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
             if (vid.PathPoster != null)
             {
                 request.Error = "Poster is existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -52,6 +54,7 @@ namespace ParadiseApi.Repository
             catch
             {
                 request.Error = "Failde upload poster file";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -76,12 +79,14 @@ namespace ParadiseApi.Repository
             if (vid == null)
             {
                 request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
             if (vid.PathVideo != null)
             {
                 request.Error = "Video file existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -96,6 +101,7 @@ namespace ParadiseApi.Repository
             {
                 await RemoveVideo(vid);
                 request.Error = "Failde upload file video";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -119,6 +125,7 @@ namespace ParadiseApi.Repository
             if (v == null)
             {
                 request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -132,6 +139,7 @@ namespace ParadiseApi.Repository
             catch 
             {
                 request.Error = "Failed update view";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -154,6 +162,7 @@ namespace ParadiseApi.Repository
             if (ExistenceModel.User(idUser, _context) == null)
             {
                 request.Error = "User not existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -167,6 +176,7 @@ namespace ParadiseApi.Repository
             catch
             {
                 request.Error = "Failed create new video";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -188,6 +198,7 @@ namespace ParadiseApi.Repository
             if (ExistenceModel.User(idUser, _context) == null)
             {
                 request.Error = "User not existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -216,6 +227,7 @@ namespace ParadiseApi.Repository
             if (ExistenceModel.User(idUser, _context) == null)
             {
                 request.Error = "User not existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -242,6 +254,7 @@ namespace ParadiseApi.Repository
             if (page == 0)
             {
                 request.Error = "Not correct page";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -285,6 +298,7 @@ namespace ParadiseApi.Repository
             if (video == null)
             {
                 request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -296,6 +310,7 @@ namespace ParadiseApi.Repository
             catch
             {
                 request.Error = "Failde remove video " + request.Result.Id;
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
@@ -307,6 +322,8 @@ namespace ParadiseApi.Repository
         /// <summary>
         /// Search video by name video or name user
         /// </summary>
+        /// <param name="count"></param>
+        /// <param name="page"></param>
         /// <param name="search"></param>
         /// <param name="error"></param>
         /// <returns></returns>
@@ -317,12 +334,14 @@ namespace ParadiseApi.Repository
             if (page == 0)
             {
                 request.Error = "Not correct page";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 
             if (string.IsNullOrWhiteSpace(search))
             {
                 request.Error = "The search cannot be null";
+                request.Status = StatusRequest.Error;
                 return request;
             }
 

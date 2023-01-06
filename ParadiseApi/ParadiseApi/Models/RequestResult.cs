@@ -9,18 +9,7 @@
     public class RequestResult <T>
     {
         public T Result { get; set; }
-        public string Error 
-        { 
-            get 
-            { 
-               return Error; 
-            } 
-            set 
-            {
-                Error = value;
-                Status = StatusRequest.Error;
-            } 
-        }
+        public string Error { get; set; }
 
         public StatusRequest Status = StatusRequest.Ok;
     }
