@@ -172,7 +172,7 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser">current user</param>
         /// <param name="videoInfo"></param>
         /// <returns></returns>
-        [HttpPost("user/{idUser}/video/create")]
+        [HttpPost("video/create")]
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

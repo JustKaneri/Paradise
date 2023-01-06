@@ -470,3 +470,293 @@
 
   Result:
   True or false
+
+### Video
+
+> #### get_all_video
+
+  URL https://[host-name]/api/v1/video/videos
+
+  Result:
+  ```json
+  	[
+		  {
+		    "id": 0,
+		    "name": "string",
+		    "discript": "string",
+		    "dateCreate": "2023-01-06T15:17:44.063Z",
+		    "countWatch": 0,
+		    "pathVideo": "string",
+		    "pathPoster": "string",
+		    "user": {
+		      "id": 0,
+		      "name": "string",
+		      "profile": {
+		        "id": 0,
+		        "idUser": 0,
+		        "pathFon": "string",
+		        "pathAvatar": "string"
+		      }
+		    }
+		  }
+		]
+  ```  
+
+> #### get_video_favorite
+
+  URL https://[host-name]/api/v1/video/video/favorite
+
+  Result:
+  ```json
+  	[
+		  {
+		    "id": 0,
+		    "name": "string",
+		    "discript": "string",
+		    "dateCreate": "2023-01-06T15:17:44.063Z",
+		    "countWatch": 0,
+		    "pathVideo": "string",
+		    "pathPoster": "string",
+		    "user": {
+		      "id": 0,
+		      "name": "string",
+		      "profile": {
+		        "id": 0,
+		        "idUser": 0,
+		        "pathFon": "string",
+		        "pathAvatar": "string"
+		      }
+		    }
+		  }
+		]
+  ```  
+
+> #### get_video_by_current_user
+
+  URL https://[host-name]/api/v1/video/user/[Paramaters]/video
+
+  Parameters:
+  idUser = integer
+
+  Result:
+  ```json
+  	[
+		  {
+		    "id": 0,
+		    "name": "string",
+		    "discript": "string",
+		    "dateCreate": "2023-01-06T15:17:44.063Z",
+		    "countWatch": 0,
+		    "pathVideo": "string",
+		    "pathPoster": "string",
+		    "user": {
+		      "id": 0,
+		      "name": "string",
+		      "profile": {
+		        "id": 0,
+		        "idUser": 0,
+		        "pathFon": "string",
+		        "pathAvatar": "string"
+		      }
+		    }
+		  }
+		]
+  ```  
+
+> #### get_video_by_page
+
+  URL https://[host-name]/api/v1/video/video-page?page=[Parameters_1]&count=[Parameters_2]
+
+  Parameters:
+  1. page = integer
+  2. count = integer
+
+  Result:
+  ```json
+  	[
+		  {
+		    "id": 0,
+		    "name": "string",
+		    "discript": "string",
+		    "dateCreate": "2023-01-06T15:17:44.063Z",
+		    "countWatch": 0,
+		    "pathVideo": "string",
+		    "pathPoster": "string",
+		    "user": {
+		      "id": 0,
+		      "name": "string",
+		      "profile": {
+		        "id": 0,
+		        "idUser": 0,
+		        "pathFon": "string",
+		        "pathAvatar": "string"
+		      }
+		    }
+		  }
+		]
+  ```  
+
+> #### get_video_by_page_search
+
+  URL https://[host-name]/api/v1/video/video-page?page=[Parameters_1]&count=[Parameters_2]&search=[Parameters_3]
+
+  Parameters:
+  1. page = integer
+  2. count = integer
+  3. search = string
+
+  Result:
+  ```json
+  	[
+		  {
+		    "id": 0,
+		    "name": "string",
+		    "discript": "string",
+		    "dateCreate": "2023-01-06T15:17:44.063Z",
+		    "countWatch": 0,
+		    "pathVideo": "string",
+		    "pathPoster": "string",
+		    "user": {
+		      "id": 0,
+		      "name": "string",
+		      "profile": {
+		        "id": 0,
+		        "idUser": 0,
+		        "pathFon": "string",
+		        "pathAvatar": "string"
+		      }
+		    }
+		  }
+		]
+  ```  
+
+> #### add_view
+
+  URL https://[host-name]/v1/video/video/[Parameters]/add-views
+
+  Parameters: idVideo = integer
+
+  Result:
+  ```json
+  	{
+		  "id": 0,
+		  "name": "string",
+		  "discript": "string",
+		  "dateCreate": "2023-01-06T15:24:17.359Z",
+		  "countWatch": 0,
+		  "pathVideo": "string",
+		  "pathPoster": "string",
+		  "user": {
+		    "id": 0,
+		    "name": "string",
+		    "profile": {
+		      "id": 0,
+		      "idUser": 0,
+		      "pathFon": "string",
+		      "pathAvatar": "string"
+		    }
+		  }
+		}
+  ```  
+
+> #### create_video(1/3)
+
+  URL https://[host-name]/v1/video/video/create
+
+  Body
+  ```json
+		{
+		  "name": "string",
+		  "discript": "string",
+		  "dateCreate": "2023-01-06T15:25:41.703Z"
+		}
+  ```
+
+  Result:
+  ```json
+  	{
+		  "id": 0,
+		  "name": "string",
+		  "discript": "string",
+		  "dateCreate": "2023-01-06T15:24:17.359Z",
+		  "countWatch": 0,
+		  "pathVideo": "string",
+		  "pathPoster": "string",
+		  "user": {
+		    "id": 0,
+		    "name": "string",
+		    "profile": {
+		      "id": 0,
+		      "idUser": 0,
+		      "pathFon": "string",
+		      "pathAvatar": "string"
+		    }
+		  }
+		}
+  ```  
+  
+> #### create_video(2/3)
+
+  URL https://[host-name]/v1/video/video/[Parameters]/upload-video
+
+  Parameters
+  1. idVideo = integer
+
+  Body
+  1. Video file
+
+  Result:
+  ```json
+  	{
+		  "id": 0,
+		  "name": "string",
+		  "discript": "string",
+		  "dateCreate": "2023-01-06T15:24:17.359Z",
+		  "countWatch": 0,
+		  "pathVideo": "string",
+		  "pathPoster": "string",
+		  "user": {
+		    "id": 0,
+		    "name": "string",
+		    "profile": {
+		      "id": 0,
+		      "idUser": 0,
+		      "pathFon": "string",
+		      "pathAvatar": "string"
+		    }
+		  }
+		}
+  ```  
+
+> #### create_video(3/3)
+
+  URL https://[host-name]/v1/video/video/[Parameters]/upload-poster
+
+  Parameters
+  1. idVideo = integer
+
+  Body
+  1. Image file
+
+  Result:
+  ```json
+  	{
+		  "id": 0,
+		  "name": "string",
+		  "discript": "string",
+		  "dateCreate": "2023-01-06T15:24:17.359Z",
+		  "countWatch": 0,
+		  "pathVideo": "string",
+		  "pathPoster": "string",
+		  "user": {
+		    "id": 0,
+		    "name": "string",
+		    "profile": {
+		      "id": 0,
+		      "idUser": 0,
+		      "pathFon": "string",
+		      "pathAvatar": "string"
+		    }
+		  }
+		}
+  ```  
