@@ -1,18 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using ParadiseApi.Configurations;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using ParadiseApi.Models;
 using AutoMapper;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Dto;
 using ParadiseApi.Helper;
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace ParadiseApi.Controllers
 {

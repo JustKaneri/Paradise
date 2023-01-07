@@ -30,6 +30,28 @@
 
 (Auth) = Authorization required
 
+### Api
+
+> #### get_status
+ 
+ 	URL https://[host-name]/api/status
+
+  Result:
+  	string
+
+> #### get_version
+ 
+ 	URL https://[host-name]/api/version
+
+  Result:
+  ```json
+		[
+		  "string"
+		]
+  ```
+
+____
+
 ### Authentication
 
 > #### regestry 
