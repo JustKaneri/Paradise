@@ -28,6 +28,8 @@
 
 ## End Points
 
+(Auth) = Authorization required
+
 ### Authentication
 
 > #### regestry 
@@ -78,7 +80,7 @@
 	}
   ```
 
-> #### refresh_tokens
+> #### refresh_tokens (`Auth`)
 
   URL https://[host-name]/api/v1/authentication/refresh-token
 
@@ -99,7 +101,7 @@
 	}
   ```  
 
-> #### revoked_tokens
+> #### revoked_tokens (`Auth`)
 
   URL https://[host-name]/api/v1/authentication/refresh-token
 
@@ -119,6 +121,8 @@
 	  "error": "string"
 	}
   ```  
+
+____
 
 ### Comment
 
@@ -151,7 +155,7 @@
 			]
   ```
 
-> #### new_comment
+> #### new_comment (`Auth`)
 
   URL https://[host-name]/api/v1/comment/new-comment
 
@@ -184,6 +188,8 @@
 		}
   ```  
 
+____
+
 ### Profile
 
 > #### get_profile
@@ -203,7 +209,7 @@
 		}
   ```  
 
-> #### upload_avatar
+> #### upload_avatar (`Auth`)
 
   URL https://[host-name]/api/v1/profile/user/profile/upload-avatar
 
@@ -220,7 +226,7 @@
 		}
   ```  
 
-> #### upload_fon
+> #### upload_fon (`Auth`)
 
   URL https://[host-name]/api/v1/profile/user/profile/upload-fon
 
@@ -237,9 +243,11 @@
 		}
   ```  
 
+____
+
 ### Subscription
 
-> #### get_subscriptions
+> #### get_subscriptions (`Auth`)
 
   URL https://[host-name]/api/v1/subscription/subscriptions
 
@@ -273,7 +281,7 @@
   Result:
   True or false 
 
-> #### subscrib
+> #### subscrib (`Auth`)
 
   URL https://[host-name]/api/v1/subscription/user/[Parameters]/subscribe
 
@@ -297,7 +305,7 @@
 		}
   ```  
 
-> #### unsubscrib
+> #### unsubscrib (`Auth`)
 
   URL https://[host-name]/api/v1/subscription/user/[Parameters]/unsubscribe
 
@@ -321,6 +329,7 @@
 		}
   ```  
 
+____
 
 ### Responce_Video
 
@@ -339,7 +348,7 @@
 		}
   ```  
 
-> #### set_like
+> #### set_like (`Auth`)
 
   URL https://[host-name]/api/v1/responce-video/like?idVideo=[Parameters]
 
@@ -358,7 +367,7 @@
 		}
   ```  
 
-> #### set_dislike
+> #### set_dislike (`Auth`)
 
   URL https://[host-name]/api/v1/responce-video/dislike?idVideo=[Parameters]
 
@@ -377,7 +386,7 @@
 		}
   ```  
 
-> #### reset
+> #### reset (`Auth`)
 
   URL https://[host-name]/api/v1/responce-video/reset?idVideo=[Parameters]
 
@@ -396,6 +405,8 @@
 		}
   ```  
 
+____
+
 ### User_info
 
 > #### info_user
@@ -413,9 +424,11 @@
 		}
   ```  
 
+____
+
 ### User_Role
 
-> #### roles
+> #### roles (`Auth`)
 
   URL https://[host-name]/api/v1/user-role/roles
 
@@ -429,9 +442,11 @@
 		]
   ```  
 
+____
+
 ### Users
 
-> #### get_all_users
+> #### get_all_users (`Auth`)
 
   URL https://[host-name]/api/v1/users
 
@@ -471,6 +486,8 @@
   Result:
   True or false
 
+____
+
 ### Video
 
 > #### get_all_video
@@ -502,7 +519,7 @@
 		]
   ```  
 
-> #### get_video_favorite
+> #### get_video_favorite (`Auth`)
 
   URL https://[host-name]/api/v1/video/video/favorite
 
@@ -630,7 +647,7 @@
 		]
   ```  
 
-> #### add_view
+> #### add_view (`Auth`)
 
   URL https://[host-name]/v1/video/video/[Parameters]/add-views
 
@@ -659,7 +676,7 @@
 		}
   ```  
 
-> #### create_video(1/3)
+> #### create_video(1/3) (`Auth`)
 
   URL https://[host-name]/v1/video/video/create
 
@@ -695,7 +712,7 @@
 		}
   ```  
   
-> #### create_video(2/3)
+> #### create_video(2/3) (`Auth`)
 
   URL https://[host-name]/v1/video/video/[Parameters]/upload-video
 
@@ -728,7 +745,7 @@
 		}
   ```  
 
-> #### create_video(3/3)
+> #### create_video(3/3) (`Auth`)
 
   URL https://[host-name]/v1/video/video/[Parameters]/upload-poster
 
