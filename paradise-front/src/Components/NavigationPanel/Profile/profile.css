@@ -1,0 +1,12 @@
+.profile{
+    width: 10%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-img{
+    max-width: 100%;
+    max-height: 100%;
+}
