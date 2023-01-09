@@ -22,3 +22,7 @@
     color: white;
     font-size: 2em;
 }
+
+.modal-button:hover .button-name {
+    text-shadow: 0px 0px 10px #00DFA2;
+}

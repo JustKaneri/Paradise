@@ -3,9 +3,15 @@ import images from '../../../Other/DictonaryImage';
 import ModalButton from '../ModalButton/ModalButton';
 import './modalMenu.css'
 
-const ModalMenu = (IsVisible) => {
+const ModalMenu = ({IsVisible}) => {
+
+    let styles = 'modal';
+    
+    if(IsVisible)
+        styles += ' active';
+
     return (
-        <div className='modal'>
+        <div className={styles}>
             <div className='modal-content'>
                 <ModalButton 
                     srcImage = {images.logIn}

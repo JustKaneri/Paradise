@@ -11,7 +11,6 @@ const Navigation = () => {
             <MainButton></MainButton>
             <Search></Search>
             <Profile/>
-            <ModalMenu></ModalMenu>
         </div>
     );
 }
