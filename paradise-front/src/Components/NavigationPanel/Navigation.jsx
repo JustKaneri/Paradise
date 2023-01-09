@@ -1,4 +1,5 @@
 import React from 'react';
+import ModalMenu from '../ModalWindow/ModalMenu/ModalMenu';
 import MainButton from './MainButton/MainButton';
 import './navigation.css';
 import Profile from './Profile/Profile';
@@ -10,6 +11,7 @@ const Navigation = () => {
             <MainButton></MainButton>
             <Search></Search>
             <Profile/>
+            <ModalMenu></ModalMenu>
         </div>
     );
 }
