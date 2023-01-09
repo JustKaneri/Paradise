@@ -8,6 +8,7 @@
 }
 
 .modal-content {
+    position: relative;
     margin-top: 5%;
     margin-right: 3%;
     padding: 25px;
@@ -16,11 +17,29 @@
     border: 2px solid #00DFA2;
     width: 284px;
     height: 168px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 10%;
 }
 
 
 .modal.active {
+    background: #1a1a1a96;
     display: flex;
     justify-content: right;
     align-items: flex-start;
+}
+
+.content-autor{
+    color: white;
+    font-size: 1em;
+    display: block;
+    position: absolute;
+    width: 100%;
+    bottom: 5px;
+    left: 0;
+    text-align: center;
 }

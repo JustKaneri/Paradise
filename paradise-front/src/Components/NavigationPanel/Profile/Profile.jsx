@@ -1,10 +1,11 @@
 import React from 'react';
+import images from '../../../Other/DictonaryImage';
 import './profile.css'
 
 const Profile = () => {
     return (
         <div className='profile'>
-            <img className='profile-img' src={require('../../../Assets/Profile.png')}></img>
+            <img className='profile-img' src={images.mainProfile}></img>
         </div>
     );
 }
