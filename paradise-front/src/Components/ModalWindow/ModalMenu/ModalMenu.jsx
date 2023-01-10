@@ -3,7 +3,7 @@ import images from '../../../Other/DictonaryImage';
 import ModalButton from '../ModalButton/ModalButton';
 import './modalMenu.css'
 
-const ModalMenu = ({IsVisible}) => {
+const ModalMenu = ({IsVisible,children}) => {
 
     let styles = 'modal';
     
@@ -13,16 +13,7 @@ const ModalMenu = ({IsVisible}) => {
     return (
         <div className={styles}>
             <div className='modal-content'>
-                <ModalButton 
-                    srcImage = {images.logIn}
-                    handler = { () => alert('ok') }
-                    name = {'Вход'}
-                /> 
-                <ModalButton 
-                    srcImage = {images.regestry}
-                    handler = { () => alert('ok') }
-                    name = {'Регистрация'}
-                />
+                {children}
                 <span className='content-autor'>© 2022 Cradle of Desires</span>
             </div>
         </div>
