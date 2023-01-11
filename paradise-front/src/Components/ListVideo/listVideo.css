@@ -1,0 +1,11 @@
+.list-video{
+    padding-top: 5%;
+    width: 100vw;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 30px;
+}
