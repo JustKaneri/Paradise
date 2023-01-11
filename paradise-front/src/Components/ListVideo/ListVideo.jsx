@@ -50,7 +50,7 @@ const ListVideo = () => {
             "dateCreate": "2023-01-06T15:17:44.063Z",
             "countWatch": 12,
             "pathVideo": "string",
-            "pathPoster": "https://sun9-61.userapi.com/IqrzPHOzMcE2DLjKhAERBvBMquVMBQRpf2ZZqA/DZuXxcqOKH4.jpg",
+            "pathPoster": "https://w-dog.ru/wallpapers/5/5/533567594584480/eda-sladkoe-tort-tortik-pirozhnoe-krem-vkusno.jpg",
             "user": {
               "id": 4,
               "name": "User8",
