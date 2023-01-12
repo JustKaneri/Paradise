@@ -20,7 +20,7 @@ const ListVideo = () => {
   	        "id": 2,
   	        "idUser": 2,
   	        "pathFon": "string",
-  	        "pathAvatar": "https://вести35.рф/images/2018/11/22/9b846a76bf9847c29f263fc4e9f23d43.jpg"
+  	        "pathAvatar": "https://pixelbox.ru/wp-content/uploads/2022/06/risovanie-avatars-for-girls-pixelbox.ru-78.jpg"
   	      }
   	    }
   	  },
@@ -80,7 +80,7 @@ const ListVideo = () => {
                   "pathAvatar": "https://вести35.рф/images/2018/11/22/9b846a76bf9847c29f263fc4e9f23d43.jpg"
                 }
               }
-      }
+      },
   	];
 
     return (
