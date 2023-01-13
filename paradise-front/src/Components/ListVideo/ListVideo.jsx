@@ -87,6 +87,7 @@ const ListVideo = () => {
         <div className='list-video'>
             {videoArray.map((value)=>
                 <VideoItem
+                     key={value.id}
                      videoItem = {value}
                 ></VideoItem>)
             }

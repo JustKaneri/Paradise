@@ -1,0 +1,31 @@
+.btn{
+    border-radius: 10px;
+    font-size: 1.5em;
+    width: 214px;
+    height: 39px;
+    transition: all 0.3s ease;
+    font-family: 'Caveat', cursive;
+    cursor: pointer;
+}
+
+.btn-not-sub{
+    background: #1A1A1A;
+    border: 1px solid #00DFA2; 
+    color: white;
+}
+
+.btn-not-sub:hover{
+    color: #00DFA2;
+}
+
+.btn-sub:hover{
+    background-color: #00DFA2;
+    border: 1px solid #1A1A1A;
+}
+
+.btn-sub{
+    background: #ffffff;
+    border: 1px solid #00DFA2;
+    color: #1A1A1A;
+
+}
