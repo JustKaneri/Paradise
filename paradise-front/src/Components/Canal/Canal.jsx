@@ -7,7 +7,6 @@ const Canal = () => {
     return (
         <div>
             <ProfileCanal/>
-            <ButtonSubscrib/>
             <ListVideo/>
         </div>
     );
