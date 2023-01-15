@@ -5,10 +5,10 @@ const ProfileInfo = () => {
     return (
         <div className={styles.block}>
             <span className={styles.info}>
-                Подписчиков: 
+                Подписчиков: 0
             </span>
             <span className={styles.info}>
-                Просмотров: 
+                Просмотров: 0
             </span>
         </div>
     );
