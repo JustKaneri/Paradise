@@ -1,5 +1,7 @@
 .box{
-    width: 22vw;
+    position: relative;
+    width: 23%;
+    min-width: 200px;
     height: auto;
     border-radius: 10px;
     background-color: #1a1a1a26;
