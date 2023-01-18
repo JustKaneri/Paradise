@@ -1,4 +1,5 @@
 import React from 'react';
+import AuthButtons from './AuthButton/AuthButtons';
 import AuthInput from './AuthInput/AuthInput';
 import AuthName from './AuthName/AuthName';
 import styles from './authWindow.module.css'
@@ -13,9 +14,13 @@ const AuthWindow = () => {
                         nameLabel={'Логин'}
                         inputName={'login'}
                     />
-                    <AuthInput 
+                    <AuthInput
+                        isPassword={true}
                         nameLabel={'Пароль'}
                         inputName={'password'}
+                    />
+                    <AuthButtons
+                        status = {'login'}
                     />
                 </div>
             </div>
