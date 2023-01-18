@@ -20,7 +20,7 @@ const AuthWindow = () => {
                         inputName={'password'}
                     />
                     <AuthButtons
-                        status = {'login'}
+                        status = {'log'}
                     />
                 </div>
             </div>

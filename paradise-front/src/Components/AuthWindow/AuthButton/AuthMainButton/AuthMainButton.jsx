@@ -1,10 +1,15 @@
 import React from 'react';
+import '../authButton.css';
 
-const AuthMainButton = ({status}) => {
+const AuthMainButton = ({status,handler}) => {
+
+    const content = status === "reg" ? "Зарегистрироваться": "Вход";
+    
     return (
-        <div>
-            
-        </div>
+        <button className='auth_button button_big'
+                onClick={()=> handler}>
+            {content}
+        </button>
     );
 }
 
