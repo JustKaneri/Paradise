@@ -2,8 +2,8 @@
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
-    margin-bottom: 2%;
-    height: 15%;
+    margin-bottom: 4%;
+    height: 6%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -11,7 +11,7 @@
 }
 
 .label{
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .input{
@@ -19,12 +19,9 @@
     box-sizing: border-box;
     line-height: 100%;
     border: 2px solid #1A1A1A;
-    height: 80%;
     border-radius: 10px;
     padding-left: 2%;
-    border-radius: 10px;
     outline-style: none;
     font-size: 1.5em;
-    vertical-align: center;
     font-family: 'Caveat', cursive;
 }

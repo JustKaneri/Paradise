@@ -17,6 +17,10 @@
     width: 98%;
     height: 98%;
     border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .auth_back{
@@ -28,7 +32,7 @@
     border: 1px solid #1A1A1A;
     border-radius: 10px;
     width: 30%;
-    height: 70vh
+    height: 75vh
 }
 
 .auth_back::before{
