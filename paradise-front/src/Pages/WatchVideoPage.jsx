@@ -1,0 +1,21 @@
+import React from 'react';
+import Video from '../Components/Video/Video';
+
+
+const WatchVideoPage = () => {
+
+    const video = {
+        src: 'https://localhost:7077/videos/1682f9c30-03a8-48e6-b850-64a010c273d520221202192821529.mp4',
+        poster:''
+    }
+
+    return (
+        <div style={{paddingTop:"10vh"}}>
+            <Video 
+                video = {video}
+            />
+        </div>
+    );
+}
+
+export default WatchVideoPage;
