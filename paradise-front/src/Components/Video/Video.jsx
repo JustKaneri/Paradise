@@ -1,6 +1,7 @@
 import React from 'react';
 import Player from 'react-custom-player';
 import DiscriptVideo from '../DiscriptVideo/DiscriptVideo';
+import VideoControlls from '../VideoControlls/VideoControlls';
 import styles from './video.module.css';
 
 const Video = ({video}) => {
@@ -15,6 +16,7 @@ const Video = ({video}) => {
             <DiscriptVideo
                 content = {content}
             />
+            <VideoControlls/>
         </div>
     );
 }
