@@ -11,7 +11,7 @@ const ButtonSubscrib = () => {
     const styleName = !isSub? "btn btn-not-sub" : "btn btn-sub";
 
     return (
-        <button className = {styleName}>
+        <button className = {styleName} onClick={()=> setIsSub(!isSub)}>
             {content}
         </button>
     );
