@@ -2,6 +2,7 @@ import React from 'react';
 import ButtonSubscrib from '../ButtonSubscrib/ButtonSubscrib';
 import styles from './videoControlls.module.css'
 import VideoName from './VideoName/VideoName';
+import VideoUser from './VideoUser/VideoUser';
 
 const VideoControlls = () => {
 
@@ -11,6 +12,7 @@ const VideoControlls = () => {
         <div className={styles.box}>
             <VideoName name={name}/>
             <div className={styles.box_elements}>
+                <VideoUser />
                 <ButtonSubscrib></ButtonSubscrib>
             </div>
         </div>
