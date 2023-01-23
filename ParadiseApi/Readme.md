@@ -355,9 +355,9 @@ ____
 
 ### Responce_Video
 
-> #### info_responce
+> #### count_responce
 
-  URL https://[host-name]/api/v1/responce-video/video/[Parameters]/info-responce
+  URL https://[host-name]/api/v1/responce-video/video/[Parameters]/count-responce
 
   Parameters
   idVideo = integer
@@ -369,6 +369,25 @@ ____
 		  "countDisLike": 0
 		}
   ```  
+
+> #### info_responce (`Auth`)
+
+  URL https://[host-name]/api/v1/responce-video/video/[Parameters]/info-responce
+
+  Parameters
+  idVideo = integer
+
+  Result:
+  ```json
+  	{
+		  "id": 0,
+		  "userId": 0,
+		  "videoId": 0,
+		  "isLike": true,
+		  "isDisLike": true,
+		  "dateResponce": "2023-01-06T11:59:41.161Z"
+		}
+  ```   
 
 > #### set_like (`Auth`)
 

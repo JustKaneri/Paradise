@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using Azure;
+using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using ParadiseApi.Data;
 using ParadiseApi.Dto;
@@ -15,6 +16,41 @@ namespace ParadiseApi.Repository
         public ResponceVideoRepository(DataContext context)
         {
             _context = context;
+        }
+
+        public async Task<RequestResult<ResponceVideo>> GetResponceForVideo(int idVideo, int idUser)
+        {
+            RequestResult<ResponceVideo> request = new RequestResult<ResponceVideo>();
+
+            if (ExistenceModel.User(idUser, _context) == null)
+            {
+                request.Error = "User not existence";
+                request.Status = StatusRequest.Error;
+                return request;
+            }
+
+            if (ExistenceModel.Video(idVideo, _context) == null)
+            {
+                request.Error = "Video not existence";
+                request.Status = StatusRequest.Error;
+                return request;
+            }
+
+
+            request.Result = await _context.ResponceVideos
+                                                    .Where(rp => rp.UserId == idUser)
+                                                    .Where(rp => rp.VideoId == idVideo)
+                                                    .DefaultIfEmpty()
+                                                    .FirstAsync();
+
+            if (request.Result == null)
+            {
+                request.Error = "Responce not existence";
+                request.Status = StatusRequest.Error;
+                return request;
+            }
+
+            return request;
         }
 
         public async Task<RequestResult<ResponceVideo>> SetDisLike(int idVideo, int idUser)

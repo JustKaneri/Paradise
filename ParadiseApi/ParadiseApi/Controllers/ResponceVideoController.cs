@@ -23,16 +23,42 @@ namespace ParadiseApi.Controllers
         }
 
         /// <summary>
+        /// Get count responce for current video
+        /// </summary>
+        /// <param name="idVideo"></param>
+        /// <returns></returns>
+        [HttpGet("video/{idVideo}/count-responce")]
+        [ProducesResponseType(200, Type = typeof(ResponceInfoDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ResponceCount(int idVideo)
+        {
+            RequestResult<ResponceInfoDto> requestRes = await _responce.GetResponceInfo(idVideo);
+
+            if (requestRes.Status == StatusRequest.Error)
+                return BadRequest(requestRes.Error);
+
+            return Ok(requestRes.Result);
+        }
+
+        /// <summary>
         /// Get responce for current video
         /// </summary>
         /// <param name="idVideo"></param>
         /// <returns></returns>
         [HttpGet("video/{idVideo}/info-responce")]
-        [ProducesResponseType(200, Type = typeof(ResponceInfoDto))]
+        [Authorize(Roles = "Administrator,User")]
+        [ProducesResponseType(200, Type = typeof(ResponceVideo))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResponceInfo(int idVideo)
         {
-            RequestResult<ResponceInfoDto> requestRes = await _responce.GetResponceInfo(idVideo);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
+            RequestResult<ResponceVideo> requestRes = await _responce.GetResponceForVideo(idVideo, idUser);
 
             if (requestRes.Status == StatusRequest.Error)
                 return BadRequest(requestRes.Error);

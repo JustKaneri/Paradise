@@ -6,6 +6,7 @@ namespace ParadiseApi.Interfaces
     public interface IResponceVideoRepository
     {
         public Task<RequestResult<ResponceInfoDto>> GetResponceInfo(int idVideo);
+        public Task<RequestResult<ResponceVideo>> GetResponceForVideo(int idVideo, int idUser); 
         public Task<RequestResult<ResponceVideo>> SetLike(int idVideo, int idUser);
         public Task<RequestResult<ResponceVideo>> SetDisLike(int idVideo, int idUser);
         public Task<RequestResult<ResponceVideo>> ResetResponce(int idVideo, int idUser);
