@@ -1,5 +1,6 @@
 import React from 'react';
 import DiscriptVideo from '../Components/DiscriptVideo/DiscriptVideo';
+import ListComments from '../Components/ListComments/ListComments';
 import Video from '../Components/Video/Video';
 
 
@@ -15,6 +16,7 @@ const WatchVideoPage = () => {
             <Video 
                 video = {video}
             />
+            <ListComments/>
         </div>
     );
 }

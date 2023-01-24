@@ -1,0 +1,15 @@
+.box{
+    width: 90%;
+    height: 30%;
+    background: linear-gradient(90.96deg, #00DFA2 0.13%, rgba(0, 223, 162, 0) 80.37%), #F5F5DC;
+    border: 2px solid #1A1A1A;
+    border-radius: 15px 0px;
+}
+
+.avatar{
+    margin: 10px;
+    width: 3.5em;
+    height: 3.5em;
+    border-radius: 100%;
+    object-fit: cover;
+}
