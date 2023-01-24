@@ -1,4 +1,5 @@
 .box{
+    position: relative;
     margin-top: 30px;
     margin-bottom: 30px;
     width: 100%;
@@ -8,4 +9,10 @@
     flex-direction: column;
     align-items: center;
     row-gap: 20px;
+}
+
+.article{
+    width: 95%;
+    font-size: 2.5em;
+    padding-left: 1%;
 }

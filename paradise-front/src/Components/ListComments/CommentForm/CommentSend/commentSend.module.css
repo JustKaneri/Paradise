@@ -1,0 +1,22 @@
+.btn_send{
+    position: relative;
+    left: calc(100%-214px);
+    width: 10%;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    width: 214px;
+    height: 39px;
+    transition: all 0.3s ease;
+    font-family: 'Caveat', cursive;
+    cursor: pointer;
+    background: #1A1A1A;
+    border: 1px solid #00DFA2; 
+    color: white;
+}
+
+.btn_send:hover{
+    color: #00DFA2;
+}
