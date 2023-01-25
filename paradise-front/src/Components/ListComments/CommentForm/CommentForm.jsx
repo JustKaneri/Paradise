@@ -6,12 +6,12 @@ import CommentSend from './CommentSend/CommentSend';
 const CommentForm = () => {
 
     const [string,setString] = useState('');
-    //Здесь должен быть код на ограничения кол-во символов
     
     return (
         <div className={styles.box}>
             <textarea
                 className={styles.input}
+                maxlength='300'
                 onChange={(event)=> setString(event.target.value)}
             ></textarea>
             <span className={styles.counter}>
