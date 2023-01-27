@@ -1,6 +1,7 @@
 import React from 'react';
 import ControlPanel from './ModalControl/ControlPanel/ControlPanel';
 import styles from './modalVideo.module.css'
+import ModalVideoButton from './ModalVideoButton/ModalVideoButton';
 import ModalVideoContent from './ModalVideoContent/ModalVideoContent';
 
 const ModalVideo = () => {
@@ -9,7 +10,9 @@ const ModalVideo = () => {
             <div className={styles.window}>
                 <ControlPanel/>
                 <ModalVideoContent/>
-            
+                <ModalVideoButton>
+                    Добавить
+                </ModalVideoButton>
             </div>
         </div>
     );

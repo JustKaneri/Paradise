@@ -15,5 +15,9 @@
     background: #F5F5DC;
     border: 4px solid #00DFA2;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import ContentFile from './ContentFile/ContentFile';
 import ContentText from './ContentText/ContentText';
 import styles from './modalVideoContent.module.css';
 
@@ -17,6 +18,7 @@ const ModalVideoContent = () => {
                 video = {newVideo}
                 handler = {setNewVideo}
             />
+            <ContentFile/>
         </div>
     );
 }
