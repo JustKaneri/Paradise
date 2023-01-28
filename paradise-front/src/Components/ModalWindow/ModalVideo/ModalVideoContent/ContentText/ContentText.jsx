@@ -1,15 +1,10 @@
 import React from 'react';
+import { useState } from 'react';
 import styles from './contentText.module.css'
 
-const ContentText = ({video , handler}) => {
+const ContentText = ({inputName , inputDisc}) => {
 
-    const changeName = (event) =>{
-        handler({...video, name: event.target.value});
-    }
-
-    const changeDiscrip = (event) =>{
-        handler({...video, discript: event.target.value});
-    }
+    const [lengthInput,setLengthInput] = useState({name:0,disc:0});
 
     return (
         <div className={styles.box}>
@@ -18,12 +13,13 @@ const ContentText = ({video , handler}) => {
                     Название
                 </span>
                 <textarea
+                    ref ={inputName}
                     maxLength='80'
-                    onChange={(event) => changeName(event)}
-                    className={styles.input}>
+                    className={styles.input}
+                    onChange={(event) => setLengthInput({...lengthInput, name: event.target.value.length})}>
                 </textarea>
                 <span className={styles.counter}>
-                    {video.name.length} / 80
+                    {lengthInput.name} /80
                 </span>
             </div>
             <div className={styles.box_discr}>
@@ -31,12 +27,13 @@ const ContentText = ({video , handler}) => {
                    Описание:
                 </span>
                 <textarea
+                    ref = {inputDisc}
                     maxLength='300'
-                    onChange={(event) => changeDiscrip(event)} 
-                    className={styles.input}>
+                    className={styles.input}
+                    onChange={(event) => setLengthInput({...lengthInput, disc: event.target.value.length})}>
                 </textarea>
                 <span className={styles.counter}>
-                    {video.discript.length} / 300
+                    {lengthInput.disc}  / 300
                 </span>
             </div>
         </div>

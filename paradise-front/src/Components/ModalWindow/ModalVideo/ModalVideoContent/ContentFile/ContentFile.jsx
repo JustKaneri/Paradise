@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useMemo } from 'react';
 import { useRef } from 'react';
 import ModalVideoButton from '../../ModalVideoButton/ModalVideoButton';
 import styles from './contentFile.module.css';
@@ -57,6 +58,14 @@ const ContentFile = () => {
         fr.readAsDataURL(file);
     }
 
+    const renderVideo = useMemo(() => (
+        <video
+            ref = {video}
+            className={styles.video}
+            controls
+        />
+    ), [files.pathVideo])
+
     return (
         <div className={styles.box}>
             <input ref={inputFile} id="file-input" 
@@ -77,11 +86,7 @@ const ContentFile = () => {
                    />
             <div className={styles.box_block}>
                 <span className={styles.article_video}>Видео</span>
-                <video
-                    ref = {video}
-                    className={styles.video}
-                    controls
-                    />
+                {renderVideo}
                 <ModalVideoButton handler={selectVideo}>
                     Выбрать
                 </ModalVideoButton>
