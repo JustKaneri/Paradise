@@ -9,11 +9,11 @@ const ContentFile = () => {
     const inputFile = useRef(null); 
     const inputFileVideo = useRef(null);
     const poster =useRef(null);
+    const video = useRef(null);
     const [files,setFiles] = useState({
         pathVideo:null,
         pathPoster:null
     })
-
 
     const selectImage = () =>{
         inputFile.current.click();
@@ -27,19 +27,25 @@ const ContentFile = () => {
         event.stopPropagation();
         event.preventDefault();
         var file = event.target.files[0];
+
+        let refObj = null;
        
-        if(type="img")
+        if(type=='img'){
             setFiles({...files,pathPoster:inputFile.current.files[0]});
-        else
+            refObj = poster;
+        }            
+        else{
             setFiles({...files,pathVideo:inputFileVideo.current.files[0]});
+            refObj = video;
+        }
+        
+        getUrl(file, refObj );
     }
 
     const getUrl = (file,element) => {
 
         if(file === null)
             return '';
-
-        console.log(element);
 
         let src = '';
 
@@ -70,17 +76,20 @@ const ContentFile = () => {
                    onChange={(event) => onChangeFile(event,'video')}
                    />
             <div className={styles.box_block}>
-                <span className={styles.article}>Видео:</span>
-                <video src={files.pathVideo} className={styles.video}/>
+                <span className={styles.article_video}>Видео</span>
+                <video
+                    ref = {video}
+                    className={styles.video}
+                    controls
+                    />
                 <ModalVideoButton handler={selectVideo}>
                     Выбрать
                 </ModalVideoButton>
             </div>
             <div className={styles.box_block}>
-                <span className={styles.article}>Обложка:</span>
+                <span className={styles.article_poster}> Обложка</span>
                 <img 
                     ref={poster}
-                    src={getUrl(files.pathPoster,poster)}
                     className={styles.image}
                 />
                 <ModalVideoButton handler={selectImage}>
