@@ -1,19 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using ParadiseApi.Data;
-using ParadiseApi.Interfaces;
-using ParadiseApi.Repository;
-using System;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
 using ParadiseApi.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using ParadiseApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -67,9 +62,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<LoggingMiddleware>();
 app.UseHttpsRedirection();
 
-app.UseHttpLogging();
+//app.UseHttpLogging();
 
 app.UseAuthentication();
 
