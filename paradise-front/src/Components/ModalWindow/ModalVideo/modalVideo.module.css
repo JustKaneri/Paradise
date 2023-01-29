@@ -10,7 +10,9 @@
 }
 
 .window{
+    display: inline-block;
     width: 80vw;
+    min-width: 600px;
     height: 85vh;
     background: #F5F5DC;
     border: 4px solid #00DFA2;

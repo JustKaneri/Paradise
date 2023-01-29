@@ -17,14 +17,6 @@ const ContentFile = () => {
         pathPoster:null
     })
 
-    const selectImage = () =>{
-        inputFile.current.click();
-    }
-    
-    const selectVideo = () =>{
-        inputFileVideo.current.click();
-    }
-
     const renderVideo = useMemo(() => (
         <video
             ref = {video}
@@ -54,7 +46,8 @@ const ContentFile = () => {
             <div className={styles.box_block}>
                 <span className={styles.article_video}>Видео</span>
                 {renderVideo}
-                <ModalVideoButton handler={selectVideo}>
+                <ModalVideoButton 
+                    handler={() => inputFileVideo.current.click()}>
                     Выбрать
                 </ModalVideoButton>
             </div>
@@ -64,7 +57,8 @@ const ContentFile = () => {
                     ref={poster}
                     className={styles.image}
                 />
-                <ModalVideoButton handler={selectImage}>
+                <ModalVideoButton 
+                    handler={() => inputFile.current.click()}>
                     Выбрать
                 </ModalVideoButton>
             </div>
