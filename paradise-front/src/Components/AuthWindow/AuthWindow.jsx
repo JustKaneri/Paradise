@@ -3,12 +3,15 @@ import styles from './authWindow.module.css'
 import AuthLogIn from './AuthWindowContent/AuthLogIn';
 import AuthRegestry from './AuthWindowContent/AuthRegestry';
 
-const AuthWindow = () => {
+const AuthWindow = ({type}) => {
     return (
         <div className={styles.box}>
             <div className={styles.auth_back}>
                 <div className={styles.box_auth}>
-                   <AuthRegestry/>
+                {type == 'auth'
+                    ?<AuthLogIn/>
+                    :<AuthRegestry/> 
+                }   
                 </div>
             </div>
         </div>
