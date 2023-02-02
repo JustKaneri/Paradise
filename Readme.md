@@ -15,7 +15,6 @@
 
 
 > #### Data Base
-
 >> MS Sql Server for main data
-
+>> 
 >> SQLite for logging
