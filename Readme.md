@@ -6,15 +6,16 @@
 
 ## Stack technology
 
-> Backend
+> #### Backend
 >> Asp.Net core 6 (Rest Api)
 
 
-> Frontend
+> #### Frontend
 >> React.js
 
 
-> Data Base
+> #### Data Base
+
 >> MS Sql Server for main data
 
 >> SQLite for logging
