@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import './search.css'
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
+
+    const router = useNavigate();
 
     const [searhValue,setSearhValue] = useState('');
 
     return (
         <div className='search'>
-            <input className='search-input' type='text'></input>
-            <button className='search-button'></button>
+            <input 
+                onChange={(event) => setSearhValue(event.target.value)}
+                className='search-input' 
+                type='text'></input>
+            <button 
+                onClick={()=> router(`/video/searh/${searhValue}`)}
+                className='search-button'>    
+            </button>
         </div>
     );
 }

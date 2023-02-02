@@ -10,6 +10,8 @@
 }
 
 .video{
+    background: linear-gradient(135.38deg, rgba(0, 223, 162, 0.1) 27.88%, rgba(0, 0, 0, 0.1) 68.1%);
     width: 60%;
     height: 80%;
+    border-radius: 10px;
 }

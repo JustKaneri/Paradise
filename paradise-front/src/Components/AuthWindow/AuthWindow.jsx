@@ -8,7 +8,7 @@ const AuthWindow = ({type}) => {
         <div className={styles.box}>
             <div className={styles.auth_back}>
                 <div className={styles.box_auth}>
-                {type == 'auth'
+                {type == 'login'
                     ?<AuthLogIn/>
                     :<AuthRegestry/> 
                 }   

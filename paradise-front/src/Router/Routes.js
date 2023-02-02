@@ -13,8 +13,9 @@ export const privatRoutes = [
 
 export const publicRoutes = [
     {path:'/login', element: <AuthPage/>, exact: true },
-    {path:'regestry',element: <RegestryPage/>, exact: true},
+    {path:'/regestry',element: <RegestryPage/>, exact: true},
     {path:'/main', element: <VideoPage/>, exact: true },
     {path:'/profile/:id', element: <ProfilePage/>, exact: true },
+    {path:'/video/searh/:searh', element: <VideoPage/>, exact: true },
     {path:'/video/:id', element: <WatchVideoPage/>, exact: true }
 ]
