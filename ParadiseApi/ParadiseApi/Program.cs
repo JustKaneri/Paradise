@@ -22,6 +22,9 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddDbContext<LogDataContext>(options => {
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqlLiteConnection"));
+});
 
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 

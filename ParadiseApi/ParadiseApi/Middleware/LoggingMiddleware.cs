@@ -1,33 +1,41 @@
-﻿namespace ParadiseApi.Middleware
+﻿using ParadiseApi.Data;
+using ParadiseApi.Models;
+
+namespace ParadiseApi.Middleware
 {
     public class LoggingMiddleware
     {
         public readonly RequestDelegate _next;
+
         public LoggingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, LogDataContext contextDB)
         {
             await _next.Invoke(context);
 
-            string data = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
-            string requestUser = context.Request.Headers.UserAgent.ToString();
-            string requestBody = "";
+            Logging log = new Logging();
+
+            log.Date = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+            log.RequestBody = "";
             using (var reader = new StreamReader(context.Request.Body))
             {
-                requestBody = await reader.ReadToEndAsync();
+                log.RequestBody = await reader.ReadToEndAsync();
             }
-            string requestPath = context.Request.Path;
-            string responce = context.Response.StatusCode.ToString();
+            log.RequestPath = context.Request.Path;
+            log.StatusCode = context.Response.StatusCode;
 
-
-            Console.WriteLine($"{data}" +
-                              $"\t\t\n User:{requestUser} " +
-                              $"\t\t\n Request body: {requestBody} " +
-                              $"\t\t\n Path {requestPath}" +
-                              $"\t\t\n Status {responce}");
+            try
+            {
+                contextDB.Logs.Add(log);
+                await contextDB.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Not save logs " + e);
+            }
 
         }
     }
