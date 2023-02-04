@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ParadiseApi.Middleware;
+using ParadiseApi.Other;
+using Azure.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +65,7 @@ builder.Services.AddSwaggerGen(options => SwaggerConfig.AddConfig(options));
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -72,6 +75,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("corsapp");
 app.UseMiddleware<LoggingMiddleware>();
+app.Use(async (context, next) =>
+{
+    if (ApplicationURL.Url != "")
+        ApplicationURL.Url = context.Request.Host.ToString();
+
+    await next.Invoke();
+});
+
 app.UseHttpsRedirection();
 
 //app.UseHttpLogging();
