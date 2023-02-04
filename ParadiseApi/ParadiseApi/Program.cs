@@ -16,6 +16,11 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //pattern Repository
 builder.ConnectPaternRepository();
 
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<DataContext>(options =>
@@ -65,6 +70,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("corsapp");
 app.UseMiddleware<LoggingMiddleware>();
 app.UseHttpsRedirection();
 
