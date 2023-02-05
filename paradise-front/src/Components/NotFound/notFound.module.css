@@ -1,0 +1,39 @@
+.box{
+    padding-top: 10vh;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.article{
+    font-size:5em;
+    color: #1A1A1A;
+}
+
+.code{
+    color: #00DFA2;
+    animation-name: changeColor;
+    animation-duration:3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.button{
+    border-radius: 10px;
+    font-size: 2em;
+    width: 250px;
+    height: 50px;
+    transition: all 0.3s ease;
+    font-family: 'Caveat', cursive;
+    cursor: pointer;
+    background: rgb(26, 26, 26);
+    border: 1px solid #00dfa2; 
+    color: white;
+}
+
+.button:hover{
+    color: #00DFA2;
+}

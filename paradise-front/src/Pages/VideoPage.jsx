@@ -5,6 +5,7 @@ import VideoServis from '../Api/VideoServis/VideoServis';
 import ListVideo from '../Components/ListVideo/ListVideo';
 import { useFetching } from '../UserHook/useFeatching';
 import Loader from '../Components/Loader/Loader';
+import NotFound from '../Components/NotFound/NotFound';
 
 const VideoPage = () => {
 
@@ -24,9 +25,11 @@ const VideoPage = () => {
         <div>
         {isLoading
             ? <Loader/>
-            : <ListVideo
-                videos={videos}    
-              />
+            : videos.length > 0
+                ? <ListVideo
+                    videos={videos}    
+                  />
+                : <NotFound/>
         }
         </div>
     );
