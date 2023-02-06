@@ -6,4 +6,10 @@ export default class VideoServis{
 
         return responce;
     }
+
+    static async getCurrentVideo(id){
+        const responce = await axios.get('https://localhost:7077/api/v1/video/videos/'+id);
+
+        return responce;
+    }
 }

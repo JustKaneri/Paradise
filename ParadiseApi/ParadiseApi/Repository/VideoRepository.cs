@@ -268,6 +268,29 @@ namespace ParadiseApi.Repository
             return request;
         }
 
+        public async Task<RequestResult<Video>> GetSelectionVideo(int idVideo)
+        {
+            RequestResult<Video> request = new RequestResult<Video>();
+
+
+            var video = await _context.Videos.Include(v => v.User)
+                                             .Include(us => us.User.Profile)
+                                             .Where(vid => vid.Id == idVideo)
+                                             .FirstOrDefaultAsync();
+
+            if(video == null)
+            {
+                request.Error = "video not found";
+                request.Status = StatusRequest.Error;
+
+
+            }
+
+            request.Result = video;
+
+            return request;
+        }
+
         /// <summary>
         /// get all video
         /// </summary>

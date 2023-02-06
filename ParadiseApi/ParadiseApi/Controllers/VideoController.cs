@@ -45,6 +45,25 @@ namespace ParadiseApi.Controllers
         }
 
         /// <summary>
+        /// Get selection video
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("video/{idVideo}")]
+        [ProducesResponseType(200, Type = typeof(VideoDto))]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAllVideo(int idVideo)
+        {
+            var result = await _repository.GetSelectionVideo(idVideo);
+
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
+
+            var video = _mapper.Map<VideoDto>(result.Result);
+
+            return Ok(video);
+        }
+
+        /// <summary>
         /// Get favorite video for user
         /// </summary>
         /// <returns></returns>

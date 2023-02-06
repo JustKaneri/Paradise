@@ -560,6 +560,35 @@ ____
 		]
   ```  
 
+> #### get_selection_video
+
+  URL https://[host-name]/api/v1/video/video/[params]
+
+  Params: integer - idVideo
+
+  Result:
+  ```json
+  	{
+		  "id": 0,
+		  "name": "string",
+		  "discript": "string",
+		  "dateCreate": "2023-02-06T13:11:01.372Z",
+		  "countWatch": 0,
+		  "pathVideo": "string",
+		  "pathPoster": "string",
+		  "user": {
+		    "id": 0,
+		    "name": "string",
+		    "profile": {
+		      "id": 0,
+		      "idUser": 0,
+		      "pathFon": "string",
+		      "pathAvatar": "string"
+		    }
+		  }
+		}
+  ```  
+
 > #### get_video_favorite (`Auth`)
 
   URL https://[host-name]/api/v1/video/video/favorite

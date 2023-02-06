@@ -18,6 +18,8 @@ namespace ParadiseApi.Interfaces
 
         public Task<RequestResult<ICollection<Video>>> GetAllVideos();
 
+        public Task<RequestResult<Video>> GetSelectionVideo(int idVideo);
+
         public Task<RequestResult<Video>> AddViews(int idVideo);
 
         public Task<RequestResult<ICollection<Video>>> GetFavoriteVideo(int idUser);
