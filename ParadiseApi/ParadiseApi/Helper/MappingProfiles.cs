@@ -12,8 +12,16 @@ namespace ParadiseApi.Helper
         {
             CreateMap<Users, UserDto>()
                 .ForMember(pr => pr.Profile, s => s.MapFrom(s => s.Profile))
-                .ForPath(pr => pr.Profile.PathAvatar, ava => ava.MapFrom(ava => ava.Profile.PathAvatar == null ? "" : "https://" + ApplicationURL.Url + "//" + ava.Profile.PathAvatar))
-                .ForPath(pr => pr.Profile.PathFon, fon => fon.MapFrom(fon => fon.Profile.PathFon == null ? "" : "https://" + ApplicationURL.Url + "//" + fon.Profile.PathFon));
+                .ForPath(pr => pr.Profile.PathAvatar, ava => ava.MapFrom(ava => ava.Profile.PathAvatar == null
+                    ? null
+                    : ava.Profile.PathAvatar.StartsWith("http") 
+                        ? ava.Profile.PathAvatar 
+                        : "https://" + ApplicationURL.Url + "//" + ava.Profile.PathAvatar))
+                .ForPath(pr => pr.Profile.PathFon, fon => fon.MapFrom(fon => fon.Profile.PathFon == null 
+                    ? null 
+                    : fon.Profile.PathFon.StartsWith("http") 
+                        ? fon.Profile.PathFon 
+                        : "https://" + ApplicationURL.Url + "//" + fon.Profile.PathFon));
 
             CreateMap<Users, UserRegestryDto>().ReverseMap();
 
@@ -22,8 +30,8 @@ namespace ParadiseApi.Helper
 
             CreateMap<Video, VideoDto>().
                 ForMember(vid => vid.User, opt => opt.MapFrom(v => v.User))
-                .ForMember(v => v.PathVideo, s => s.MapFrom(s => s.PathVideo == "" ? "" : "https://" + ApplicationURL.Url + "//" + s.PathVideo))
-                .ForMember(v => v.PathPoster, s => s.MapFrom(s => s.PathPoster == null ? "" : "https://" + ApplicationURL.Url + "//" + s.PathPoster)); ;
+                .ForMember(v => v.PathVideo, s => s.MapFrom(s => s.PathVideo == null ? null : "https://" + ApplicationURL.Url + "//" + s.PathVideo))
+                .ForMember(v => v.PathPoster, s => s.MapFrom(s => s.PathPoster == null ? null : "https://" + ApplicationURL.Url + "//" + s.PathPoster)); ;
 
             CreateMap<Video, CreateVideoDto>().ReverseMap();
 

@@ -1,39 +1,42 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DiscriptVideo from '../Components/DiscriptVideo/DiscriptVideo';
 import ListComments from '../Components/ListComments/ListComments';
 import Video from '../Components/Video/Video';
 import { useFetching } from '../UserHook/useFeatching';
 import Loader from '../Components/Loader/Loader';
 import NotFound from '../Components/NotFound/NotFound';
+import VideoServis from '../Api/VideoServis/VideoServis';
+import { useParams } from 'react-router-dom';
 
 
 const WatchVideoPage = () => {
 
-    const [videos,setVideos] = useState([]);
+    const {id} = useParams();
+    console.log(id);
+    const [video,setVideo] = useState(null);
 
     const [fetchVideo,isLoading,error] = useFetching(async () =>{
-        const video = await VideoServis.getAll();
-        setVideos([...videos,...video.data]);
+        const videoReq = await VideoServis.getCurrentVideo(id);
+        setVideo({...videoReq.data});
       });
 
     useEffect(()=>{
         fetchVideo();
-        console.log(videos);
     },[]);
 
-
-    const video = {
-        src: 'https://localhost:7077/videos/1682f9c30-03a8-48e6-b850-64a010c273d520221202192821529.mp4',
-        poster:''
-    }
-    
     return (
         <div>
-            <Video 
-                video = {video}
-            />
-            <ListComments/>
+        {isLoading == false
+            ?<>
+                <Video 
+                    video = {video}
+                />
+                <ListComments/>
+             </>
+            : <Loader/>
+        }
+            
         </div>
     );
 }

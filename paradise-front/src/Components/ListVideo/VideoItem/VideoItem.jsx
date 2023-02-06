@@ -7,10 +7,10 @@ const VideoItem = (props) => {
     
     const router = useNavigate();
 
-    const srcAva = props.videoItem.user.profile.pathAvata == null ? images.profile : props.videoItem.user.profile.pathAvata ;
+    const srcAva = props.videoItem.user.profile.pathAvatar == null ? images.profile : props.videoItem.user.profile.pathAvatar;
 
     return (
-        <div onClick={()=> router(`/video/:${props.key}`)} key={props.videoItem.id} className={styles.box}>
+        <div onClick={()=> router(`/video/${props.videoItem.id}`)} key={props.videoItem.id} className={styles.box}>
             <img src={props.videoItem.pathPoster} 
                 className={styles.video}/>
             <div className={styles.info}>

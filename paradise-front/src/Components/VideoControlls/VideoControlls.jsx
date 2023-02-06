@@ -5,15 +5,13 @@ import VideoName from './VideoName/VideoName';
 import VideoResponce from './VideoResponce/VideoResponce';
 import VideoUser from './VideoUser/VideoUser';
 
-const VideoControlls = () => {
-
-    const name = "Wdadawdjhwdkahjdjkawjhkdhwadja daw dwa dawd daw a dw dada d daw da 1 rf czkjhk czxnm ewqe #1";
-
+const VideoControlls = ({videoInfo}) => {
+    
     return (
         <div className={styles.box}>
-            <VideoName name={name}/>
+            <VideoName name={videoInfo.name}/>
             <div className={styles.box_elements}>
-                <VideoUser />
+                <VideoUser user = {videoInfo.user}/>
                 <ButtonSubscrib></ButtonSubscrib>
                 <VideoResponce/>
             </div>
