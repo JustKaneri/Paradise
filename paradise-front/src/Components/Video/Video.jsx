@@ -4,9 +4,7 @@ import DiscriptVideo from '../DiscriptVideo/DiscriptVideo';
 import VideoControlls from '../VideoControlls/VideoControlls';
 import styles from './video.module.css';
 
-const Video = ({video}) => {
-
-    console.log(video);
+const Video = ({video,countResponce}) => {
 
     const videoPlayer = {
         src: video.pathVideo,
@@ -22,6 +20,7 @@ const Video = ({video}) => {
                 content = {video.discript}
             />
             <VideoControlls 
+                countResponce = {countResponce}
                 videoInfo = {video}
             />
         </div>

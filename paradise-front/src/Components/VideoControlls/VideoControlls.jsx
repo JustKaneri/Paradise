@@ -5,7 +5,7 @@ import VideoName from './VideoName/VideoName';
 import VideoResponce from './VideoResponce/VideoResponce';
 import VideoUser from './VideoUser/VideoUser';
 
-const VideoControlls = ({videoInfo}) => {
+const VideoControlls = ({videoInfo,countResponce}) => {
     
     return (
         <div className={styles.box}>
@@ -13,7 +13,9 @@ const VideoControlls = ({videoInfo}) => {
             <div className={styles.box_elements}>
                 <VideoUser userInfo = {videoInfo.user} />
                 <ButtonSubscrib></ButtonSubscrib>
-                <VideoResponce/>
+                <VideoResponce 
+                    idVideo={videoInfo.id}
+                    countResponce={countResponce}/>
             </div>
         </div>
     );
