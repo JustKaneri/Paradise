@@ -11,7 +11,7 @@ const VideoControlls = ({videoInfo}) => {
         <div className={styles.box}>
             <VideoName name={videoInfo.name}/>
             <div className={styles.box_elements}>
-                <VideoUser user = {videoInfo.user}/>
+                <VideoUser userInfo = {videoInfo.user} />
                 <ButtonSubscrib></ButtonSubscrib>
                 <VideoResponce/>
             </div>

@@ -9,12 +9,11 @@ import NotFound from '../Components/NotFound/NotFound';
 import VideoServis from '../Api/VideoServis/VideoServis';
 import { useParams } from 'react-router-dom';
 
-
 const WatchVideoPage = () => {
 
     const {id} = useParams();
-    console.log(id);
-    const [video,setVideo] = useState(null);
+
+    const [video,setVideo] = useState({});
 
     const [fetchVideo,isLoading,error] = useFetching(async () =>{
         const videoReq = await VideoServis.getCurrentVideo(id);
@@ -27,16 +26,17 @@ const WatchVideoPage = () => {
 
     return (
         <div>
-        {isLoading == false
-            ?<>
-                <Video 
-                    video = {video}
-                />
-                <ListComments/>
-             </>
-            : <Loader/>
+        {isLoading
+            ? <Loader/>
+            : Object.entries(video).length !== 0
+                ? <>
+                    <Video 
+                        video = {video}
+                    />
+                    <ListComments/>
+                  </>
+                : <NotFound/>
         }
-            
         </div>
     );
 }

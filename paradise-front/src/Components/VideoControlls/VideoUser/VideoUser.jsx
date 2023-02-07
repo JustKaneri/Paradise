@@ -2,22 +2,23 @@ import React from 'react';
 import styles from './videoUser.module.css'
 import images from '../../../Other/DictonaryImage';
 
-const VideoUser = ({user}) => {
-  
+const VideoUser = ({userInfo}) => {
+
+
   const getSrcAva = () =>{
     let src = images.profile;
 
-    if(user.profile != null)
-      if(user.profile.pathAvatar != null)
-        src = user.profile.pathAvatar;
+    if(userInfo.profile != null)
+      if(userInfo.profile.pathAvatar != null)
+        src = userInfo.profile.pathAvatar;
 
     return src;
   }
 
     return (
         <div className={styles.box}>
-          <img className={styles.image} src={getSrcAva()} />
-          <span className={styles.name}>{user.name}</span>   
+          <img className={styles.image} src={getSrcAva()}  />
+          <span className={styles.name}>{userInfo.name}</span>   
         </div>
     );
 }

@@ -18,7 +18,6 @@ const VideoPage = () => {
 
     useEffect(()=>{
         fetchVideo();
-        console.log(videos);
     },[]);
 
     return (

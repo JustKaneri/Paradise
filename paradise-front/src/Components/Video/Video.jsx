@@ -6,7 +6,7 @@ import styles from './video.module.css';
 
 const Video = ({video}) => {
 
-    console.log(video)
+    console.log(video);
 
     const videoPlayer = {
         src: video.pathVideo,
