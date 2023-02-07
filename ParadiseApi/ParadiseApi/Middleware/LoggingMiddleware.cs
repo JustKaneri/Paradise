@@ -20,10 +20,19 @@ namespace ParadiseApi.Middleware
 
             log.Date = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
             log.RequestBody = "";
-            using (var reader = new StreamReader(context.Request.Body))
+
+            try
             {
-                log.RequestBody = await reader.ReadToEndAsync();
+                using (var reader = new StreamReader(context.Request.Body))
+                {
+                    log.RequestBody = await reader.ReadToEndAsync();
+                }
             }
+            catch (Exception e)
+            {
+                log.RequestBody = "Bad request body: " + e.Message;
+            }
+
             log.RequestPath = context.Request.Path;
             log.StatusCode = context.Response.StatusCode;
 

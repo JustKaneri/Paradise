@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import DiscriptVideo from '../Components/DiscriptVideo/DiscriptVideo';
 import ListComments from '../Components/ListComments/ListComments';
 import Video from '../Components/Video/Video';
 import { useFetching } from '../UserHook/useFeatching';
 import Loader from '../Components/Loader/Loader';
 import NotFound from '../Components/NotFound/NotFound';
 import VideoServis from '../Api/VideoServis/VideoServis';
+import CommentServis from '../Api/CommentsServis/CommentServis';
 import VideoResponceServis from '../Api/VideoResponceServis/VideoResponceServis';
 import { useParams } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ const WatchVideoPage = () => {
 
     const [video,setVideo] = useState({});
     const [counterResponce,setCounterResponce] = useState({});
+    const [comments,setComments] = useState([]);
 
     const [fetchVideo,isLoading,error] = useFetching(async () =>{
         const videoReq = await VideoServis.getCurrentVideo(id);
@@ -27,9 +28,15 @@ const WatchVideoPage = () => {
         setCounterResponce({...responce.data});
     });
 
+    const [fetchComments,isLoadingComments, errorComments] = useFetching(async () =>{
+        const responce = await CommentServis.getComments(id);
+        setComments([...comments, ...responce.data]);
+    });
+
     useEffect(()=>{
         fetchVideo();
         fetchResponce();
+        fetchComments();
     },[]);
 
     return (
@@ -42,7 +49,9 @@ const WatchVideoPage = () => {
                         video = {video}
                         countResponce = {counterResponce}
                     />
-                    <ListComments/>
+                    <ListComments
+                        comments = {comments}
+                    />
                   </>
                 : <NotFound/>
         }
