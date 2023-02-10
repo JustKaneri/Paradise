@@ -4,11 +4,10 @@ import ListComments from '../Components/ListComments/ListComments';
 import Video from '../Components/Video/Video';
 import { useFetching } from '../UserHook/useFeatching';
 import Loader from '../Components/Loader/Loader';
-import NotFound from '../Components/NotFound/NotFound';
 import VideoServis from '../Api/VideoServis/VideoServis';
 import CommentServis from '../Api/CommentsServis/CommentServis';
 import VideoResponceServis from '../Api/VideoResponceServis/VideoResponceServis';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate  } from 'react-router-dom';
 
 const WatchVideoPage = () => {
 
@@ -53,7 +52,7 @@ const WatchVideoPage = () => {
                         comments = {comments}
                     />
                   </>
-                : <NotFound/>
+                : <Navigate to="/not-found" replace={true} />
         }
         </div>
     );

@@ -5,7 +5,7 @@ import VideoServis from '../Api/VideoServis/VideoServis';
 import ListVideo from '../Components/ListVideo/ListVideo';
 import { useFetching } from '../UserHook/useFeatching';
 import Loader from '../Components/Loader/Loader';
-import NotFound from '../Components/NotFound/NotFound';
+import {Navigate } from "react-router-dom";
 
 const VideoPage = () => {
 
@@ -28,7 +28,7 @@ const VideoPage = () => {
                 ? <ListVideo
                     videos={videos}    
                   />
-                : <NotFound/>
+                :  <Navigate to="/not-found" replace={true} />
         }
         </div>
     );

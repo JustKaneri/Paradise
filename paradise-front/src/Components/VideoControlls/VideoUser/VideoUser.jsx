@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from './videoUser.module.css'
 import images from '../../../Other/DictonaryImage';
+import { useNavigate } from 'react-router-dom';
 
 const VideoUser = ({userInfo}) => {
 
+  const router = useNavigate();
 
   const getSrcAva = () =>{
     let src = images.profile;
@@ -16,7 +18,9 @@ const VideoUser = ({userInfo}) => {
   }
 
     return (
-        <div className={styles.box}>
+        <div className={styles.box}
+             onClick={()=> router(`/profile/${userInfo.id}`)}
+        >
           <img className={styles.image} src={getSrcAva()}  />
           <span className={styles.name}>{userInfo.name}</span>   
         </div>
