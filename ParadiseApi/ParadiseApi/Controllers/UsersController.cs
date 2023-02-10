@@ -38,6 +38,26 @@ namespace ParadiseApi.Controllers
         }
 
         /// <summary>
+        /// Get selection user
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{idUser}")]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
+        public async Task<IActionResult> GetSelectionUser(int idUser)
+        {
+            var request = await _userRepository.GetSelectionUser(idUser);
+
+            if(request.Status == StatusRequest.Error)
+            {
+                return NotFound(request.Error);
+            }
+
+            var user = _mapper.Map<UserDto>(request.Result);
+
+            return Ok(user);
+        }
+
+        /// <summary>
         /// Check exist login in DB
         /// </summary>
         /// <param name="login"></param>

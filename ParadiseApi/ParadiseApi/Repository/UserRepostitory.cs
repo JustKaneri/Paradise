@@ -65,6 +65,25 @@ namespace ParadiseApi.Repository
             return request;
         }
 
-      
+        public async Task<RequestResult<Users>> GetSelectionUser(int idUser)
+        {
+            RequestResult<Users> request = new RequestResult<Users>();
+
+            var user = await _context.Users.Include(p => p.Profile).Where(u => u.Id == idUser).FirstOrDefaultAsync();
+
+            if(user == null)
+            {
+                request.Error = "user not exist";
+                request.Status = StatusRequest.Error;
+                return request;
+            }
+
+            request.Result = user;
+
+            return request;
+        }
+
+
+
     }
 }
