@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './commentIte.module.css'
+import getSrcUser from '../../../UserHook/useSrcUser';
 
 const CommentItem = ({comment}) => {
     return (
         <div className={styles.box}>
             <img
                 className={styles.avatar} 
-                src = {comment.user.profile.pathAvatar}
+                src = {getSrcUser.Avatar(comment.user)}
             />
             <span className={styles.name}>
                 {comment.user.name}

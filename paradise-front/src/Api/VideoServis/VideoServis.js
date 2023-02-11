@@ -13,4 +13,10 @@ export default class VideoServis{
 
         return responce;
     }
+
+    static async getVideoSelectUser(idUser){
+        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/user/${idUser}/video`);
+
+        return responce;
+    }
 }

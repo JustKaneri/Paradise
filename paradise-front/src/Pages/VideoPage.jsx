@@ -22,14 +22,12 @@ const VideoPage = () => {
 
     return (
         <div>
-        {isLoading
-            ? <Loader/>
-            : videos.length > 0
-                ? <ListVideo
-                    videos={videos}    
-                  />
-                :  <Navigate to="/not-found" replace={true} />
-        }
+        {isLoading && <Loader/>}
+        {error && <Navigate to="/not-found" replace={true} />}
+        {videos.length > 0 && 
+            <ListVideo
+                videos={videos}    
+            />}
         </div>
     );
 }

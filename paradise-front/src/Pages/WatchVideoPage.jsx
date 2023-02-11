@@ -40,10 +40,10 @@ const WatchVideoPage = () => {
 
     return (
         <div>
-        {isLoading 
-            ? <Loader/>
-            :  Object.entries(video).length !== 0
-                ? <>
+        {isLoading && <Loader/>}
+        {error && <Navigate to="/not-found" replace={true} />}
+        { Object.entries(video).length !== 0 &&
+            <>
                     <Video 
                         video = {video}
                         countResponce = {counterResponce}
@@ -52,7 +52,6 @@ const WatchVideoPage = () => {
                         comments = {comments}
                     />
                   </>
-                : <Navigate to="/not-found" replace={true} />
         }
         </div>
     );
