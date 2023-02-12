@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './authInput.module.css'
 
-const AuthInput = ({nameLabel,inputName,isPassword}) => {
+const AuthInput = ({nameLabel,inputName,isPassword,refInput}) => {
 
     const typeInput = !isPassword ? 'input': 'password';
 
@@ -16,7 +16,8 @@ const AuthInput = ({nameLabel,inputName,isPassword}) => {
                 className={styles.input}
                 type={typeInput}
                 name={inputName} 
-                id={inputName}>    
+                id={inputName}
+                ref = {refInput}>    
             </input>
         </div>
     );

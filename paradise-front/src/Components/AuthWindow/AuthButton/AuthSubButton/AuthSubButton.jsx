@@ -7,7 +7,7 @@ const AuthSubButton = ({status,handler}) => {
 
     return (
         <button className='auth_button button_small'
-                onClick={()=> handler}>
+                onClick={()=> handler()}>
             {content}
         </button>
     );

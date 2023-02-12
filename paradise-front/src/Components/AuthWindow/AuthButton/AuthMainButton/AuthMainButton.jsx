@@ -7,7 +7,7 @@ const AuthMainButton = ({status,handler}) => {
     
     return (
         <button className='auth_button button_big'
-                onClick={()=> handler}>
+                onClick={()=>handler()}>
             {content}
         </button>
     );
