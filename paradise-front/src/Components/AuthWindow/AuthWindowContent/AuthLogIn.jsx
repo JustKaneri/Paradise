@@ -7,6 +7,7 @@ import AuthInput from '../AuthInput/AuthInput';
 import AuthName from '../AuthName/AuthName';
 import { useFetching } from '../../../UserHook/useFeatching';
 import useTokenHook from '../../../UserHook/useTokensHoouk';
+import ModalInfoWindow from '../../ModalWindow/ModalInfoWindow/ModalInfoWindow';
 
 const AuthLogIn = () => {
 
@@ -47,6 +48,7 @@ const AuthLogIn = () => {
 
     return (
         <>
+            <ModalInfoWindow/>
             <AuthName name = {'Paradise'}/>
             <AuthInput 
                 nameLabel={'Логин'}
