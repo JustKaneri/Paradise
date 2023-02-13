@@ -6,6 +6,7 @@ import AuthButtons from '../AuthButton/AuthButtons';
 import AuthInput from '../AuthInput/AuthInput';
 import AuthName from '../AuthName/AuthName';
 import { useFetching } from '../../../UserHook/useFeatching';
+import useTokenHook from '../../../UserHook/useTokensHoouk';
 
 const AuthLogIn = () => {
 
@@ -19,8 +20,12 @@ const AuthLogIn = () => {
 
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
-        
-        console.log(responce);
+
+        console.log(error);
+        if(error == ''){
+            console.log('save tokens');
+            useTokenHook.saveTokens(responce.data);
+        }  
     });
 
     const logInSistem = ()=>{
@@ -36,11 +41,6 @@ const AuthLogIn = () => {
             return;
 
         fetch();
-
-        if(error == null){
-            //link to main
-        }
-
     },[user])
 
     return (
