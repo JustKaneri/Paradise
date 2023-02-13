@@ -21,11 +21,13 @@ const AuthLogIn = () => {
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
 
-        console.log(error);
         if(error == ''){
             console.log('save tokens');
             useTokenHook.saveTokens(responce.data);
-        }  
+        }
+        else{
+
+        }
     });
 
     const logInSistem = ()=>{
