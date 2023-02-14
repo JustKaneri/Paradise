@@ -11,7 +11,10 @@ const images = {
     dislikeActive: require("../Assets/Dislike-active.png"),
     addVideo: require("../Assets/AddVideo.png"),
     subscrib: require("../Assets/Subscrib.png"),
-    favorite: require("../Assets/Favorite.png")
+    favorite: require("../Assets/Favorite.png"),
+    error: require("../Assets/Error.png"),
+    defaultAva: require("../Assets/Default_ava.png"),
+    ok: require("../Assets/Ok.png")
 };
 
 export default images;
