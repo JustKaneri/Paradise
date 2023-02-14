@@ -8,6 +8,8 @@ import AuthName from '../AuthName/AuthName';
 import { useFetching } from '../../../UserHook/useFeatching';
 import useTokenHook from '../../../UserHook/useTokensHoouk';
 import ModalInfoWindow from '../../ModalWindow/ModalInfoWindow/ModalInfoWindow';
+import useModal from '../../../UserHook/useModal';
+import images from '../../../Other/DictonaryImage';
 
 const AuthLogIn = () => {
 
@@ -16,39 +18,48 @@ const AuthLogIn = () => {
         "password": ""
     });
 
+    const[modal,closeModal,showModal] = useModal();
+
     const refLogin = useRef(null);
     const refPassword = useRef(null);
 
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
 
-        if(error == ''){
-            console.log('save tokens');
-            useTokenHook.saveTokens(responce.data);
-        }
-        else{
+        console.log(error);
 
+        if(responce.data){
+            showModal(images.ok,'Успешно','Вы авторизовались в системе');
+            useTokenHook.saveTokens(responce.data);
         }
     });
 
-    const logInSistem = ()=>{
+    const logInSystem = ()=>{
         setUser(user => ({
             ...user,
             login:refLogin.current.value.trim(),
-            password: refLogin.current.value.trim()
+            password: refPassword.current.value.trim()
         }));
     }
 
     useEffect(()=>{
         if(user.login == '' || user.password == '')
             return;
-
         fetch();
     },[user])
 
+
+    useEffect(()=>{
+        if(error != '')
+            showModal(images.error,'Упссс...',error);
+    },[error])
+
     return (
         <>
-            <ModalInfoWindow/>
+            <ModalInfoWindow
+                modal = {modal}
+                handler = {closeModal}
+            />
             <AuthName name = {'Paradise'}/>
             <AuthInput 
                 nameLabel={'Логин'}
@@ -62,7 +73,7 @@ const AuthLogIn = () => {
                 refInput = {refPassword}
             />
             <AuthButtons
-                handler = {()=>logInSistem()}
+                handler = {()=>logInSystem()}
                 status = {'log'}
             />
         </>

@@ -18,4 +18,41 @@
     background-color: white;
     border: 2px solid rgba(0, 223, 162);
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.image{
+    width: 18%;
+}
+
+.article{
+    font-size: 4em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.text{
+    font-size: 2.5em;
+}
+
+.button{
+    margin-top: 30px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    width: 214px;
+    height: 39px;
+    transition: all 0.3s ease;
+    font-family: 'Caveat', cursive;
+    cursor: pointer;
+    background: #1A1A1A;
+    border: 1px solid #00DFA2; 
+    color: white;
+}
+
+.button:hover{
+    background-color: #00DFA2;
+    border: 1px solid #1A1A1A;
 }

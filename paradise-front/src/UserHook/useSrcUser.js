@@ -5,7 +5,7 @@ export default class getSrcUser{
 
   static Avatar (user){
 
-    let src = images.profile;
+    let src = images.defaultAva;
 
     if(user.profile != null)
       if(user.profile.pathAvatar != null)
