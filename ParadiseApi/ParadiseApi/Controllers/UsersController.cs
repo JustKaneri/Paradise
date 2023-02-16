@@ -5,6 +5,7 @@ using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
 using System.Data;
+using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
@@ -45,6 +46,33 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(200, Type = typeof(UserDto))]
         public async Task<IActionResult> GetSelectionUser(int idUser)
         {
+            var request = await _userRepository.GetSelectionUser(idUser);
+
+            if(request.Status == StatusRequest.Error)
+            {
+                return NotFound(request.Error);
+            }
+
+            var user = _mapper.Map<UserDto>(request.Result);
+
+            return Ok(user);
+        }
+
+        /// <summary>
+        /// Get auth user
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("auth")]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
+        public async Task<IActionResult> GetAuthUser()
+        {   
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             var request = await _userRepository.GetSelectionUser(idUser);
 
             if(request.Status == StatusRequest.Error)

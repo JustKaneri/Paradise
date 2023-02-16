@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useContext} from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import AuthServis from '../../../Api/AuthServis/AuthServis';
@@ -10,19 +10,21 @@ import useTokenHook from '../../../UserHook/useTokensHoouk';
 import ModalInfoWindow from '../../ModalWindow/ModalInfoWindow/ModalInfoWindow';
 import useModal from '../../../UserHook/useModal';
 import images from '../../../Other/DictonaryImage';
+import { useNavigate } from 'react-router-dom';
+import {AuthContext} from '../../../Context';
 
 const AuthLogIn = () => {
 
+    const router = useNavigate();
+    const {IsAuth,setIsAuth} = useContext(AuthContext);
     const [user,setUser] = useState({
         "login": "",
         "password": ""
     });
 
     const[modal,closeModal,showModal] = useModal();
-
     const refLogin = useRef(null);
     const refPassword = useRef(null);
-
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
 
@@ -33,7 +35,6 @@ const AuthLogIn = () => {
             useTokenHook.saveTokens(responce.data);
         }
     });
-
     const logInSystem = ()=>{
         setUser(user => ({
             ...user,
@@ -48,7 +49,6 @@ const AuthLogIn = () => {
         fetch();
     },[user])
 
-
     useEffect(()=>{
         if(error != '')
             showModal(images.error,'Упссс...',error);
@@ -59,6 +59,7 @@ const AuthLogIn = () => {
             <ModalInfoWindow
                 modal = {modal}
                 handler = {closeModal}
+                handlerClosing = {()=>{ router('/main'); setIsAuth(true)}}
             />
             <AuthName name = {'Paradise'}/>
             <AuthInput 

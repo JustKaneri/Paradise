@@ -1,4 +1,5 @@
-import React, { useState }  from 'react';
+import React, { useState , useContext }  from 'react';
+import {AuthContext} from '../../../Context';
 import images from '../../../Other/DictonaryImage';
 import ModalContentAuth from '../../ModalWindow/ModalList/ListAuth/ModalContentAuth';
 import ModalContentNotAuth from '../../ModalWindow/ModalList/ListNotAuth/ModalContentNotAuth';
@@ -8,6 +9,8 @@ import './profile.css'
 const Profile = () => {
 
     const[IsVisible,setIsVisible] = useState(false);
+    const {IsAuth,setIsAuth} = useContext(AuthContext);
+    
 
     return (
         <div className='profile' onClick={()=> setIsVisible(!IsVisible)}>
@@ -15,7 +18,11 @@ const Profile = () => {
             <ModalMenu 
                 IsVisible = {IsVisible}
             > 
-                <ModalContentNotAuth/>
+                {IsAuth 
+                    ? <ModalContentAuth/>
+                    : <ModalContentNotAuth/>
+                }
+                
             </ModalMenu>
         </div>
     );

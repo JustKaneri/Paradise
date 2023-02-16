@@ -9,4 +9,8 @@ export default class UserServis{
         return responce;
     }
 
+    static async getAuthUser(token){
+        
+    }
+
 }
