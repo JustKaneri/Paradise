@@ -12,8 +12,8 @@ export const useFetching = (callback) =>{
             setError('');
         }
         catch(e) {
-            setError(e.response.data);
-            console.log(e.response.data);
+            setError(e?.response?.data);
+            console.log(e.message);
         }
         finally {
             setLoading(false);

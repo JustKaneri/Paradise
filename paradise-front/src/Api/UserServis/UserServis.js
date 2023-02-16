@@ -10,7 +10,15 @@ export default class UserServis{
     }
 
     static async getAuthUser(token){
-        
+        const responce =  axios.get(ApiConfig.mainPath + '/api/v1/users/auth', 
+                                            { 
+                                                headers: 
+                                                    {
+                                                        "Authorization" : `Bearer ${token}`
+                                                    } 
+                                            });
+
+        return responce;
     }
 
 }
