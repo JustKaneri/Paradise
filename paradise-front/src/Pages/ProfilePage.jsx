@@ -35,7 +35,7 @@ const ProfilePage = () => {
     return (
         <div>
             {isLoadingUser && <Loader/>}
-            {errorUser && <Navigate to="/not-found" replace={true} />}
+            {errorUser.message && <Navigate to="/not-found" replace={true} />}
             {user &&
                 <ProfileCanal
                     user ={user}

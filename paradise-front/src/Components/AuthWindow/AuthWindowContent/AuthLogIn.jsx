@@ -27,9 +27,6 @@ const AuthLogIn = () => {
     const refPassword = useRef(null);
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
-
-        console.log(error);
-
         if(responce.data){
             showModal(images.ok,'Успешно','Вы авторизовались в системе');
             useTokenHook.saveTokens(responce.data);
@@ -50,9 +47,9 @@ const AuthLogIn = () => {
     },[user])
 
     useEffect(()=>{
-        if(error != '')
-            showModal(images.error,'Упссс...',error);
-    },[error])
+        if(error.responce != null && error.responce.data != null)
+            showModal(images.error,'Упссс...',error.responce.data);
+    },[error.responce])
 
     return (
         <>

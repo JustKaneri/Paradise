@@ -1,4 +1,6 @@
 .profile{
+    min-width: 250px;
+    min-height: 250px;
     width: 20vw;
     height: 20vw;
     border-radius: 10px;

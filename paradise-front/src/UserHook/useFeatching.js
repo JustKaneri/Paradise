@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export const useFetching = (callback) =>{
     const [isLoading,setLoading] = useState(false);
-    const [error,setError] = useState('');
+    const [error,setError] = useState({});
 
     const fetchObjcet = async () =>{
         try{
@@ -12,7 +12,7 @@ export const useFetching = (callback) =>{
             setError('');
         }
         catch(e) {
-            setError(e?.response?.data);
+            setError(e);
             console.log(e.message);
         }
         finally {

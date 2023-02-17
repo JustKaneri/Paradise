@@ -87,7 +87,6 @@ namespace ParadiseApi.Controllers
         /// <param name="tokenRequest"></param>
         /// <returns></returns>
         [HttpPost("refresh-token")]
-        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RefreshToken([FromBody] TokenRequest tokenRequest)
@@ -113,7 +112,6 @@ namespace ParadiseApi.Controllers
         /// <param name="tokenRequest"></param>
         /// <returns></returns>
         [HttpPost("revoked-token")]
-        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(AuthResult))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RevokedToken([FromBody] TokenRequest tokenRequest)

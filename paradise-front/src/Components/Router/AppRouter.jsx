@@ -7,6 +7,8 @@ const AppRouter = () => {
 
     const {IsAuth} = useContext(AuthContext);
 
+    console.log(IsAuth);
+
     return (
         <div>
             <Routes>
@@ -18,7 +20,7 @@ const AppRouter = () => {
                             key={obj.path}
                         />
                     )}
-                    {!IsAuth &&
+                    {IsAuth == false &&
                         notAuthRoutes.map((obj)=>
                             <Route 
                                 exact = {obj.exact} 

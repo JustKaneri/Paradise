@@ -20,4 +20,10 @@ export default class AuthServis{
 
         return responce;
     }
+
+    static async revokedTokens(tokens){
+        const responce = await axios.post(ApiConfig.mainPath+"/api/v1/authentication/revoked-token", tokens);
+
+        return responce;
+    }
 }

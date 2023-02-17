@@ -42,7 +42,7 @@ var tokenValidationParamers  = new TokenValidationParameters()
     IssuerSigningKey = new SymmetricSecurityKey(key),
     ValidateIssuer = false, // for dev
     ValidateAudience = false, // for dev
-    RequireExpirationTime = false, //for dev
+    RequireExpirationTime = true, //for dev
     ValidateLifetime = true
 };
 

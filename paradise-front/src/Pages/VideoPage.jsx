@@ -23,7 +23,7 @@ const VideoPage = () => {
     return (
         <div>
         {isLoading && <Loader/>}
-        {error && <Navigate to="/not-found" replace={true} />}
+        {error.message && <Navigate to="/not-found" replace={true} />}
         {videos.length > 0 && 
             <ListVideo
                 videos={videos}    

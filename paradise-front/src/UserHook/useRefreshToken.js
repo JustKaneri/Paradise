@@ -8,33 +8,45 @@ import { useFetching } from "./useFeatching";
 
 const useRefreshToken = (handler,error) =>{
 
-    const {IsAuth,setIsAth} = useContext(AuthContext);
+    const {IsAuth,setIsAuth} = useContext(AuthContext);
     const router = useNavigate();
 
     const [fetchTokens,isLoadingTokens,errorTokens] = useFetching(async () =>{
         let tokens = useTokenHook.getTokens();
         const responce = await AuthServis.updateTokens(tokens);
 
-        useTokenHook.updateTokens(responce.data);
+        useTokenHook.saveTokens(responce.data);
+        
+        handler();
+
+        console.log('updateTokens');
+    });
+
+    const [fetch] = useFetching(async () =>{
+        let tokens = useTokenHook.getTokens();
+        const responce = await AuthServis.revokedTokens(tokens);
     });
 
     useEffect(()=>{
-        if(error){
+
+        if(error.response == undefined)
+             return;
+
+        if(error.response.status == 401){
             fetchTokens();
-            handler();
         }
-    },[error])
+
+    },[error.message])
 
 
-    useEffect(()=>{
-        
-        if(errorTokens){
-            console.log(errorTokens);
+    useEffect(()=>{         
+        if(errorTokens.message){
+            fetch();
             useTokenHook.resetTokens();
-            setIsAth(false);
-            router('/login');
+            setIsAuth(false);
+            router('/login'); 
         }
-    },[errorTokens])
+    },[errorTokens.message])
 
 
     return errorTokens;
