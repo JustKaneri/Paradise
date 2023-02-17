@@ -10,6 +10,8 @@ import useTokensHook from '../../../UserHook/useTokensHoouk';
 import {useFetching} from '../../../UserHook/useFeatching';
 import './profile.css'
 import useTokenHook from '../../../UserHook/useTokensHoouk';
+import images from '../../../Other/DictonaryImage';
+import useRefreshToken from '../../../UserHook/useRefreshToken';
 
 const Profile = () => {
 
@@ -23,37 +25,26 @@ const Profile = () => {
         setUser({...responce.data});
     });
 
-    const [fetchTokens,isLoadingTokens,errorTokens] = useFetching(async () =>{
-        let tokens = useTokensHook.getTokens();
-        const responce = await AuthServis.updateTokens(tokens);
-
-        useTokenHook.updateTokens(responce.data);
-    });
-
-    useEffect(()=>{
-        console.log(IsAuth);
-        if(IsAuth)
-            fetch();
-    },[]);
+    useRefreshToken(fetch,error);
 
     useEffect(()=>{
         if(IsAuth){
-            fetchTokens();
             fetch();
+            console.log(user);
         }
-    },[error])
+           
+    },[]);
+
+    const srcAva = IsAuth?useSrcUser.Avatar(user):images.profile;
 
     return (
         <div className='profile' onClick={()=> setIsVisible(!IsVisible)}>
-            <img className='profile-img' src={useSrcUser.Avatar(user)}></img>          
-            <ModalMenu 
-                IsVisible = {IsVisible}
-            > 
+            <img className='profile-img' src={srcAva}></img>          
+            <ModalMenu  IsVisible = {IsVisible}> 
                 {IsAuth 
                     ? <ModalContentAuth/>
                     : <ModalContentNotAuth/>
                 }
-                
             </ModalMenu>
         </div>
     );

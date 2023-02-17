@@ -4,6 +4,7 @@ import ModalButton from '../../ModalButton/ModalButton';
 import './modalContent.css'
 
 const ModalContentAuth = () => {
+
     return (
         <div className = 'content-auth'>
             <ModalButton 

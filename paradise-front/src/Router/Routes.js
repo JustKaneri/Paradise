@@ -12,9 +12,12 @@ export const privatRoutes = [
     {path:'/add-page', element: <VideoAddPage/>, exact: true }
 ]
 
-export const publicRoutes = [
+export const notAuthRoutes = [ 
     {path:'/login', element: <AuthPage/>, exact: true },
-    {path:'/regestry',element: <RegestryPage/>, exact: true},
+    {path:'/regestry',element: <RegestryPage/>, exact: true}
+]
+
+export const publicRoutes = [
     {path:'/main', element: <VideoPage/>, exact: true },
     {path:'/not-found', element: <NotFoundPage/>, exact: true },
     {path:'/profile/:id', element: <ProfilePage/>, exact: true },
