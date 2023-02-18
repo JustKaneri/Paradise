@@ -63,6 +63,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("auth")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(UserDto))]
         public async Task<IActionResult> GetAuthUser()
         {   

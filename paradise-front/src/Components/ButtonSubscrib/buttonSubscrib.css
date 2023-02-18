@@ -10,22 +10,24 @@
 
 .btn-not-sub{
     background: #1A1A1A;
-    border: 1px solid #00DFA2; 
+    border: 3px solid #00DFA2; 
     color: white;
 }
 
 .btn-not-sub:hover{
     color: #00DFA2;
+    transform: scale(1.05,1.05);
 }
 
 .btn-sub:hover{
     background-color: #00DFA2;
-    border: 1px solid #1A1A1A;
+    border: 3px solid #1A1A1A;
+    transform: scale(1.08,1.08);
 }
 
 .btn-sub{
     background: #ffffff;
-    border: 1px solid #00DFA2;
+    border: 3px solid #00DFA2;
     color: #1A1A1A;
 
 }

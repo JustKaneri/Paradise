@@ -30,7 +30,8 @@ const Profile = () => {
         if(IsAuth){
             fetch();
         }      
-    },[]);
+    },[IsAuth]);
+
 
     const srcAva = IsAuth?useSrcUser.Avatar(user):images.profile;
 
