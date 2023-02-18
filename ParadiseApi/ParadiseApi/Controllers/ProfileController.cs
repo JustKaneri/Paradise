@@ -46,7 +46,7 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(Profile))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadAvatar([FromBody]IFormFile file)
+        public async Task<IActionResult> UploadAvatar(IFormFile file)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             int idUser = -1;
@@ -73,7 +73,7 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type=typeof(Profile))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadFon([FromBody]IFormFile file)
+        public async Task<IActionResult> UploadFon(IFormFile file)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             int idUser = -1;

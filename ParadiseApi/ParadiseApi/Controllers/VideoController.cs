@@ -229,7 +229,7 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddVideoFile([FromBody]IFormFile file, int idVideo)
+        public async Task<IActionResult> AddVideoFile(IFormFile file, int idVideo)
         {
             var result = await _repository.AddVideoFile(file,idVideo);
 
@@ -251,7 +251,7 @@ namespace ParadiseApi.Controllers
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddPosterFile([FromBody]IFormFile file, int idVideo)
+        public async Task<IActionResult> AddPosterFile(IFormFile file, int idVideo)
         {
             var result = await _repository.AddPosterFile(file, idVideo);
 
