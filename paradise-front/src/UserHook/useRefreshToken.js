@@ -41,6 +41,7 @@ const useRefreshToken = (handler,error) =>{
 
     useEffect(()=>{         
         if(errorTokens.message){
+            console.log(errorTokens.message);
             fetch();
             useTokenHook.resetTokens();
             setIsAuth(false);

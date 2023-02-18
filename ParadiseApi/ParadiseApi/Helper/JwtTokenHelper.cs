@@ -78,7 +78,7 @@ namespace ParadiseApi.Helper
 
             try
             {
-                _tokenValidationParameters.ValidateLifetime = false; // for testing, for dev = true
+                _tokenValidationParameters.ValidateLifetime = true; // for testing, for dev = true
 
                 var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token,_tokenValidationParameters,out var validToken);
 
@@ -160,7 +160,7 @@ namespace ParadiseApi.Helper
 
             try
             {
-                _tokenValidationParameters.ValidateLifetime = false; // for testing, for dev = true
+                _tokenValidationParameters.ValidateLifetime = true; // for testing, for dev = true
 
                 var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token, _tokenValidationParameters, out var validToken);
 
