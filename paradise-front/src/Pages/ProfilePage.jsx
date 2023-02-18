@@ -31,12 +31,11 @@ const ProfilePage = () => {
         fetchUser();
     },[]);
 
-
     return (
         <div>
             {isLoadingUser && <Loader/>}
             {errorUser.message && <Navigate to="/not-found" replace={true} />}
-            {user &&
+            {Object.entries(user).length !== 0  &&
                 <ProfileCanal
                     user ={user}
                 />
