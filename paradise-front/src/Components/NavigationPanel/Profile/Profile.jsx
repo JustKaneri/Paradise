@@ -9,7 +9,6 @@ import ModalMenu from '../../ModalWindow/ModalMenu/ModalMenu';
 import useTokensHook from '../../../UserHook/useTokensHoouk';
 import {useFetching} from '../../../UserHook/useFeatching';
 import './profile.css'
-import useTokenHook from '../../../UserHook/useTokensHoouk';
 import images from '../../../Other/DictonaryImage';
 import useRefreshToken from '../../../UserHook/useRefreshToken';
 
@@ -30,7 +29,6 @@ const Profile = () => {
     useEffect(()=>{
         if(IsAuth){
             fetch();
-            console.log(user);
         }      
     },[]);
 
@@ -38,7 +36,7 @@ const Profile = () => {
 
     return (
         <div className='profile' onClick={()=> setIsVisible(!IsVisible)}>
-            <img className='profile-img' src={srcAva}></img>          
+            {!isLoading && <img className='profile-img' src={srcAva}></img> }               
             <ModalMenu  IsVisible = {IsVisible}> 
                 {IsAuth 
                     ? <ModalContentAuth/>

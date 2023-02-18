@@ -62,11 +62,18 @@ namespace ParadiseApi.Controllers
         /// <param name="idUser"></param>
         /// <returns>True or false</returns>
         [HttpGet("user/{idCanal}/subscription/status")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200,Type = typeof(bool))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> IsSubscrib(int idCanal,int idUser)
-        {
-          
+        public async Task<IActionResult> IsSubscrib(int idCanal)
+        {       
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int idUser = -1;
+            if (identity != null)
+            {
+                idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
             var result = await _subscriptionRepository.IsSubscrib(idCanal, idUser);
 
             if (result.Status == StatusRequest.Error)
@@ -74,6 +81,7 @@ namespace ParadiseApi.Controllers
 
             return Ok(result.Result);
         }
+
 
         /// <summary>
         /// Subscribe user on account
