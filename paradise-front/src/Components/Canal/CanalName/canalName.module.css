@@ -9,5 +9,7 @@
     font-size: 4em;
     border-radius: 10px;
     color: white;
+    background: rgb(26, 26, 26,0.1);
     backdrop-filter: blur(3px);
+    text-shadow: 1px 0px 5px  #00DFA2;
 }

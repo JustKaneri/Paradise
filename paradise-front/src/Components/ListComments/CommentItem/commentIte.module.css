@@ -8,6 +8,7 @@
 }
 
 .avatar{
+    cursor: pointer;
     margin: 10px;
     width: 3.5em;
     height: 3.5em;
