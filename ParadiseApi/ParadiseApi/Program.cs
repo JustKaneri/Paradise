@@ -11,8 +11,6 @@ using Azure.Core;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //pattern Repository
@@ -42,8 +40,8 @@ var tokenValidationParamers  = new TokenValidationParameters()
     IssuerSigningKey = new SymmetricSecurityKey(key),
     ValidateIssuer = false, // for dev
     ValidateAudience = false, // for dev
-    RequireExpirationTime = true, //for dev
-    ValidateLifetime = true
+    ValidateLifetime = true,
+    ClockSkew = new TimeSpan(0,3,0)
 };
 
 builder.Services.AddAuthentication( options => {
@@ -62,6 +60,8 @@ builder.Services.AddAuthentication( options => {
 builder.Services.AddSingleton(tokenValidationParamers);
 
 builder.Services.AddSwaggerGen(options => SwaggerConfig.AddConfig(options));
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
