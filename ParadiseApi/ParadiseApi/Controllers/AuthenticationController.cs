@@ -93,7 +93,7 @@ namespace ParadiseApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository, _tokenValidationParameters);
+                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
 
                 var result = await tokenHelper.VerifyAndGenerareToken(tokenRequest);
 
@@ -118,7 +118,7 @@ namespace ParadiseApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository, _tokenValidationParameters);
+                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
 
                 var result = await tokenHelper.RevokedToken(tokenRequest);
 

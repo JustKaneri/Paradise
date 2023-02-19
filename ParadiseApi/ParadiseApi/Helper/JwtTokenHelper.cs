@@ -70,7 +70,7 @@ namespace ParadiseApi.Helper
 
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
+                ValidateAudience = false, 
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:Secret").Value)),
@@ -79,7 +79,6 @@ namespace ParadiseApi.Helper
 
             try
             {
-                //_tokenValidationParameters.ValidateLifetime = true; // for testing, for dev = true
 
                 var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token,tokenValidationParameters,out var validToken);
 
@@ -161,7 +160,7 @@ namespace ParadiseApi.Helper
 
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
+                ValidateAudience = false, 
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:Secret").Value)),
