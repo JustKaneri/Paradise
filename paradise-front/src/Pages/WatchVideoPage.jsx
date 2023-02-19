@@ -32,11 +32,21 @@ const WatchVideoPage = () => {
         setComments([...comments, ...responce.data]);
     });
 
+    const [fetchView, errorView] = useFetching(async () =>{
+        const responce = await VideoServis.postAddView(id);
+    });
+
     useEffect(()=>{
         fetchVideo();
         fetchResponce();
         fetchComments();
     },[]);
+
+    useEffect(()=>{
+        if(Object.entries(video).length !== 0){
+            fetchView();
+        }
+    },[video]);
 
     return (
         <div>

@@ -22,13 +22,29 @@ const ProfileInfo = ({id}) => {
         fetch();
     },[]);
 
+    const getCount = (num) => {
+        let count= num;
+
+        if(count > 999999){
+            count  = count /1000000 + ' млн.';
+            return count;
+        }
+
+        if(count > 999){
+            count = count/1000 + ' тыс.';
+            return count;
+        }
+            
+        return count;
+    }
+
     return (
         <div className={styles.block}>
             <span className={styles.info}>
-                Подписчиков: {info.countSubscrib}
+                Подписчиков: {getCount(info.countSubscrib)}
             </span>
             <span className={styles.info}>
-                Просмотров: {info.countWatch}
+                Просмотров: {getCount(info.countWatch)}
             </span>
         </div>
     );

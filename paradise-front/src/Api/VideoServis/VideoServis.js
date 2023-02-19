@@ -19,4 +19,10 @@ export default class VideoServis{
 
         return responce;
     }
+
+    static async postAddView(idVideo){
+        const responce = await axios.post(ApiConfig.mainPath + `/api/v1/video/video/${idVideo}/add-views`,null);
+
+        return responce;
+    }
 }

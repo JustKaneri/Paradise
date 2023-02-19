@@ -11,7 +11,7 @@ const CommentForm = () => {
         <div className={styles.box}>
             <textarea
                 className={styles.input}
-                maxlength='300'
+                maxLength={300}
                 onChange={(event)=> setString(event.target.value)}
             ></textarea>
             <span className={styles.counter}>

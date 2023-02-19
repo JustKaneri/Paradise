@@ -5,11 +5,15 @@ import VideoName from './VideoName/VideoName';
 import VideoResponce from './VideoResponce/VideoResponce';
 import VideoUser from './VideoUser/VideoUser';
 import {AuthContext} from '../../Context'
+import VideoInfo from './VideoInfo/VideoInfo';
 
 const VideoControlls = ({videoInfo,countResponce}) => {
     
     return (
         <div className={styles.box}>
+            <VideoInfo
+                info = {videoInfo}
+            />
             <VideoName name={videoInfo.name}/>
             <div className={styles.box_elements}>
                 <VideoUser userInfo = {videoInfo.user} />
@@ -20,6 +24,7 @@ const VideoControlls = ({videoInfo,countResponce}) => {
                     idVideo={videoInfo.id}
                     countResponce={countResponce}/>
             </div>
+            
         </div>
     );
 }
