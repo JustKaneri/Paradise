@@ -11,6 +11,7 @@ const VideoResponce = ({idVideo,countResponce}) => {
   	   isDisLike: false,
   	});
 
+    
 
     const likeClik = () =>{
 

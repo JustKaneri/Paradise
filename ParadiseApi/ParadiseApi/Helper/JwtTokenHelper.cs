@@ -12,19 +12,11 @@ namespace ParadiseApi.Helper
     {
         private readonly IConfiguration _configuration;
         private readonly IRefreshTokenRepository _tokenRepository;
-        private readonly TokenValidationParameters _tokenValidationParameters;
 
         public JwtTokenHelper(IConfiguration configuration, IRefreshTokenRepository tokenRepository)
         {
             _configuration = configuration;
             _tokenRepository = tokenRepository;
-        }
-
-        public JwtTokenHelper(IConfiguration configuration, IRefreshTokenRepository tokenRepository, TokenValidationParameters tokenValidationParameters)
-        {
-            _configuration = configuration;
-            _tokenRepository = tokenRepository;
-            _tokenValidationParameters = tokenValidationParameters;
         }
 
         public async Task<AuthResult> GenerateJwtToken(Users user)
@@ -76,11 +68,20 @@ namespace ParadiseApi.Helper
         {
             var jwtTokenHandeler = new JwtSecurityTokenHandler();
 
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:Secret").Value)),
+                ValidateLifetime = false
+            };
+
             try
             {
-                _tokenValidationParameters.ValidateLifetime = true; // for testing, for dev = true
+                //_tokenValidationParameters.ValidateLifetime = true; // for testing, for dev = true
 
-                var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token,_tokenValidationParameters,out var validToken);
+                var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token,tokenValidationParameters,out var validToken);
 
                 if(validToken is JwtSecurityToken jwtSecurityToken)
                 {
@@ -158,11 +159,18 @@ namespace ParadiseApi.Helper
         {
             var jwtTokenHandeler = new JwtSecurityTokenHandler();
 
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:Secret").Value)),
+                ValidateLifetime = false
+            };
+
             try
             {
-                _tokenValidationParameters.ValidateLifetime = true; // for testing, for dev = true
-
-                var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token, _tokenValidationParameters, out var validToken);
+                var tokenInVerification = jwtTokenHandeler.ValidateToken(tokenRequest.Token, tokenValidationParameters, out var validToken);
 
                 if (validToken is JwtSecurityToken jwtSecurityToken)
                 {
@@ -187,24 +195,6 @@ namespace ParadiseApi.Helper
                 }
 
                 var storageToken = request.Result;
-
-                if (storageToken == null)
-                    return new AuthResult()
-                    {
-                        Error = "Invalid tokens"
-                    };
-
-                if (storageToken.IsUsed)
-                    return new AuthResult()
-                    {
-                        Error = "Invalid tokens"
-                    };
-
-                if (storageToken.IsRevoked)
-                    return new AuthResult()
-                    {
-                        Error = "Invalid tokens"
-                    };
 
                 var jti = tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
 

@@ -7,8 +7,6 @@ const AppRouter = () => {
 
     const {IsAuth} = useContext(AuthContext);
 
-    console.log(IsAuth);
-
     return (
         <div>
             <Routes>

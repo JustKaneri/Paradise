@@ -47,7 +47,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpGet("video/{idVideo}/info-responce")]
         [Authorize(Roles = "Administrator,User")]
-        [ProducesResponseType(200, Type = typeof(ResponceVideo))]
+        [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResponceInfo(int idVideo)
         {
@@ -63,7 +63,9 @@ namespace ParadiseApi.Controllers
             if (requestRes.Status == StatusRequest.Error)
                 return BadRequest(requestRes.Error);
 
-            return Ok(requestRes.Result);
+            var res = _mapper.Map<ResponceVideoDto>(requestRes.Result);
+
+            return Ok(res);
         }
 
         /// <summary>
