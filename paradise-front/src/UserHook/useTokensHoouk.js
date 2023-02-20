@@ -12,8 +12,11 @@ export default class useTokenHook{
     }
 
     static saveTokens(data){
+        const date = new Date()
+        date.setMonth(date.getMonth() + 3);
+
         const cookies = new Cookies();
-        cookies.set('refresh', data.refreshToken , { path: '/' });
+        cookies.set('refresh', data.refreshToken , { path: '/',secure: false , expires:date });
         localStorage.setItem('token',data.token)
     }
 
