@@ -47,9 +47,11 @@ const AuthLogIn = () => {
     },[user])
 
     useEffect(()=>{
-        if(error.responce != null && error.responce.data != null)
-            showModal(images.error,'Упссс...',error.responce.data);
-    },[error.responce])
+        if(error.response != null ){
+            if(error.response.data != null)
+                showModal(images.error,'Упссс...',error.response.data);
+        }
+    },[error.response])
 
     return (
         <>
