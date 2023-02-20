@@ -33,7 +33,7 @@ namespace ParadiseApi.Repository
 
             var listSubsrcrib = await _context.Subscriptions.Where(sb => sb.AccountId == idUser).ToListAsync();
 
-            dto.CountSubscrib = listSubsrcrib.Sum(sb => sb.Id);
+            dto.CountSubscrib = listSubsrcrib.Count();
             dto.CountWatch = listWatch.Sum(v => v.CountWatch);
 
             request.Result = dto;
