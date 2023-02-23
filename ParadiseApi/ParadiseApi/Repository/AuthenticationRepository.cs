@@ -78,7 +78,7 @@ namespace ParadiseApi.Repository
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
-                requestResult.Result = user;
+                requestResult.Result = await _context.Users.Include(r => r.Role).Where(u => user.Id == u.Id).FirstOrDefaultAsync();
             }
             catch
             {
