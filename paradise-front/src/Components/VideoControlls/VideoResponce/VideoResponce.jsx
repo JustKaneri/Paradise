@@ -4,9 +4,9 @@ import { AuthContext } from '../../../Context';
 import { useFetching } from '../../../UserHook/useFeatching';
 import useRefreshToken from '../../../UserHook/useRefreshToken';
 import useTokenHook from '../../../UserHook/useTokensHoouk';
-import ResponceDislike from './ResponceDisLike/ResponceDislike';
 import ResponceLike from './ResponceLike/ResponceLike';
 import styles from './videoResponce.module.css'
+import ResponceDislike from '../VideoResponce/ResponceDisLike/ResponceDislike';
 
 const VideoResponce = ({idVideo}) => {
 
@@ -34,22 +34,11 @@ const VideoResponce = ({idVideo}) => {
         setResponce({...responce.data});
     });
 
-    const[fethSetLike,errorLike] = useFetching(async () =>{
-        const responce = await VideoResponceServis.setLikeResponce(idVideo, useTokenHook.getAccsesToken());
-        setResponce({...responce.data});
-    });
-
-    const[fethSetDisLike,errorDisLike] = useFetching(async () =>{
-        const responce = await VideoResponceServis.setDisLikeResponce(idVideo, useTokenHook.getAccsesToken());
-        setResponce({...responce.data});
-    });
-
     const[fethReset,errorReset] = useFetching(async () =>{
         const responce = await VideoResponceServis.resetResponce(idVideo, useTokenHook.getAccsesToken());
         setResponce({...responce.data});
     });
     
-
     useEffect(()=>{   
         if(IsAuth){
             fethGetResponce();
@@ -61,39 +50,21 @@ const VideoResponce = ({idVideo}) => {
     },[responce])
 
     useRefreshToken(fethGetResponce,errorResponce);
-    useRefreshToken(fethSetLike,errorLike);
-    useRefreshToken(fethSetDisLike,errorDisLike);
     useRefreshToken(fethReset,errorReset);
-
-    const likeClik = () =>{
-
-        if(responce.isLike){
-            fethReset();
-            return;
-        }
-
-        fethSetLike();
-    }
-
-    const dislikeClick = () =>{
-
-        if(responce.isDisLike){
-            fethReset();
-            return;
-        }
-
-        fethSetDisLike();
-    }
 
     return (
         <div className={styles.box}>
             <ResponceLike 
-                handler = {likeClik}
+                id = {idVideo}
+                handlerSet = {setResponce}
+                handlerReset = {fethReset}
                 countLike = {counterResponce.countLike}  
                 isLike = {responce.isLike}  
             />
             <ResponceDislike
-                handler = {dislikeClick}
+                id = {idVideo}
+                handlerSet = {setResponce}
+                handlerReset = {fethReset}
                 countDis = {counterResponce.countDisLike}  
                 isDis = {responce.isDisLike}  
             />
