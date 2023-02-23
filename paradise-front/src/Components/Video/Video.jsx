@@ -19,8 +19,7 @@ const Video = ({video,countResponce}) => {
             <DiscriptVideo
                 content = {video.discript}
             />
-            <VideoControlls 
-                countResponce = {countResponce}
+            <VideoControlls
                 videoInfo = {video}
             />
         </div>

@@ -14,17 +14,11 @@ const WatchVideoPage = () => {
     const {id} = useParams();
 
     const [video,setVideo] = useState({});
-    const [counterResponce,setCounterResponce] = useState({});
     const [comments,setComments] = useState([]);
 
     const [fetchVideo,isLoading,error] = useFetching(async () =>{
         const videoReq = await VideoServis.getCurrentVideo(id);
         setVideo({...videoReq.data});
-    });
-
-    const [fetchResponce,isLoadingRespon, errorRespon] = useFetching(async () =>{
-        const responce = await VideoResponceServis.getResponceVideo(id);
-        setCounterResponce({...responce.data});
     });
 
     const [fetchComments,isLoadingComments, errorComments] = useFetching(async () =>{
@@ -38,7 +32,6 @@ const WatchVideoPage = () => {
 
     useEffect(()=>{
         fetchVideo();
-        fetchResponce();
         fetchComments();
     },[]);
 
@@ -56,7 +49,6 @@ const WatchVideoPage = () => {
             <>
                     <Video 
                         video = {video}
-                        countResponce = {counterResponce}
                     />
                     <ListComments
                         comments = {comments}

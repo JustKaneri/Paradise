@@ -228,13 +228,13 @@ namespace ParadiseApi.Repository
                                                   .Where(rp => rp.VideoId == idVideo)
                                                   .DefaultIfEmpty()
                                                   .First();
+
             if (responceVideo == null)
             {
                 request.Error = "Responce not existence";
                 request.Status = StatusRequest.Error;
                 return request;
-            }
-                
+            }                
 
             try
             {
@@ -247,6 +247,9 @@ namespace ParadiseApi.Repository
                 request.Status = StatusRequest.Error;
                 return request;
             }
+
+            responceVideo.IsDisLike = false;
+            responceVideo.IsLike = false;
 
             request.Result = responceVideo;
 

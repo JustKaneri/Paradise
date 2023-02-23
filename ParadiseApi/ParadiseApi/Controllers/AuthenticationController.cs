@@ -38,7 +38,7 @@ namespace ParadiseApi.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost("regestry")]
-        [ProducesResponseType(201, Type = typeof(UserDto))]
+        [ProducesResponseType(201, Type = typeof(AuthResult))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegestryUser([FromBody] UserRegestryDto user)
         {
@@ -50,10 +50,11 @@ namespace ParadiseApi.Controllers
             if (request.Status == StatusRequest.Error)
                 return BadRequest(request.Error);
 
-            var us = _mapper.Map<UserDto>(request.Result);
+            JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
 
-            return Ok(us);
+            var token = await tokenHelper.GenerateJwtToken(request.Result);
 
+            return Ok(token);
         }
 
         /// <summary>
