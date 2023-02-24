@@ -11,14 +11,12 @@ const useRefreshToken = (handler,error) =>{
     const {IsAuth,setIsAuth} = useContext(AuthContext);
     const router = useNavigate();
 
-    const [fetchTokens,isLoadingTokens,errorTokens] = useFetching(async () =>{
+    const [fetchUpdate,isLoadingTokens,errorTokens] = useFetching(async () =>{
         let tokens = useTokenHook.getTokens();
         const responce = await AuthServis.updateTokens(tokens);
-
         useTokenHook.saveTokens(responce.data);
-        
-        handler();
 
+        handler();
         console.log('updateTokens');
     });
 
@@ -32,11 +30,9 @@ const useRefreshToken = (handler,error) =>{
              return;
 
         if(error.response.status == 401){
-            fetchTokens();
+            fetchUpdate();
         }
-
     },[error.message])
-
 
     useEffect(()=>{         
         if(errorTokens.message){

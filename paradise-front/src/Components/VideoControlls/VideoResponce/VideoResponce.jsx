@@ -10,7 +10,7 @@ import ResponceDislike from '../VideoResponce/ResponceDisLike/ResponceDislike';
 
 const VideoResponce = ({idVideo}) => {
 
-    const {IsAuth} = useContext(AuthContext);
+    const {IsAuth,setIsAuth} = useContext(AuthContext);
     const [counterResponce,setCounterResponce] = useState({
         "countLike": 0,
         "countDisLike": 0
@@ -29,7 +29,7 @@ const VideoResponce = ({idVideo}) => {
         setCounterResponce({...responce.data});
     });
 
-    const[fethGetResponce,errorResponce] = useFetching(async () =>{
+    const[fethGetResponce, isLoad ,errorResponce] = useFetching(async () =>{
         const responce = await VideoResponceServis.getResponceVideo(idVideo, useTokenHook.getAccsesToken());
         setResponce({...responce.data});
     });

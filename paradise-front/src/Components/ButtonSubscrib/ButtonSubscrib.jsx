@@ -8,7 +8,7 @@ import useRefreshToken from '../../UserHook/useRefreshToken';
 
 const ButtonSubscrib = ({id}) => {
 
-    const {isAuth,setIsAuth} = useContext(AuthContext);
+    const {IsAuth,setIsAuth} = useContext(AuthContext);
     const[isSub,setIsSub] = useState(false);
 
     const [fetch,isLoading,error] = useFetching(async()=>{
@@ -32,6 +32,9 @@ const ButtonSubscrib = ({id}) => {
     useRefreshToken(fetchUnSub,errorUnSub);
 
     const subscribe = () =>{
+        if(!IsAuth)
+            return;
+
         if(!isSub){
             fetchSub();
         }
@@ -41,7 +44,9 @@ const ButtonSubscrib = ({id}) => {
     }
 
     useEffect(()=>{
-        fetch();
+        if(IsAuth){
+            fetch();
+        }
     },[]);
 
     const content = !isSub ?"Подписаться":"Отписаться";
