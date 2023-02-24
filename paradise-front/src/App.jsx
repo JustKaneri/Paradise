@@ -9,6 +9,7 @@ import { useMemo } from 'react';
 const App = () => {
 
   const [IsAuth,setIsAuth] = useState(false);
+  const [IsUpdate,setIsUpdate] = useState(false);
 
   useMemo(()=>{
     if(localStorage.getItem('token')){
@@ -20,7 +21,9 @@ const App = () => {
   return (
       <AuthContext.Provider value={{
         IsAuth,
-        setIsAuth
+        setIsAuth,
+        IsUpdate,
+        setIsUpdate
       }}>
      <Router>
         <Navigation/>

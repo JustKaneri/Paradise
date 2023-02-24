@@ -9,15 +9,15 @@ import { useFetching } from "./useFeatching";
 const useRefreshToken = (handler,error) =>{
 
     const {IsAuth,setIsAuth} = useContext(AuthContext);
+    const {IsUpdate,setIsUpdate} = useContext(AuthContext);
     const router = useNavigate();
 
     const [fetchUpdate,isLoadingTokens,errorTokens] = useFetching(async () =>{
         let tokens = useTokenHook.getTokens();
         const responce = await AuthServis.updateTokens(tokens);
         useTokenHook.saveTokens(responce.data);
-
-        handler();
         console.log('updateTokens');
+        console.log(IsUpdate);
     });
 
     const [fetch] = useFetching(async () =>{
@@ -30,7 +30,13 @@ const useRefreshToken = (handler,error) =>{
              return;
 
         if(error.response.status == 401){
-            fetchUpdate();
+            if(!IsUpdate){
+                setIsUpdate(true);  
+            }
+            setTimeout(()=>{
+                handler();
+            } , 50);
+                
         }
     },[error.message])
 
