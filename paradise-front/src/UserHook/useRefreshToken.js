@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../Context";
 import { useNavigate } from "react-router-dom";
 import { useFetching } from "./useFeatching";
+import { useMemo } from "react";
 
 const useRefreshToken = (handler,error) =>{
 
@@ -16,8 +17,8 @@ const useRefreshToken = (handler,error) =>{
         let tokens = useTokenHook.getTokens();
         const responce = await AuthServis.updateTokens(tokens);
         useTokenHook.saveTokens(responce.data);
+        handler();
         console.log('updateTokens');
-        console.log(IsUpdate);
     });
 
     const [fetch] = useFetching(async () =>{
@@ -25,22 +26,25 @@ const useRefreshToken = (handler,error) =>{
         const responce = await AuthServis.revokedTokens(tokens);
     });
 
-    useEffect(()=>{
+    useMemo(()=>{
         if(error.response == undefined)
              return;
 
+        //Если запрос возвращает ошибку 401 (проблемы с токеном)
         if(error.response.status == 401){
+            //Если токен не находится в процессе обновления
             if(!IsUpdate){
-                setIsUpdate(true);  
+                setIsUpdate(true);
+                fetchUpdate();
             }
-            setTimeout(()=>{
-                handler();
-            } , 50);
-                
+            else{
+               //иначе вызываем запрос повторно
+               setTimeout(()=>handler(),150);
+            }      
         }
     },[error.message])
 
-    useEffect(()=>{         
+    useMemo(()=>{         
         if(errorTokens.message){
             fetch();
             useTokenHook.resetTokens();
