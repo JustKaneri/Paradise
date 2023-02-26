@@ -31,6 +31,6 @@
 - [x] Set responce for video
 - [x] Regestry
 - [ ] Wath favorite video
-- [ ] Edit mine profile
+- [ ] Edit your profile
 - [ ] Add new video
 - [ ] Create new comment
