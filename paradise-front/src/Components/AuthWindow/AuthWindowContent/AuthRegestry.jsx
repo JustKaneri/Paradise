@@ -1,4 +1,4 @@
-import React, { useRef, useState,useContext } from 'react';
+import React, { useRef, useState,useContext, useEffect } from 'react';
 import AuthButtons from '../AuthButton/AuthButtons';
 import AuthInput from '../AuthInput/AuthInput';
 import AuthName from '../AuthName/AuthName';
@@ -21,16 +21,53 @@ const AuthRegestry = () => {
     const passwordRef = useRef(null);
     const confirmRef = useRef(null);
     const [modal,closeModal,showModal,setHandler] = useModal();
-    const [user,setUser] = useState({});
+    const [user,setUser] = useState({
+        "name": "",
+        "login": "",
+        "password": "",
+        "confirmPassword": ""
+    });
 
     const [fetch,isLoading,error] = useFetching(async () =>{
+        console.log(1);
         const responce = await AuthServis.regestry(user);
         if(responce.data){
             setHandler(()=>{ router('/main'); setIsAuth(true)});
-            showModal(images.ok,'Успешно','Вы авторизовались в системе');
+            showModal(images.ok,'Успешно','Вы зарегистрировались в системе');
             useTokenHook.saveTokens(responce.data);
         }
     });
+
+    const regestry = ()=>{
+        setUser(user => ({
+            ...user,
+            name: nameRef.current.value.trim(),
+            login: loginRef.current.value.trim(),
+            password: passwordRef.current.value.trim(),
+            confirmPassword: confirmRef.current.value.trim()
+        }));
+    }
+
+    useEffect(()=>{
+        if(user.name == '' || user.login == '' || user.password == ''){
+            return;
+        }
+
+        if(user.password != user.confirmPassword){
+            showModal(images.error, 'Упссс...', 'Passwords dont match');
+            return;
+        }
+        console.log('fetch')
+        fetch();
+    },[user])
+
+    useEffect(()=>{
+        console.log(error);
+        if(error.response != null ){
+            if(error.response.data != null)
+                showModal(images.error,'Упссс...',error.response.data);
+        }
+    },[error.response])
 
     return (
         <>  
@@ -62,6 +99,7 @@ const AuthRegestry = () => {
                 refInput = {confirmRef}
             />
             <AuthButtons
+                handler = {()=>regestry()}
                 status = {'reg'}
             />
         </>

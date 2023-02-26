@@ -29,7 +29,7 @@
 - [x] Wath subscribs
 - [x] View select profile
 - [x] Set responce for video
-- [ ] Regestry
+- [x] Regestry
 - [ ] Wath favorite video
 - [ ] Edit mine profile
 - [ ] Add new video
