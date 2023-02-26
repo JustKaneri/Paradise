@@ -22,12 +22,13 @@ const AuthLogIn = () => {
         "password": ""
     });
 
-    const[modal,closeModal,showModal] = useModal();
+    const[modal,closeModal,showModal,setHandler] = useModal();
     const refLogin = useRef(null);
     const refPassword = useRef(null);
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
         if(responce.data){
+            setHandler(()=>{ router('/main'); setIsAuth(true)});
             showModal(images.ok,'Успешно','Вы авторизовались в системе');
             useTokenHook.saveTokens(responce.data);
         }
@@ -58,7 +59,6 @@ const AuthLogIn = () => {
             <ModalInfoWindow
                 modal = {modal}
                 handler = {closeModal}
-                handlerClosing = {()=>{ router('/main'); setIsAuth(true)}}
             />
             <AuthName name = {'Paradise'}/>
             <AuthInput 

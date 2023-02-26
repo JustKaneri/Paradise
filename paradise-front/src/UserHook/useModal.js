@@ -8,6 +8,8 @@ const useModal = () => {
         isShow:false
     });
 
+    const[handler,setHandler] = useState(null);
+
     function closeModal(handler) {
         setModal(modal =>({...modal, isShow:false}));
         if(handler)
@@ -21,7 +23,8 @@ const useModal = () => {
     return [
         modal,
         closeModal,
-        showModal
+        showModal,
+        setHandler
     ];
 }
 

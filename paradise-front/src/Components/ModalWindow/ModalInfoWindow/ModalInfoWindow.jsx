@@ -6,9 +6,7 @@ const ModalInfoWindow = (props) => {
     if (!props.modal.isShow) {
         return null;
     }
-
-    const beforeClose = () => props.handlerClosing();
-
+    
     return ReactDOM.createPortal(
         <div className={styles.box}>
             <div className={styles.window}>
@@ -23,7 +21,7 @@ const ModalInfoWindow = (props) => {
                  </span>
                  <button 
                     className={styles.button}
-                    onClick={()=> props.handler(beforeClose)}>
+                    onClick={()=> props.handler()}>
                     Ok
                  </button>
             </div>
