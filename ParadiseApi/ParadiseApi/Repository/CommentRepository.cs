@@ -63,9 +63,11 @@ namespace ParadiseApi.Repository
             }
 
             List<Comment> comments = await _context.Comments
+                                             .Where(cm => cm.VideoId == idVideo)
                                              .Include(ic => ic.User)
                                              .Include(ic => ic.User.Profile)
-                                             .Where(cm => cm.VideoId == idVideo).ToListAsync();
+                                             .OrderByDescending(c => c.CreatedDate)
+                                             .ToListAsync();
 
             requestResult.Result = comments;
 

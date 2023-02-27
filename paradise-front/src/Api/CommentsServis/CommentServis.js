@@ -8,4 +8,16 @@ export default class CommentServis{
 
         return responce;
     }
+
+    static async createComment(data,token){
+        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/comment/new-comment`,data,
+        { 
+            headers: 
+                {
+                    "Authorization" : `Bearer ${token}`
+                } 
+        });;
+
+        return responce;
+    }
 }

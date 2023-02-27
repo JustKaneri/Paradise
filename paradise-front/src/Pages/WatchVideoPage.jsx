@@ -23,7 +23,7 @@ const WatchVideoPage = () => {
 
     const [fetchComments,isLoadingComments, errorComments] = useFetching(async () =>{
         const responce = await CommentServis.getComments(id);
-        setComments([...comments, ...responce.data]);
+        setComments([ ...responce.data]);
     });
 
     const [fetchView, errorView] = useFetching(async () =>{
@@ -41,6 +41,10 @@ const WatchVideoPage = () => {
         }
     },[video]);
 
+    const createComment = () =>{
+       fetchComments();
+    }
+
     return (
         <div>
         {isLoading && <Loader/>}
@@ -51,6 +55,8 @@ const WatchVideoPage = () => {
                         video = {video}
                     />
                     <ListComments
+                        handler = {createComment}
+                        id = {video.id}
                         comments = {comments}
                     />
                   </>
