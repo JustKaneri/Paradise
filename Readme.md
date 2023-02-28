@@ -30,7 +30,9 @@
 - [x] View select profile
 - [x] Set responce for video
 - [x] Regestry
+- [x] Create new comment
+- [ ] Find video
 - [ ] Wath favorite video
 - [ ] Edit your profile
 - [ ] Add new video
-- [ ] Create new comment
+

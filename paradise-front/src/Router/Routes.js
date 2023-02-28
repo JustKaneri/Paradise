@@ -6,8 +6,10 @@ import SubscribPage from '../Pages/SubscribPage';
 import VideoAddPage from '../Pages/VideoAddPage';
 import WatchVideoPage from '../Pages/WatchVideoPage';
 import NotFoundPage from '../Pages/NotFoundPage';
+import FavoritePage from '../Pages/FavoritePage';
 
 export const privatRoutes = [
+    {path:"/favorite", element: <FavoritePage/>, exact: true},
     {path:'/subscribs', element: <SubscribPage/>, exact: true },
     {path:'/add-page', element: <VideoAddPage/>, exact: true }
 ]

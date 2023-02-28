@@ -24,7 +24,7 @@ const ModalContentAuth = () => {
             />
             <ModalButton 
                     srcImage = {images.favorite}
-                    handler = { () => alert('В разработке') }
+                    handler = { () => router('/favorite') }
                     name = {'Избранное'}
             />
             <ModalButton 

@@ -25,4 +25,15 @@ export default class VideoServis{
 
         return responce;
     }
+
+
+    static async getFavoriteVideo(token){
+        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/video/favorite`,{
+            headers:{
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        return responce;
+    }
 }
