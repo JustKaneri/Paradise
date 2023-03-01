@@ -18,6 +18,7 @@ const useRefreshToken = (handler,error) =>{
         const responce = await AuthServis.updateTokens(tokens);
         useTokenHook.saveTokens(responce.data);
         handler();
+        setTimeout(()=>setIsUpdate(false),400);
         console.log('updateTokens');
     });
 

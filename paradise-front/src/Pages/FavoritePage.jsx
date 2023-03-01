@@ -5,12 +5,10 @@ import { useFetching } from '../UserHook/useFeatching';
 import useRefreshToken from '../UserHook/useRefreshToken';
 import useTokenHook from '../UserHook/useTokensHoouk';
 import Loader from '../Components/Loader/Loader';
-import {Navigate } from "react-router-dom";
 
 const FavoritePage = () => {
 
     const [video,setVideo] = useState([]);
-
 
     const [fetch,isLoading,error] = useFetching(async ()=>{
         const responce = await VideoServis.getFavoriteVideo(useTokenHook.getAccsesToken());

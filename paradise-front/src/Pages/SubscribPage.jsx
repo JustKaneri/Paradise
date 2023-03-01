@@ -27,7 +27,6 @@ const SubscribPage = () => {
     return (
         <div>
             {isLoading && <Loader/>}
-            {error.message && <Navigate to="/not-found" replace={true} />}
             {sub.length > 0 && 
                 <ListSubscrib
                     subscribs = {sub}

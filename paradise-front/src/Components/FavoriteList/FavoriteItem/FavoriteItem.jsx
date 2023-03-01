@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './favoriteItem.module.css'
-import getSrcUser from '../../../UserHook/useSrcUser';
 import { useNavigate } from 'react-router-dom';
+import FavoriteInfo from './FavoriteInfo/FavoriteInfo';
 
 const FavoriteItem = ({value,index}) => {
 
@@ -16,22 +16,9 @@ const FavoriteItem = ({value,index}) => {
                 onClick={()=> router(`/video/${value.id}`)}
                 className={styles.poster}
                 src={value.pathPoster}/>
-            <div className={styles.video_info}>
-                    <span 
-                        onClick={()=> router(`/video/${value.id}`)}
-                        className={styles.name}>
-                        {value.name}
-                    </span>
-                    <div onClick={()=> router(`/profile/${value.user.id}`)}
-                         className={styles.user}>
-                        <img  
-                            className={styles.avatar}
-                            src={getSrcUser.Avatar(value.user)}/>
-                        <span className={styles.user_name}>
-                            {value.user.name}
-                        </span>
-                    </div>
-            </div>
+            <FavoriteInfo
+                value = {value}
+            />
         </div>
     );
 }
