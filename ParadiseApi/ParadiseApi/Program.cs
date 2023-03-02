@@ -18,7 +18,7 @@ builder.ConnectPaternRepository();
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("*");
 }));
 
 builder.Services.AddEndpointsApiExplorer();

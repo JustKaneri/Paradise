@@ -2,8 +2,8 @@ import axios from "axios";
 import ApiConfig from "../ApiConfig";
 
 export default class VideoServis{
-    static async getAll(){
-        const responce = await axios.get(ApiConfig.mainPath + '/api/v1/video/videos');
+    static async getAll(page,count){
+        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/video-page?page=${page}&count=${count}`);
 
         return responce;
     }
