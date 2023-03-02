@@ -22,7 +22,6 @@ const VideoPage = () => {
 
         const totalCount = responce.headers["x-total-count"];
         setTotalPage(getPageCount(totalCount,limit));
-        console.log('set')
     });
 
     useEffect(()=>{    
@@ -30,7 +29,6 @@ const VideoPage = () => {
         if(observer.current) observer.current.disconnect();
         var callback = function(entries,observer){
             if(entries[0].isIntersecting && (page < totalPage)){
-                console.log(page);
                 setPage(page+1);
             }
         }

@@ -5,6 +5,7 @@ import { useFetching } from '../UserHook/useFeatching';
 import useRefreshToken from '../UserHook/useRefreshToken';
 import useTokenHook from '../UserHook/useTokensHoouk';
 import Loader from '../Components/Loader/Loader';
+import PageName from '../Components/PageName/PageName'
 
 const FavoritePage = () => {
 
@@ -24,6 +25,9 @@ const FavoritePage = () => {
 
     return (
         <div>
+            <PageName
+                content = {'Мои понравившиеся'}
+            />
             {isLoading && <Loader/>}
             {video.length > 0 && 
                 <FavoriteList
