@@ -8,6 +8,7 @@ import SubscribServis from '../Api/SubscribServis/SubscribServis';
 import useTokenHook from '../UserHook/useTokensHoouk';
 import useRefreshToken from '../UserHook/useRefreshToken';
 import { useEffect } from 'react';
+import PageName from '../Components/PageName/PageName';
 
 const SubscribPage = () => {
 
@@ -26,6 +27,9 @@ const SubscribPage = () => {
     
     return (
         <div>
+            <PageName
+                content={'Мои подписки'}
+            />
             {isLoading && <Loader/>}
             {sub.length > 0 && 
                 <ListSubscrib

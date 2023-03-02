@@ -1,12 +1,12 @@
 .list-sub{
-    padding-top: 10vh;
+    padding-top: 5vh;
     padding-bottom: 5%;
-    padding-left: 2%;
-    padding-right: 2%;
-    width: 100vw;
+    width: auto;
     height: auto;
     display: flex;
     flex-wrap: wrap;
     column-gap: 30px;
+    box-sizing: border-box;
     row-gap: 30px;
+    justify-content: space-evenly;
 }
