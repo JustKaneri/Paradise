@@ -14,11 +14,13 @@ namespace ParadiseApi.Controllers
     public class VideoController : Controller 
     {
         private readonly IVideoRepository _repository;
+        private readonly IVideoCreaterRepository _createrRepository;
         private readonly IMapper _mapper;
 
-        public VideoController(IVideoRepository repository,IMapper mapper)
+        public VideoController(IVideoRepository repository, IVideoCreaterRepository createrRepository,IMapper mapper)
         {
             _repository = repository;
+            _createrRepository = createrRepository;
             _mapper = mapper;
         }
 
@@ -137,6 +139,8 @@ namespace ParadiseApi.Controllers
             if (video.Count == 0)
                 return NotFound();
 
+            Response.Headers.Add("x-total-count", _repository.GetTotalCount().ToString());
+
             return Ok(video);
         }
 
@@ -161,6 +165,9 @@ namespace ParadiseApi.Controllers
 
             if (lstVideo.Count == 0)
                 return NotFound();
+
+
+            Response.Headers.Add("x-total-count", result.OtherData);
 
             return Ok(lstVideo);
         }
@@ -209,7 +216,7 @@ namespace ParadiseApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(videoInfo);
 
-            var result = await _repository.CreateVideo(idUser, video);
+            var result = await _createrRepository.CreateVideo(idUser, video);
 
             if (result.Status == StatusRequest.Error)
                 return BadRequest(result.Error);
@@ -231,7 +238,7 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddVideoFile(IFormFile file, int idVideo)
         {
-            var result = await _repository.AddVideoFile(file,idVideo);
+            var result = await _createrRepository.AddVideoFile(file,idVideo);
 
             if (result.Status == StatusRequest.Error)
                 return BadRequest(result.Error);
@@ -253,7 +260,7 @@ namespace ParadiseApi.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddPosterFile(IFormFile file, int idVideo)
         {
-            var result = await _repository.AddPosterFile(file, idVideo);
+            var result = await _createrRepository.AddPosterFile(file, idVideo);
 
             if (result.Status == StatusRequest.Error)
                 return BadRequest(result.Error);
