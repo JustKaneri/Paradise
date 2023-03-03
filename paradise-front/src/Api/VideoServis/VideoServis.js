@@ -8,6 +8,12 @@ export default class VideoServis{
         return responce;
     }
 
+    static async findVideo(page,count,search){
+        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/video-page-search?page=${page}&count=${count}&search=${search}`);
+
+        return responce;
+    }
+
     static async getCurrentVideo(id){
         const responce = await axios.get(ApiConfig.mainPath + '/api/v1/video/video/' + id);
 
