@@ -66,7 +66,7 @@ const SearchPage = () => {
     return (
         <div>
             <PageName
-                content = {'Результаты поиска: '}
+                content = {'Результаты поиска'}
             />
             {error.message && <Navigate to="/not-found" replace={true} />}
             {videos.length > 0 && 
