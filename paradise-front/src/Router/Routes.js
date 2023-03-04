@@ -24,6 +24,6 @@ export const publicRoutes = [
     {path:'/main', element: <VideoPage/>, exact: true },
     {path:'/not-found', element: <NotFoundPage/>, exact: true },
     {path:'/profile/:id', element: <ProfilePage/>, exact: true },
-    {path:'/video/searh/:searh', element: <SearchPage/>, exact: true },
+    {path:'/video-searh/:searh', element: <SearchPage/>, exact: true },
     {path:'/video/:id', element: <WatchVideoPage/>, exact: true }
 ]

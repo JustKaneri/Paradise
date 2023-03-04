@@ -15,7 +15,7 @@ const Search = () => {
                 className='search-input' 
                 type='text'></input>
             <button 
-                onClick={()=>  router(`/video/searh/${searhValue}`,{ replace: true })}
+                onClick={()=>  router(`/video-searh/${searhValue}`)}
                 className='search-button'>    
             </button>
         </div>
