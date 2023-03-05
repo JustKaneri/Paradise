@@ -32,7 +32,7 @@
 - [x] Regestry
 - [x] Create new comment
 - [x] Search video
-- [ ] Wath favorite video
+- [x] Wath favorite video
 - [ ] Edit your profile
 - [ ] Add new video
 
