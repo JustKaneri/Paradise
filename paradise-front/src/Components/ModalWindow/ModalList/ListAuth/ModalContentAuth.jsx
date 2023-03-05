@@ -19,7 +19,7 @@ const ModalContentAuth = () => {
         <div className = 'content-auth'>
             <ModalButton 
                     srcImage = {images.profile}
-                    handler = { () => alert('В разработке') }
+                    handler = { () => router('/my-profile') }
                     name = {'Профиль'}
             />
             <ModalButton 
