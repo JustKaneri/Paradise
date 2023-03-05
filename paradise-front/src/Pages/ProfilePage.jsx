@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useContext, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import ProfileCanal from '../Components/Canal/ProfileCanal/ProfileCanal';
 import ListVideo from '../Components/ListVideo/ListVideo';
@@ -8,6 +8,8 @@ import { useState } from 'react';
 import Loader from '../Components/Loader/Loader';
 import { useFetching } from '../UserHook/useFeatching';
 import { Navigate } from 'react-router-dom';
+import RedirectToMyProfile from '../UserHook/useRederect';
+
 
 const ProfilePage = () => {
 
@@ -45,7 +47,6 @@ const ProfilePage = () => {
                     videos={videos} 
                 />
             }
-            
         </div>
     );
 }
