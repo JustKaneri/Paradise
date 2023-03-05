@@ -31,7 +31,7 @@
 - [x] Set responce for video
 - [x] Regestry
 - [x] Create new comment
-- [ ] Find video
+- [x] Search video
 - [ ] Wath favorite video
 - [ ] Edit your profile
 - [ ] Add new video
