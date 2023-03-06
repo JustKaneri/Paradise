@@ -1,0 +1,20 @@
+.btn{
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    width: 214px;
+    height: 39px;
+    transition: all 0.3s ease;
+    font-family: 'Caveat', cursive;
+    cursor: pointer;
+    background: #1A1A1A;
+    border: 3px solid #00DFA2; 
+    color: white;
+}
+
+
+.btn:hover{
+    color: #00DFA2;
+    transform: scale(1.05,1.05);
+}

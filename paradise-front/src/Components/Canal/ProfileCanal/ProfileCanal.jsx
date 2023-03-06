@@ -6,8 +6,10 @@ import ProfileInfo from '../ProfileInfo/ProfileInfo';
 import styles from './profileCanal.module.css'
 import getSrcUser from '../../../UserHook/useSrcUser';
 import CanalName from '../CanalName/CanalName';
+import CanalSub from '../CanalControlls/CanalSub';
+import CanalEdit from '../CanalControlls/CanalEdit/CanalEdit';
 
-const ProfileCanal = ({user}) => {
+const ProfileCanal = ({user,isMy}) => {
     return (
         <div className={styles.box}>
             <div className={styles.profile}>
@@ -24,9 +26,12 @@ const ProfileCanal = ({user}) => {
                     id = {user.id}
                 />
             </div>
-            <ButtonSubscrib
-                id={user.id}
-            />
+            {!isMy
+                ? <CanalSub
+                        id = {user.id}
+                   />
+                : <CanalEdit/>
+            }
         </div>
     );
 }

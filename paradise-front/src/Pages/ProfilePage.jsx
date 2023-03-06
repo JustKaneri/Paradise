@@ -8,7 +8,6 @@ import { useState } from 'react';
 import Loader from '../Components/Loader/Loader';
 import { useFetching } from '../UserHook/useFeatching';
 import { Navigate } from 'react-router-dom';
-import RedirectToMyProfile from '../UserHook/useRederect';
 
 
 const ProfilePage = () => {
