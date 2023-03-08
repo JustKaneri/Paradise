@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import ContentFile from './ContentFile/ContentFile';
 import ContentText from './ContentText/ContentText';
-import styles from './modalVideoContent.module.css';
+import styles from './creatorVideoContent.module.css'
 
 const ModalVideoContent = () => {
 

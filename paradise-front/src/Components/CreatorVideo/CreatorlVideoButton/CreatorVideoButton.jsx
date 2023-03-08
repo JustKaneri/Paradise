@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './modalVideoButton.module.css'
+import styles from './creatorVideoButton.module.css'
 
 const ModalVideoButton = ({children,handler}) => {
     return (

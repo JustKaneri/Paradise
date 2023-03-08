@@ -29,7 +29,7 @@ const ModalContentAuth = () => {
             />
             <ModalButton 
                     srcImage = {images.addVideo}
-                    handler = { () => alert('В разработке') }
+                    handler = { () => router('/add-video') }
                     name = {'Добавить'}
             />
             <ModalButton 

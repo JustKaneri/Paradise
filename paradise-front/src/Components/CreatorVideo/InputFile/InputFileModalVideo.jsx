@@ -1,5 +1,5 @@
 import React from 'react';
-import getUrl from '../../../../UserHook/useGetUrl';
+import getUrl from '../../../UserHook/useGetUrl';
 
 const InputFileModalVideo = (props) => {
 

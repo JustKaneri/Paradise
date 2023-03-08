@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useMemo } from 'react';
 import { useRef } from 'react';
 import InputFileModalVideo from '../../InputFile/InputFileModalVideo';
-import ModalVideoButton from '../../ModalVideoButton/ModalVideoButton';
+import CreatorVideoButton from '../../CreatorlVideoButton/CreatorVideoButton';
 import styles from './contentFile.module.css';
 
 const ContentFile = () => {
@@ -46,10 +46,10 @@ const ContentFile = () => {
             <div className={styles.box_block}>
                 <span className={styles.article_video}>Видео</span>
                 {renderVideo}
-                <ModalVideoButton 
+                <CreatorVideoButton 
                     handler={() => inputFileVideo.current.click()}>
                     Выбрать
-                </ModalVideoButton>
+                </CreatorVideoButton>
             </div>
             <div className={styles.box_block}>
                 <span className={styles.article_poster}> Обложка</span>
@@ -57,10 +57,10 @@ const ContentFile = () => {
                     ref={poster}
                     className={styles.image}
                 />
-                <ModalVideoButton 
+                <CreatorVideoButton 
                     handler={() => inputFile.current.click()}>
                     Выбрать
-                </ModalVideoButton>
+                </CreatorVideoButton>
             </div>
         </div>
     );

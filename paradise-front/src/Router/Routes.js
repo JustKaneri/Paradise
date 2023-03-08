@@ -13,7 +13,7 @@ import MyProfilePage from '../Pages/MyProfilePage';
 export const privatRoutes = [
     {path:"/favorite", element: <FavoritePage/>, exact: true},
     {path:'/subscribs', element: <SubscribPage/>, exact: true },
-    {path:'/add-page', element: <VideoAddPage/>, exact: true },
+    {path:'/add-video', element: <VideoAddPage/>, exact: true },
     {path:'/my-profile', element: <MyProfilePage/>, exact: true }
 ]
 
