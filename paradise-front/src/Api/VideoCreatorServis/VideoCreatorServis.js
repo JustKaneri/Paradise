@@ -3,7 +3,7 @@ import ApiConfig from "../ApiConfig";
 
 export default class VideoCreatorServis{
 
-    static async createideo(data,token){
+    static async createVideo(data,token){
 
         const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/video/video/create`, data,
         { 
@@ -22,14 +22,14 @@ export default class VideoCreatorServis{
 
         file.append("file", data);
 
-        const responce = await axios.post(`${ApiConfig.mainPath}api/v1/video/video/${idVideo}/upload-poster`, file,
+        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/video/video/${idVideo}/upload-poster`, file,
         { 
             headers: 
                 {
                     "Authorization" : `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
                 } 
-        });;
+        });
 
         return responce;
     }
@@ -38,16 +38,17 @@ export default class VideoCreatorServis{
 
         var file = new FormData();
 
+        console.log(file);
         file.append("file", data);
 
-        const responce = await axios.post(`${ApiConfig.mainPath}api/v1/video/video/${idVideo}/upload-video`, file,
+        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/video/video/${idVideo}/upload-video`, file,
         { 
             headers: 
                 {
                     "Authorization" : `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
                 } 
-        });;
+        });
 
         return responce;
     }

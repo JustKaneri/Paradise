@@ -8,6 +8,9 @@ const InputFileModalVideo = (props) => {
     const files = props.files;
     const setFiles = props.setFiles;
 
+    const data = props.data;
+    const handler = props.handler;
+
     const onChangeFile= (event,type) => {
         event.stopPropagation();
         event.preventDefault();
@@ -16,10 +19,12 @@ const InputFileModalVideo = (props) => {
         let refObj = null;
        
         if(type == 'img'){
+            handler(data => ({...data,poster:file}));
             setFiles({...files,pathPoster: props.reference.current.files[0]});
             refObj = props.poster;
         }            
         else{
+            handler(data => ({...data, video:file}));
             setFiles({...files,pathVideo: props.reference.current.files[0]});
             refObj = props.video;
         }

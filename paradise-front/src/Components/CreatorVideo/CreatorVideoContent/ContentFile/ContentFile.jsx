@@ -6,7 +6,7 @@ import InputFileModalVideo from '../../InputFile/InputFileModalVideo';
 import CreatorVideoButton from '../../CreatorlVideoButton/CreatorVideoButton';
 import styles from './contentFile.module.css';
 
-const ContentFile = () => {
+const ContentFile = ({data,handler}) => {
 
     const inputFile = useRef(null); 
     const inputFileVideo = useRef(null);
@@ -28,6 +28,8 @@ const ContentFile = () => {
     return (
         <div className={styles.box}>
             <InputFileModalVideo
+                data = {data}
+                handler = {handler}
                 reference = {inputFile}
                 files ={files}
                 setFiles = {setFiles}
@@ -36,6 +38,8 @@ const ContentFile = () => {
                 poster = {poster}
             />
             <InputFileModalVideo
+                data = {data}
+                handler = {handler}
                 reference = {inputFileVideo}
                 files = {files}
                 setFiles = {setFiles}
