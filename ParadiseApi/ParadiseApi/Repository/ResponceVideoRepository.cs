@@ -83,7 +83,7 @@ namespace ParadiseApi.Repository
                 responceVideo.IsDisLike = true;
                 responceVideo.IsLike = false;
                 responceVideo.VideoId = idVideo;
-                responceVideo.DateResponce = DateTime.UtcNow;
+                responceVideo.DateResponce = DateTime.Now;
                 responceVideo = (await AddResponce(responceVideo)).Result;
             }
             else

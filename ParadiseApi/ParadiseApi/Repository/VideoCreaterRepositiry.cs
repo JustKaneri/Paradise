@@ -129,6 +129,7 @@ namespace ParadiseApi.Repository
             }
 
             videoInfo.UserId = idUser;
+            videoInfo.DateCreate = DateTime.Now;
 
             try
             {

@@ -32,8 +32,7 @@ namespace ParadiseApi.Repository
                 return requestResult;
             }
 
-            if(comment.CreatedDate == null)
-                comment.CreatedDate = DateTime.Now;
+            comment.CreatedDate = DateTime.Now;
 
             try
             {

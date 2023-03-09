@@ -8,6 +8,5 @@ namespace ParadiseApi.Dto
         public int VideoId { get; set; }
         [Required]
         public string Content { get; set; }
-        public DateTime CreatedDate { get; set; }
     }
 }

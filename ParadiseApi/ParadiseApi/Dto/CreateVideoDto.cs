@@ -6,6 +6,5 @@ namespace ParadiseApi.Dto
     {
         public string Name { get; set; }
         public string Discript { get; set; }
-        public DateTime DateCreate { get; set; }
     }
 }

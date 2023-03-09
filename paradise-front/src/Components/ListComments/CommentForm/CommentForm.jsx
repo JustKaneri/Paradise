@@ -15,7 +15,6 @@ const CommentForm = ({id,updateComments}) => {
     const [comment,setComment] = useState({
         "videoId": id,
         "content": "",
-        "createdDate": ""
     });
 
     const [fetch, isLoading, error] = useFetching(async() =>{
@@ -23,33 +22,15 @@ const CommentForm = ({id,updateComments}) => {
 
         updateComments();
 
-        setComment(comment => ({...comment, createdDate: ""}));
         inputRef.current.value = "";
     });
 
     const sendComment = ()=>{
-        setComment(comment => ({...comment, createdDate: new Date()}))
+        if(comment.content != '')
+            fetch();
     }
 
     useRefreshToken(fetch,error);
-
-    useEffect(()=>{
-        if(comment.createdDate == '')
-            return;
-
-        fetch();
-    },[comment])
-
-
-    useEffect(()=>{
-
-        if(error.message)
-        {
-            setComment(comment => ({...comment, createdDate: ""}));
-        }
-
-    },[error.message])
-
     
     return (
         <div className={styles.box}>
