@@ -71,7 +71,6 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Set like for current video
         /// </summary>
-        /// <param name="idUser"></param>
         /// <param name="idVideo"></param>
         /// <returns></returns>
         [HttpPost("like")]
@@ -100,7 +99,6 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Set dislike for current video
         /// </summary>
-        /// <param name="idUser"></param>
         /// <param name="idVideo"></param>
         /// <returns></returns>
         [HttpPost("dislike")]
@@ -129,7 +127,6 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Remove responce for current video
         /// </summary>
-        /// <param name="idUser"></param>
         /// <param name="idVideo"></param>
         /// <returns></returns>
         [HttpDelete("reset")]

@@ -21,7 +21,7 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Get Profile by Id user
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpGet("user/{idUser}/profile")]
         [ProducesResponseType(200,Type = typeof(Profile))]
@@ -40,7 +40,6 @@ namespace ParadiseApi.Controllers
         /// Upload avatar for user
         /// </summary>
         /// <param name="file"></param>
-        /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpPost("user/profile/upload-avatar")]
         [Authorize(Roles = "Administrator,User")]
@@ -67,7 +66,6 @@ namespace ParadiseApi.Controllers
         /// Upload background for user
         /// </summary>
         /// <param name="file"></param>
-        /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpPost("user/profile/upload-fon")]
         [Authorize(Roles = "Administrator,User")]

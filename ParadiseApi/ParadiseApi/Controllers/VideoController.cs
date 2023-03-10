@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using ParadiseApi.Other;
 using System.Data;
 using System.Security.Claims;
 
@@ -195,20 +196,26 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Create video
         /// </summary>
-        /// <param name="idUser">current user</param>
         /// <param name="videoInfo"></param>
+        /// <param name="files"></param>
         /// <returns></returns>
         [HttpPost("video/create")]
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddVideo([FromBody]CreateVideoDto videoInfo)
+        public async Task<IActionResult> AddVideo([ModelBinder(BinderType = typeof(JsonModelBinder))] CreateVideoDto videoInfo,
+                                                  IList<IFormFile> files)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             int idUser = -1;
             if (identity != null)
             {
                 idUser = int.Parse(identity.FindFirst("id").Value);
+            }
+
+            if(files.Count == 0)
+            {
+                return BadRequest("File video not was null");
             }
 
             Video video = _mapper.Map<Video>(videoInfo);
@@ -220,6 +227,19 @@ namespace ParadiseApi.Controllers
 
             if (result.Status == StatusRequest.Error)
                 return BadRequest(result.Error);
+
+            result = await _createrRepository.AddVideoFile(files[0], result.Result.Id);
+
+            if (result.Status == StatusRequest.Error)
+                return BadRequest(result.Error);
+
+            if(files.Count > 1)
+            {
+                result = await _createrRepository.AddPosterFile(files[1], result.Result.Id);
+
+                if (result.Status == StatusRequest.Error)
+                    return BadRequest(result.Error);
+            }
 
             var createVideo = _mapper.Map<VideoDto>(result.Result);
 

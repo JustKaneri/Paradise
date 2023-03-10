@@ -20,7 +20,6 @@ namespace ParadiseApi.Repository
         /// </summary>
         /// <param name="poster"></param>
         /// <param name="idVideo"></param>
-        /// <param name="error"></param>
         /// <returns></returns>
         public async Task<RequestResult<Video>> AddPosterFile(IFormFile poster, int idVideo)
         {
@@ -67,7 +66,6 @@ namespace ParadiseApi.Repository
         /// </summary>
         /// <param name="video"></param>
         /// <param name="idVideo"></param>
-        /// <param name="error"></param>
         /// <returns></returns>
         public async Task<RequestResult<Video>> AddVideoFile(IFormFile video, int idVideo)
         {
@@ -115,7 +113,6 @@ namespace ParadiseApi.Repository
         /// </summary>
         /// <param name="idUser"></param>
         /// <param name="videoInfo"></param>
-        /// <param name="error"></param>
         /// <returns></returns>
         public async Task<RequestResult<Video>> CreateVideo(int idUser, Video videoInfo)
         {
@@ -152,8 +149,7 @@ namespace ParadiseApi.Repository
         /// <summary>
         /// Remove object Video from DB by id
         /// </summary>
-        /// <param name="idVideo"></param>
-        /// <param name="error"></param>
+        /// <param name="video"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public async Task<RequestResult<Video>> RemoveVideo(Video video)

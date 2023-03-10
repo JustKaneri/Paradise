@@ -25,7 +25,6 @@ namespace ParadiseApi.Controllers
         /// <summary>
         /// Get all subscrib for user
         /// </summary>
-        /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpGet("subscriptions")]
         [Authorize(Roles = "Administrator,User")]
@@ -59,7 +58,6 @@ namespace ParadiseApi.Controllers
         /// Get status subscrib
         /// </summary>
         /// <param name="idCanal"></param>
-        /// <param name="idUser"></param>
         /// <returns>True or false</returns>
         [HttpGet("user/{idCanal}/subscription/status")]
         [Authorize(Roles = "Administrator,User")]
@@ -87,7 +85,6 @@ namespace ParadiseApi.Controllers
         /// Subscribe user on account
         /// </summary>
         /// <param name="idCanal"></param>
-        /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpPost("user/{idCanal}/subscribe")]
         [Authorize(Roles = "Administrator,User")]
@@ -116,7 +113,6 @@ namespace ParadiseApi.Controllers
         /// Unscrube user on account
         /// </summary>
         /// <param name="idCanal"></param>
-        /// <param name="idUser"></param>
         /// <returns></returns>
         [HttpDelete("user/{idCanal}/unsubscribe")]
         [Authorize(Roles = "Administrator,User")]

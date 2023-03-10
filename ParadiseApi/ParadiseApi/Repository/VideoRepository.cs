@@ -21,7 +21,6 @@ namespace ParadiseApi.Repository
         /// Add count watch for video
         /// </summary>
         /// <param name="idVideo"></param>
-        /// <param name="error"></param>
         /// <returns></returns>
         public async Task<RequestResult<Video>> AddViews(int idVideo)
         {
@@ -59,7 +58,6 @@ namespace ParadiseApi.Repository
         /// get favorite video for user
         /// </summary>
         /// <param name="idUser"></param>
-        /// <param name="error"></param>
         /// <returns></returns>
         public async Task<RequestResult<ICollection<Video>>> GetFavoriteVideo(int idUser)
         {
@@ -88,7 +86,6 @@ namespace ParadiseApi.Repository
         /// get video current user
         /// </summary>
         /// <param name="idUser">id user</param>
-        /// <param name="error"></param>
         /// <returns></returns>
         public async Task<RequestResult<ICollection<Video>>> GetVideosByUser(int idUser)
         {
@@ -115,7 +112,6 @@ namespace ParadiseApi.Repository
         /// </summary>
         /// <param name="count">count note</param>
         /// <param name="page">number page</param>
-        /// <param name="error"></param>
         /// <returns></returns>
         public async Task<RequestResult<ICollection<Video>>> GetVideosByPage(int count, int page)
         {
@@ -183,7 +179,6 @@ namespace ParadiseApi.Repository
         /// <param name="count"></param>
         /// <param name="page"></param>
         /// <param name="search"></param>
-        /// <param name="error"></param>
         /// <returns></returns>
         public async Task<RequestResult<ICollection<Video>>> FindVideosByPage(int count, int page, string search)
         {
