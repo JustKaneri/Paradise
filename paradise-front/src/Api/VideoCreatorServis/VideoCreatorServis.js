@@ -3,13 +3,24 @@ import ApiConfig from "../ApiConfig";
 
 export default class VideoCreatorServis{
 
-    static async createVideo(data,token){
+    static async createVideo(data,files,token){
 
-        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/video/video/create`, data,
+        var file = new FormData();
+
+        const json = JSON.stringify(data);
+
+        file.append('videoInfo',json)
+        file.append("files", files.video);
+        if(files.poster)
+            file.append("files", files.poster);
+
+        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/video/video/create`, file,
         { 
             headers: 
                 {
-                    "Authorization" : `Bearer ${token}`
+                    "Authorization" : `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data'
                 } 
         });;
 
@@ -37,8 +48,6 @@ export default class VideoCreatorServis{
     static async uploadVideo(idVideo,data,token){
 
         var file = new FormData();
-
-        console.log(file);
         file.append("file", data);
 
         const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/video/video/${idVideo}/upload-video`, file,

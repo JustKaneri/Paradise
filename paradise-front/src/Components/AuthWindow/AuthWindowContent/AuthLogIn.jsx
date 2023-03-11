@@ -27,8 +27,9 @@ const AuthLogIn = () => {
     const refPassword = useRef(null);
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
+
         if(responce.data){
-            setHandler(()=>{ router('/main'); setIsAuth(true)});
+            setHandler(() => handler());
             showModal(images.ok,'Успешно','Вы авторизовались в системе');
             useTokenHook.saveTokens(responce.data);
         }
@@ -54,6 +55,11 @@ const AuthLogIn = () => {
                 showModal(images.error,'Упссс...',error.response.data);
         }
     },[error.response])
+
+    const handler = () => {
+        router('/main'); 
+        setIsAuth(true)
+    }
 
     return (
         <>

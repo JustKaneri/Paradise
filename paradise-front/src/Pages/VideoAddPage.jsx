@@ -27,15 +27,9 @@ const VideoAddPage = () => {
     const router = useNavigate();
 
     const [fetch,isLoading,error] = useFetching(async () =>{
-        const responceCreator = await VideoCreatorServis.createVideo(video,useTokenHook.getAccsesToken());
+        const responceCreator = await VideoCreatorServis.createVideo(video,files,useTokenHook.getAccsesToken());
 
-        const responceVideo = await VideoCreatorServis.uploadVideo(responceCreator.data.id, files.video,useTokenHook.getAccsesToken());
-
-        if(files.poster){
-            const responcePoster = await VideoCreatorServis.uploadPoster(responceCreator.data.id, files.poster,useTokenHook.getAccsesToken());
-        }
-
-        setHandler(()=> {router('/my-profile')});
+        setHandler(()=>{ router('/my-profile');});
         showModal(images.ok,'Успешно','Видео загружено');
     });
 
@@ -48,11 +42,8 @@ const VideoAddPage = () => {
         }
 
         if(files.video){
-           // console.log(files.video)
             fetch();
         }
-         
-
     }
 
     return (
