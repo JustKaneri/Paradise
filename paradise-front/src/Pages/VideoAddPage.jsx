@@ -29,8 +29,8 @@ const VideoAddPage = () => {
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responceCreator = await VideoCreatorServis.createVideo(video,files,useTokenHook.getAccsesToken());
 
-        setHandler(()=>{ router('/my-profile');});
-        showModal(images.ok,'Успешно','Видео загружено');
+        if(responceCreator.data)
+            showModal(images.ok,'Успешно','Видео загружено',handler);
     });
 
     useRefreshToken(fetch,error);
@@ -44,6 +44,10 @@ const VideoAddPage = () => {
         if(files.video){
             fetch();
         }
+    }
+
+    const handler = () =>{
+        router('/my-profile');
     }
 
     return (

@@ -22,15 +22,14 @@ const AuthLogIn = () => {
         "password": ""
     });
 
-    const[modal,closeModal,showModal,setHandler] = useModal();
+    const[modal,closeModal,showModal] = useModal();
     const refLogin = useRef(null);
     const refPassword = useRef(null);
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
 
         if(responce.data){
-            setHandler(() => handler());
-            showModal(images.ok,'Успешно','Вы авторизовались в системе');
+            showModal(images.ok,'Успешно','Вы авторизовались в системе', handler);
             useTokenHook.saveTokens(responce.data);
         }
     });
@@ -57,8 +56,8 @@ const AuthLogIn = () => {
     },[error.response])
 
     const handler = () => {
+        setIsAuth(true);
         router('/main'); 
-        setIsAuth(true)
     }
 
     return (

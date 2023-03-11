@@ -8,28 +8,27 @@ const useModal = () => {
         isShow:false
     });
 
-    const [handler,setHandler] = useState(null);
+    const[handler,setHandler] = useState();
 
-    function closeModal(handler) {
-        console.log('close');
+    function closeModal() {
         setModal(modal =>({...modal, isShow:false}));
+
+        console.log(handler);
         if(handler){
             console.log('close add ')
-            console.log(handler);
             handler();
-        }
-            
+        }    
     }
 
-    function showModal(icon,article,text){
+    function showModal(icon,article,text,beforeClose){
         setModal(modal =>({...modal, icon:icon,article:article,text:text,isShow:true}));
+        setHandler(()=>beforeClose);
     }
 
     return [
         modal,
         closeModal,
-        showModal,
-        setHandler
+        showModal
     ];
 }
 
