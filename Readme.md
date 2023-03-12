@@ -33,6 +33,6 @@
 - [x] Create new comment
 - [x] Search video
 - [x] Wath favorite video
-- [ ] Edit your profile
-- [ ] Add new video
+- [x] Edit your profile
+- [x] Add new video
 
