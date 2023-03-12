@@ -13,5 +13,11 @@
         public string Error { get; set; }
 
         public StatusRequest Status = StatusRequest.Ok;
+
+        public void SetError(string name)
+        {
+            Error = name;
+            Status = StatusRequest.Error;
+        }
     }
 }

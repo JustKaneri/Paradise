@@ -40,8 +40,7 @@ namespace ParadiseApi.Repository
 
             if (requestResult.Result == null)
             {
-                requestResult.Error = "Token not exist";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Токен не найден");
             }
 
             return requestResult;
@@ -55,8 +54,7 @@ namespace ParadiseApi.Repository
 
             if (requestResult.Result == null)
             {
-                requestResult.Error = "User not found";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Пользователь не авторизован в системе");
             }
 
             return requestResult;
@@ -74,8 +72,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                requestResult.Status = StatusRequest.Error;
-                requestResult.Error = "Failde update refresh token";
+                requestResult.SetError("Не удалось обновить токен");
             }
 
             return requestResult;

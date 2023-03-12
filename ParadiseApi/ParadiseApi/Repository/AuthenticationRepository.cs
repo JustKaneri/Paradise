@@ -26,15 +26,13 @@ namespace ParadiseApi.Repository
 
             if(userAuth == null)
             {
-                requestResult.Error = "Login not correct";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Неверный логин");
                 return requestResult;
             }
 
             if (!HashPassword.Verifications(userAuth.Password, user.Password, userAuth.Name))
             {
-                requestResult.Error = "Password not correct";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Неверный пароль");
                 return requestResult;
             }
 ;
@@ -49,22 +47,19 @@ namespace ParadiseApi.Repository
 
             if (user == null)
             {
-                requestResult.Error  = "The user cannot be null";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Пользователь не может быть равен NUll");
                 return requestResult;
             }
 
             if (CheckExistLogin(user.Login))
             {
-                requestResult.Error = "The login is occupied by another user";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Логин занят другим пользователем");
                 return requestResult;
             }
 
             if (CheckExistName(user.Name))
             {
-                requestResult.Error = "The name is occupied by another user";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Имя занято другим пользователем");
                 return requestResult;
             }
 
@@ -82,8 +77,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                requestResult.Error = "Failed regestry";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Не удалось зарегистрироваться");
                 return requestResult;
             }
 

@@ -22,8 +22,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not exsistenc";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 

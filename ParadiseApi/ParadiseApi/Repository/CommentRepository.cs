@@ -20,15 +20,13 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(comment.UserId, _context) == null)
             {
-                requestResult.Error = "User not existence";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Пользователь не может быть равен NUll");
                 return requestResult;
             }
 
             if (ExistenceModel.Video(comment.VideoId, _context) == null)
             {
-                requestResult.Error = "Video not existence";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Видео не найдено");
                 return requestResult;
             }
 
@@ -42,8 +40,7 @@ namespace ParadiseApi.Repository
             }
             catch 
             {
-                requestResult.Error = "Failed save comment";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Не удалость создать коментарий");
                 return requestResult;
             }
 
@@ -56,8 +53,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.Video(idVideo, _context) == null)
             {
-                requestResult.Error = "Video not existence";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Видео не найдено");
                 return requestResult;
             }
 

@@ -24,8 +24,7 @@ namespace ParadiseApi.Repository
 
             if(string.IsNullOrWhiteSpace(login))
             {
-                request.Error = "Login is null";
-                request.Status = StatusRequest.Error;
+                request.SetError("Логин не может быть пустым");
                 return request;
             }
 
@@ -42,7 +41,7 @@ namespace ParadiseApi.Repository
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                request.Error = "Login is null";
+                request.SetError("Имя не может быть пустым");
                 request.Status = StatusRequest.Error;
                 return request;
             }
@@ -73,8 +72,7 @@ namespace ParadiseApi.Repository
 
             if(user == null)
             {
-                request.Error = "user not exist";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 

@@ -21,8 +21,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                requestResult.Error = "User not existence";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Пользователь не найден");
                 return requestResult;
             }
 
@@ -40,8 +39,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                requestResult.Error = "User not existence";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Пользователь не найден");
                 return requestResult;
             }
 
@@ -56,8 +54,7 @@ namespace ParadiseApi.Repository
 
                 if (fileName == null)
                 {
-                    requestResult.Error = "Failed to save file";
-                    requestResult.Status = StatusRequest.Error;
+                    requestResult.SetError("Не удалось сохранить файл");
                     return requestResult;
                 }
                     
@@ -74,8 +71,7 @@ namespace ParadiseApi.Repository
             }
             catch 
             {
-                requestResult.Error = $"Failed save avatar";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Не удалось установить аватар");
                 return requestResult;
             }
 
@@ -91,8 +87,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                requestResult.Error = "User not existence";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Пользователь не найден");
                 return requestResult;
             }
 
@@ -107,8 +102,7 @@ namespace ParadiseApi.Repository
 
                 if (fileName == null)
                 {
-                    requestResult.Error = "Failed to save file";
-                    requestResult.Status = StatusRequest.Error;
+                    requestResult.SetError("Не удалось сохранить файл");
                     return requestResult;
                 }
 
@@ -123,8 +117,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                requestResult.Error = $"Failed save avatar";
-                requestResult.Status = StatusRequest.Error;
+                requestResult.SetError("Не удалось установить фоновое изображение");
                 return requestResult;
             }
 

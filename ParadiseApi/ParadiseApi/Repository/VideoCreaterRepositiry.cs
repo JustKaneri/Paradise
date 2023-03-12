@@ -29,21 +29,27 @@ namespace ParadiseApi.Repository
 
             if (vid == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 
             if (vid.PathPoster != null)
             {
-                request.Error = "Poster is existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Файл постера уже загружен");
                 return request;
             }
 
             try
             {
                 string pathPoster = await RootFile.SaveFile(vid.UserId, "posters", poster);
+
+                if(pathPoster == null)
+                {
+                    request.SetError("Не удалось сохранить файл постера");
+                    await RemoveVideo(vid);
+                    return request;
+                }
+
                 vid.PathPoster = "posters/" + pathPoster;
 
                 _context.Videos.Update(vid);
@@ -51,8 +57,8 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                request.Error = "Failde upload poster file";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось сохранить файл постера");
+                await RemoveVideo(vid);
                 return request;
             }
 
@@ -75,21 +81,25 @@ namespace ParadiseApi.Repository
 
             if (vid == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 
             if (vid.PathVideo != null)
             {
-                request.Error = "Video file existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Файл видео уже загружен");
                 return request;
             }
 
             try
             {
                 string patchVideo = await RootFile.SaveFile(vid.UserId, "videos", video);
+                if(patchVideo == null)
+                {
+                    request.SetError("Не удалось сохранить файл видео");
+                    await RemoveVideo(vid);
+                    return request;
+                }
                 vid.PathVideo = "videos/" + patchVideo;
                 _context.Videos.Update(vid);
                 await _context.SaveChangesAsync();
@@ -97,8 +107,7 @@ namespace ParadiseApi.Repository
             catch
             {
                 await RemoveVideo(vid);
-                request.Error = "Failde upload file video";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось сохранить файл видео");
                 return request;
             }
 
@@ -120,8 +129,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
@@ -135,8 +143,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                request.Error = "Failed create new video";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось создать новое видео");
                 return request;
             }
 
@@ -158,8 +165,7 @@ namespace ParadiseApi.Repository
 
             if (video == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 
@@ -170,8 +176,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                request.Error = "Failde remove video " + request.Result.Id;
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось удалить видео: " + request.Result.Id);
                 return request;
             }
 

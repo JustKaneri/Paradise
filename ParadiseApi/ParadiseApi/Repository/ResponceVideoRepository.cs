@@ -24,15 +24,13 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
             if (ExistenceModel.Video(idVideo, _context) == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 
@@ -45,8 +43,7 @@ namespace ParadiseApi.Repository
 
             if (request.Result == null)
             {
-                request.Error = "Responce not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Реакции на это видео не найдено");
                 return request;
             }
 
@@ -59,15 +56,13 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
             if(ExistenceModel.Video(idVideo, _context) == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 
@@ -90,8 +85,7 @@ namespace ParadiseApi.Repository
             {
                 if (responceVideo.IsDisLike)
                 {
-                    request.Error = "Responce is existence";
-                    request.Status = StatusRequest.Error;
+                    request.SetError("DisLike уже установлен в качестве реакции");
                     return request;
                 }
                 else
@@ -114,15 +108,13 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
             if (ExistenceModel.Video(idVideo, _context) == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 
@@ -146,8 +138,7 @@ namespace ParadiseApi.Repository
             {
                 if (responceVideo.IsLike)
                 {
-                    request.Error = "Responce is existence";
-                    request.Status = StatusRequest.Error;
+                    request.SetError("Like уже установлен в качестве реакции");
                     return request;
                 }
                 else
@@ -174,8 +165,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                request.Error = "Failde update responce";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось обновить реакцию");
                 return request;
             }
 
@@ -195,8 +185,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                request.Error = "Failde create responce";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось создать реакцию");
                 return request;
             }
 
@@ -211,15 +200,13 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
             if (ExistenceModel.Video(idVideo, _context) == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 
@@ -231,8 +218,7 @@ namespace ParadiseApi.Repository
 
             if (responceVideo == null)
             {
-                request.Error = "Responce not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Реакция не найдена");
                 return request;
             }                
 
@@ -243,8 +229,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                request.Error = "Failde remove responce";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось удалить реакцию");
                 return request;
             }
 
@@ -263,8 +248,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.Video(idVideo, _context) == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 

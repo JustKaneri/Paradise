@@ -21,8 +21,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
@@ -43,15 +42,13 @@ namespace ParadiseApi.Repository
 
             if (idAutor == idSubscrib)
             {
-                request.Error = "Not correct id";
-                request.Status = StatusRequest.Error;
+                request.SetError("Некорректный ID");
                 return request;
             }
 
             if (ExistenceModel.User(idAutor, _context) == null || ExistenceModel.User(idSubscrib, _context) == null)
             {
-                request.Error = "User not exist";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
@@ -59,8 +56,7 @@ namespace ParadiseApi.Repository
 
             if (Subscrib != null)
             {
-                request.Error = "Subscription exist";
-                request.Status = StatusRequest.Error;
+                request.SetError("Подписка уже существует");
                 return request;
             }
 
@@ -75,8 +71,7 @@ namespace ParadiseApi.Repository
             }
             catch 
             {
-                request.Error =  "Failde subscribe";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось установить подписку");
                 return request;
             }
 
@@ -91,8 +86,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idAutor, _context) == null || ExistenceModel.User(idSubscrib, _context) == null)
             {
-                request.Error = "User not exist";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
@@ -100,8 +94,7 @@ namespace ParadiseApi.Repository
 
             if (Subscrib == null)
             {
-                request.Error = "Subscription not exist";
-                request.Status = StatusRequest.Error;
+                request.SetError("Подписка не найдена");
                 return request;
             }
 
@@ -112,8 +105,7 @@ namespace ParadiseApi.Repository
             }
             catch
             {
-                request.Error = "Failde unsubscribe";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось удалить подписку");
                 return request;
             }
 
@@ -128,8 +120,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idAutor ,_context) == null || ExistenceModel.User(idSubscrib, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status= StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 

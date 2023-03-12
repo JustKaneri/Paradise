@@ -30,8 +30,7 @@ namespace ParadiseApi.Repository
 
             if (v == null)
             {
-                request.Error = "Video not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Видео не найдено");
                 return request;
             }
 
@@ -44,8 +43,7 @@ namespace ParadiseApi.Repository
             }
             catch 
             {
-                request.Error = "Failed update view";
-                request.Status = StatusRequest.Error;
+                request.SetError("Не удалось увеличить счетчик просмотров");
                 return request;
             }
 
@@ -65,8 +63,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
@@ -93,8 +90,7 @@ namespace ParadiseApi.Repository
 
             if (ExistenceModel.User(idUser, _context) == null)
             {
-                request.Error = "User not existence";
-                request.Status = StatusRequest.Error;
+                request.SetError("Пользователь не найден");
                 return request;
             }
 
@@ -119,8 +115,7 @@ namespace ParadiseApi.Repository
 
             if (page == 0)
             {
-                request.Error = "Not correct page";
-                request.Status = StatusRequest.Error;
+                request.SetError("Некорректный номер страницы");
                 return request;
             }
 
@@ -146,10 +141,8 @@ namespace ParadiseApi.Repository
 
             if(video == null)
             {
-                request.Error = "video not found";
-                request.Status = StatusRequest.Error;
-
-
+                request.SetError("Видео не найдено");
+                return request;
             }
 
             request.Result = video;
@@ -186,15 +179,13 @@ namespace ParadiseApi.Repository
 
             if (page == 0)
             {
-                request.Error = "Not correct page";
-                request.Status = StatusRequest.Error;
+                request.SetError("Некорректный номер страницы");
                 return request;
             }
 
             if (string.IsNullOrWhiteSpace(search))
             {
-                request.Error = "The search cannot be null";
-                request.Status = StatusRequest.Error;
+                request.SetError("Некорректный поисковой запрос");
                 return request;
             }
 
