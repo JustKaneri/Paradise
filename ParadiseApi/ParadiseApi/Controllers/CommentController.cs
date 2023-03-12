@@ -39,6 +39,11 @@ namespace ParadiseApi.Controllers
 
             var result = _mapper.Map<List<CommentDto>>(request.Result);
 
+            if(result.Count == 0)
+            {
+                return NotFound();
+            }
+
             return Ok(result);
         }
 
@@ -49,9 +54,9 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("new-comment")]
         [Authorize(Roles = "Administrator,User")]
-        [ProducesResponseType(200, Type = typeof(CommentDto))]
+        [ProducesResponseType(201, Type = typeof(CommentDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetComment(CreateCommentDto commentDt)
+        public async Task<IActionResult> CreateComment(CreateCommentDto commentDt)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             int idUser = -1;

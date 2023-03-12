@@ -75,7 +75,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("like")]
         [Authorize(Roles = "Administrator,User")]
-        [ProducesResponseType(200,Type = typeof(ResponceVideoDto))]
+        [ProducesResponseType(201,Type = typeof(ResponceVideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetLike(int idVideo)
         {
@@ -103,7 +103,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("dislike")]
         [Authorize(Roles = "Administrator,User")]
-        [ProducesResponseType(200, Type = typeof(ResponceVideoDto))]
+        [ProducesResponseType(201, Type = typeof(ResponceVideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetDisLike( int idVideo)
         {

@@ -88,7 +88,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpPost("user/{idCanal}/subscribe")]
         [Authorize(Roles = "Administrator,User")]
-        [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
+        [ProducesResponseType(201, Type = typeof(SubscriptionsDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Subscribe(int idCanal)
         {
@@ -116,7 +116,7 @@ namespace ParadiseApi.Controllers
         /// <returns></returns>
         [HttpDelete("user/{idCanal}/unsubscribe")]
         [Authorize(Roles = "Administrator,User")]
-        [ProducesResponseType(200, Type = typeof(SubscriptionsDto))]
+        [ProducesResponseType(201, Type = typeof(SubscriptionsDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Unsubscribe(int idCanal)
         {
