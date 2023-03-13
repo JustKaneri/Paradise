@@ -74,6 +74,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("corsapp");
+app.UseMiddleware<GlobalErrorHandlerMiddleware>();
 app.UseMiddleware<LoggingMiddleware>();
 app.Use(async (context, next) =>
 {
