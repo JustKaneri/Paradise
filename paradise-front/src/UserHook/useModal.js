@@ -13,7 +13,6 @@ const useModal = () => {
     function closeModal() {
         setModal(modal =>({...modal, isShow:false}));
 
-        console.log(handler);
         if(handler){
             console.log('close add ')
             handler();

@@ -27,6 +27,7 @@ const VideoAddPage = () => {
     const router = useNavigate();
 
     const [fetch,isLoading,error] = useFetching(async () =>{
+        showModal(images.load,'Загрузка','Не закрывайте эту страницу до появления сообщения об окончании загрузки.');
         const responceCreator = await VideoCreatorServis.createVideo(video,files,useTokenHook.getAccsesToken());
 
         if(responceCreator.data)
@@ -67,6 +68,7 @@ const VideoAddPage = () => {
             />
             <div style={{width:'100vw',display:'flex',justifyContent:'center'}}>
                 <CreatorVideoButton
+                    disabled={isLoading ? true : false}
                     handler={()=> createVideo()}
                 >
                     Загрузить видео

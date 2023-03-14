@@ -200,6 +200,7 @@ namespace ParadiseApi.Controllers
         /// <param name="files"></param>
         /// <returns></returns>
         [HttpPost("video/create")]
+        [DisableRequestSizeLimit]
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

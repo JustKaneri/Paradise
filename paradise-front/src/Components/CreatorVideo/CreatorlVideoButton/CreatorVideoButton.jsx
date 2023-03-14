@@ -1,14 +1,15 @@
 import React from 'react';
 import styles from './creatorVideoButton.module.css'
 
-const ModalVideoButton = ({children,handler}) => {
+const ModalVideoButton = (props) => {
     return (
         <>
           <button 
+            {...props}
             className={styles.button}
-            onClick = {() => handler()}
+            onClick = {() => props.handler()}
           >
-            {children}
+            {props.children}
           </button>  
         </>
     );
