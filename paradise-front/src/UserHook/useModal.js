@@ -14,7 +14,6 @@ const useModal = () => {
         setModal(modal =>({...modal, isShow:false}));
 
         if(handler){
-            console.log('close add ')
             handler();
         }    
     }

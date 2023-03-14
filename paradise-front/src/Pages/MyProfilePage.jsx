@@ -32,7 +32,7 @@ const MyProfilePage = () => {
     useRefreshToken(fetchUser,errorUser);
 
     return (
-        <div>   
+        <div>
             {isLoadingUser && <Loader/>}
             {Object.entries(user).length !== 0  &&
                 <ProfileCanal
