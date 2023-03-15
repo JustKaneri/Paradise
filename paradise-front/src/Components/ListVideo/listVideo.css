@@ -2,12 +2,11 @@
     position: relative;
     padding-top: 10vh;
     padding-bottom: 5%;
-    padding-left: 2%;
-    padding-right: 2%;
-    width: 96%;
+    width: 100%;
     height: auto;
     display: flex;
     flex-wrap: wrap;
     column-gap: 30px;
     row-gap: 30px;
+    justify-content: center;
 }

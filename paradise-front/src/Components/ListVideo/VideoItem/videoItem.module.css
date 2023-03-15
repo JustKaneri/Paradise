@@ -4,7 +4,7 @@
     min-width: 200px;
     height: auto;
     border-radius: 10px;
-    background: linear-gradient(135.38deg, rgba(0, 223, 162, 0.1) 27.88%, rgba(0, 0, 0, 0.1) 68.1%);
+   /* background: linear-gradient(135.38deg, rgba(0, 223, 162, 0.1) 27.88%, rgba(0, 0, 0, 0.1) 68.1%); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,7 +22,7 @@
     min-height: 160px;
     border-radius: 10px;
     object-fit: cover;
-    border: 2px solid #1A1A1A;
+    border: 2px solid #00DFA2;
     background-color: transparent;
 }
 
@@ -31,21 +31,32 @@
     width: 95%;
     height: auto;
     display: flex;
-    align-content: center;
+    align-items: center;
 }
 
 .name{
-    width: 85%;
-    padding-left: 5px;
+    display: block;
+    width: 95%;
+    padding-left: 5%;
+    padding-right: 5%;
     text-align:left;
-    font-size: 1.4em;
+    font-size: 1.8em;
+    color: #1A1A1A;
 }
 
 
 .profile{
-    border: 2px solid #1A1A1A;
+    border: 2px solid #00DFA2;
     width: 30px;
     height: 30px;
     object-fit:cover;
     border-radius: 100%;
+}
+
+.name_profile{
+    color: rgba(26, 26, 26, 0.9);
+    width: 85%;
+    padding-left: 5px;
+    text-align:left;
+    font-size: 1.2em;
 }
