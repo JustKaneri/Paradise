@@ -13,7 +13,9 @@
     position: relative;
     margin-top: 10vh;
     margin-right: 3%;
-    padding: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 25px;
     background: #1A1A1A;
     border-radius: 10px;
     border: 2px solid #00DFA2;
