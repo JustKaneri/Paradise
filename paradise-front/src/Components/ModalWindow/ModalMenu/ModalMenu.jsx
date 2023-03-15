@@ -1,6 +1,4 @@
 import React from 'react';
-import images from '../../../Other/DictonaryImage';
-import ModalButton from '../ModalButton/ModalButton';
 import './modalMenu.css'
 
 const ModalMenu = ({IsVisible,children}) => {

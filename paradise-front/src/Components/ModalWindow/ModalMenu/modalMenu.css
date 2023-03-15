@@ -11,7 +11,7 @@
 
 .modal-content {
     position: relative;
-    margin-top: 5%;
+    margin-top: 10vh;
     margin-right: 3%;
     padding: 25px;
     background: #1A1A1A;
@@ -29,7 +29,7 @@
 
 
 .modal.active {
-    background: #1a1a1a16;
+    background: #1a1a1a0e;
     display: flex;
     justify-content: right;
     align-items: flex-start;
