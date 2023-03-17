@@ -3,6 +3,7 @@ import styles from './commentIte.module.css'
 import getSrcUser from '../../../UserHook/useSrcUser';
 import { useNavigate } from 'react-router-dom';
 import Redirect from '../../../UserHook/useRederect';
+import { getShortDate, getTime } from '../../../Other/dateFormater';
 
 const CommentItem = ({comment}) => {
 
@@ -24,15 +25,19 @@ const CommentItem = ({comment}) => {
                 className={styles.avatar} 
                 src = {getSrcUser.Avatar(comment.user)}
             />
-            <span className={styles.name}>
-                {comment.user.name}
-            </span>
-            <span className={styles.date}>
-                {comment.createdDate}
-            </span>
-            <span className={styles.content}>
-                {comment.content}
-            </span>
+            <div className={styles.box_content}>
+                <div className={styles.box_user}>
+                    <span className={styles.name}>
+                        {comment.user.name}
+                    </span>
+                    <span className={styles.date}>
+                        {getShortDate(comment.createdDate) + ' ' + getTime(comment.createdDate)}
+                    </span>
+                </div>
+                <span className={styles.content}>
+                    {comment.content}
+                </span>
+            </div>
         </div>
     );
 }

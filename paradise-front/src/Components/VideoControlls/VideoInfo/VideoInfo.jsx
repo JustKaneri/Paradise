@@ -1,11 +1,8 @@
 import React from 'react';
+import { getShortDate } from '../../../Other/dateFormater';
 import styles from './videoInfo.module.css';
 
 const VideoInfo = ({info}) => {
-
-    const date = () => {
-        return new Date(info.dateCreate).toLocaleDateString(); 
-    }
 
     const countWathc = () => {
         let countWatch = info.countWatch;
@@ -26,7 +23,7 @@ const VideoInfo = ({info}) => {
     return (
         <>
         <span className={styles.info}>
-            Опубликовано {date()}
+            Опубликовано {getShortDate(info.dateCreate)}
             &emsp;
             Просмотров: {countWathc()}
         </span>   
