@@ -14,7 +14,7 @@ export default class VideoCreatorServis{
         if(files.poster)
             file.append("files", files.poster);
 
-        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/video/video/create`, file,
+        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/creator-video/video/create`, file,
         { 
             headers: 
                 {
