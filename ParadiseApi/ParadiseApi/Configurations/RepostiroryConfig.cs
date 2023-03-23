@@ -19,6 +19,7 @@ namespace ParadiseApi.Configurations
             builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             builder.Services.AddScoped<IApiRepository, ApiRepository>();
             builder.Services.AddScoped<IVideoCreaterRepository,VideoCreaterRepositiry>();
+            builder.Services.AddScoped<IHistoryRepository, HistoryRepository>();
         }
     }
 }
