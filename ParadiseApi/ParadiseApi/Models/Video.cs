@@ -18,6 +18,9 @@ namespace ParadiseApi.Models
         [JsonIgnore]
         public ICollection<Comment> Comments { get; set; }
 
+        [JsonIgnore]
+        public ICollection<History> Histories { get; set; }
+
 
     }
 }

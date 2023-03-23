@@ -23,5 +23,7 @@ namespace ParadiseApi.Models
         public ICollection<Users> Accounts { get; set; }
         [JsonIgnore]
         public ICollection<Users> Subscribers { get; set; }
+        [JsonIgnore]
+        public ICollection<History> Histories { get; set; }
     }
 }
