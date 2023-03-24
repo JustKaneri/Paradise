@@ -15,7 +15,8 @@ const images = {
     error: require("../Assets/Error.png"),
     defaultAva: require("../Assets/Default-ava.png"),
     ok: require("../Assets/Ok.png"),
-    load: require('../Assets/load.gif')
+    load: require('../Assets/load.gif'),
+    history: require('../Assets/History.png')
 };
 
 export default images;

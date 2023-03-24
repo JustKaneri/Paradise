@@ -9,12 +9,14 @@ import NotFoundPage from '../Pages/NotFoundPage';
 import FavoritePage from '../Pages/FavoritePage';
 import SearchPage from '../Pages/SearchPage'
 import MyProfilePage from '../Pages/MyProfilePage';
+import HistoryPage from '../Pages/HistoryPage';
 
 export const privatRoutes = [
     {path:"/favorite", element: <FavoritePage/>, exact: true},
     {path:'/subscribs', element: <SubscribPage/>, exact: true },
     {path:'/add-video', element: <VideoAddPage/>, exact: true },
-    {path:'/my-profile', element: <MyProfilePage/>, exact: true }
+    {path:'/my-profile', element: <MyProfilePage/>, exact: true },
+    {path:'/history', element: <HistoryPage/>, exact: true }
 ]
 
 export const notAuthRoutes = [ 

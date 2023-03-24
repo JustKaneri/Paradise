@@ -33,6 +33,11 @@ const ModalContentAuth = () => {
                     name = {'Добавить'}
             />
             <ModalButton 
+                    srcImage = {images.history}
+                    handler = { () => router('/history') }
+                    name = {'История'}
+            />
+            <ModalButton 
                     srcImage = {images.subscrib}
                     handler = { () => router('/subscribs') }
                     name = {'Подписки'}
