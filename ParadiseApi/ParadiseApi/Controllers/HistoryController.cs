@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Models;
+using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
@@ -19,10 +21,22 @@ namespace ParadiseApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get history for auth user
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200,Type =typeof(IEnumerable<VideoDto>))] 
-        public async Task<IActionResult> GetHistory(int idUser)
+        public async Task<IActionResult> GetHistory()
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity == null)
+                return BadRequest("Ошибка токена");
+
+            int idUser = int.Parse(identity.FindFirst("id").Value);
+
             var result = await _repository.GetHistory(idUser);
 
             if(result.Status == Models.StatusRequest.Error)
@@ -34,10 +48,23 @@ namespace ParadiseApi.Controllers
             return Ok(_mapper.Map<List<VideoDto>>(result.Result));
         }
 
+        /// <summary>
+        /// Create new record in history
+        /// </summary>
+        /// <param name="idVideo"></param>
+        /// <returns></returns>
         [HttpPost("create")]
+        [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(History))]
-        public async Task<IActionResult> CreateHistory(int idUser,int idVideo)
+        public async Task<IActionResult> CreateHistory(int idVideo)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity == null)
+                return BadRequest("Ошибка токена");
+
+            int idUser = int.Parse(identity.FindFirst("id").Value);
+
             var result = await _repository.CreateHistory(idUser,idVideo);
 
             if (result.Status == StatusRequest.Error)
