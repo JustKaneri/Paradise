@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './favoriteItem.module.css'
+import styles from './videoRowItem.module.css'
 import { useNavigate } from 'react-router-dom';
-import FavoriteInfo from './FavoriteInfo/FavoriteInfo';
+import VideoInfo from './VideoInfo/VideoInfo';
 
-const FavoriteItem = ({value,index}) => {
+const VideoRowItem = ({value,index}) => {
 
     const router = useNavigate();
 
@@ -16,11 +16,11 @@ const FavoriteItem = ({value,index}) => {
                 onClick={()=> router(`/video/${value.id}`)}
                 className={styles.poster}
                 src={value.pathPoster}/>
-            <FavoriteInfo
+            <VideoInfo
                 value = {value}
             />
         </div>
     );
 }
 
-export default FavoriteItem;
+export default VideoRowItem;

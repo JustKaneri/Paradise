@@ -1,10 +1,10 @@
 import React from 'react';
 import getSrcUser from '../../../../UserHook/useSrcUser';
 import { useNavigate } from 'react-router-dom';
-import styles from './favoriteUser.module.css'
+import styles from './videoUser.module.css'
 import Redirect from '../../../../UserHook/useRederect';
 
-const FavoriteUser = ({value}) => {
+const VideoUser = ({value}) => {
 
     const router = useNavigate();
 
@@ -30,4 +30,4 @@ const FavoriteUser = ({value}) => {
     );
 }
 
-export default FavoriteUser;
+export default VideoUser;

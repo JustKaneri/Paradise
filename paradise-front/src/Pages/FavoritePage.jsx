@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import VideoServis from '../Api/VideoServis/VideoServis';
-import FavoriteList from '../Components/FavoriteList/FavoriteList';
 import { useFetching } from '../UserHook/useFeatching';
 import useRefreshToken from '../UserHook/useRefreshToken';
 import useTokenHook from '../UserHook/useTokensHoouk';
 import Loader from '../Components/Loader/Loader';
 import PageName from '../Components/PageName/PageName'
+import ListVideoRow from '../Components/ListVideoRow/ListVideoRow';
 
 const FavoritePage = () => {
 
@@ -30,7 +30,7 @@ const FavoritePage = () => {
             />
             {isLoading && <Loader/>}
             {video.length > 0 && 
-                <FavoriteList
+                <ListVideoRow
                     video={video}
                 />
             }

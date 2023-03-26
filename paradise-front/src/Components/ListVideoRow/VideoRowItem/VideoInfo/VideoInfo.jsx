@@ -1,11 +1,10 @@
 import React from 'react';
-import styles from './favoriteInfo.module.css';
-import getSrcUser from '../../../../UserHook/useSrcUser';
+import styles from './videoInfo.module.css'
 import { useNavigate } from 'react-router-dom';
-import FavoriteUser from '../FavoriteUser/FavoriteUser';
+import VideoUser from '../VideoUser/VideoUser';
 
 
-const FavoriteInfo = ({value}) => {
+const VideoInfo = ({value}) => {
 
     const router = useNavigate();
 
@@ -16,11 +15,11 @@ const FavoriteInfo = ({value}) => {
                         className={styles.name}>
                         {value.name}
                     </span>
-                    <FavoriteUser
+                    <VideoUser
                         value = {value}
                     />
         </div>
     );
 }
 
-export default FavoriteInfo;
+export default VideoInfo;

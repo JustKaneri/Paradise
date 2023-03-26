@@ -1,13 +1,13 @@
 import React from 'react';
-import FavoriteItem from './FavoriteItem/FavoriteItem';
-import styles from './favoriteList.module.css'
+import VideoRowItem from './VideoRowItem/VideoRowItem'
+import styles from './listVideoRow.module.css'
 
-const FavoriteList = ({video}) => {
+const ListVidoeRow = ({video}) => {
 
     return (
         <div className={styles.box}>
             {video.map((value,index)=>
-                <FavoriteItem
+                <VideoRowItem
                     value = {value}
                     key = {value.id}
                     index = {index+1}
@@ -17,4 +17,4 @@ const FavoriteList = ({video}) => {
     );
 }
 
-export default FavoriteList;
+export default ListVidoeRow;

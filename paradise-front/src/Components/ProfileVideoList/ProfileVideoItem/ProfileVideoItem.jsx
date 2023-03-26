@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './profileVideoItem.module.css'
-import FavoriteInfo from '../../FavoriteList/FavoriteItem/FavoriteInfo/FavoriteInfo'
 import { useNavigate } from 'react-router-dom';
+import VideoInfo from '../../ListVideoRow/VideoRowItem/VideoInfo/VideoInfo';
 
 const ProfileVideoItem = ({item,index}) => {
 
@@ -16,7 +16,7 @@ const ProfileVideoItem = ({item,index}) => {
                 onClick={()=> router(`/video/${item.id}`)}
                 className={styles.poster}
                 src={item.pathPoster}/>
-            <FavoriteInfo
+            <VideoInfo
                 value = {item}
             />
             <button
