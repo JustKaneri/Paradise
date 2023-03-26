@@ -6,12 +6,17 @@ import { useFetching } from '../UserHook/useFeatching';
 import Loader from '../Components/Loader/Loader';
 import VideoServis from '../Api/VideoServis/VideoServis';
 import CommentServis from '../Api/CommentsServis/CommentServis';
-import VideoResponceServis from '../Api/VideoResponceServis/VideoResponceServis';
 import { useParams, Navigate  } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../Context';
+import HistoryServis from '../Api/HistoryServis/HistoryServis';
+import useTokenHook from '../UserHook/useTokensHoouk';
+import useRefreshToken from '../UserHook/useRefreshToken';
 
 const WatchVideoPage = () => {
 
     const {id} = useParams();
+    const {IsAuth,setIsAuth} =  useContext(AuthContext)
 
     const [video,setVideo] = useState({});
     const [comments,setComments] = useState([]);
@@ -30,9 +35,18 @@ const WatchVideoPage = () => {
         const responce = await VideoServis.postAddView(id);
     });
 
+    const [fetchHistory,isLoadingHistory,errorHistory] = useFetching(async () =>{
+        const responce = await HistoryServis.createEnityHistory(id,useTokenHook.getAccsesToken());
+    })
+
     useEffect(()=>{
         fetchVideo();
         fetchComments();
+
+        if(IsAuth){
+            fetchHistory();
+        }
+        
     },[]);
 
     useEffect(()=>{
@@ -44,6 +58,8 @@ const WatchVideoPage = () => {
     const createComment = () =>{
        fetchComments();
     }
+
+    useRefreshToken(fetchHistory,errorHistory);
 
     return (
         <div>
