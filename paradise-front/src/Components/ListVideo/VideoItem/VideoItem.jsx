@@ -9,10 +9,10 @@ const VideoItem = (props) => {
 
     return (
         <div onClick={()=> router(`/video/${props.videoItem.id}`)} key={props.videoItem.id} className={styles.box}>
+            <span className={styles.name}>{props.videoItem.name}</span>
             <img src={props.videoItem.pathPoster} 
                 className={styles.video}/>
-            <span className={styles.name}>{props.videoItem.name}</span>
-            <div className={styles.info}>
+            <div className={styles.user}>
                 <img src={getSrcUser.Avatar(props.videoItem.user)} className={styles.profile}/>
                 <span className={styles.name_profile}>{props.videoItem.user.name}</span>
             </div>

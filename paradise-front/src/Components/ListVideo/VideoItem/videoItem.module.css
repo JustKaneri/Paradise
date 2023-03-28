@@ -3,21 +3,18 @@
     width: 23%;
     min-width: 200px;
     height: auto;
-    border-radius: 10px;
-   /* background: linear-gradient(135.38deg, rgba(0, 223, 162, 0.1) 27.88%, rgba(0, 0, 0, 0.1) 68.1%); */
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+
+    box-shadow: 0px 0px 10px rgba(26, 26, 26, 0.4);
+    border-radius: 10px;
 }
 
 .box:hover{
     background: linear-gradient(135.38deg, rgba(0, 223, 162, 0.2) 27.88%, rgba(0, 0, 0, 0.2) 68.1%);
 }
-
-.box:hover .video{
-    border: 2px solid rgba(0, 223, 162);
-}   
 
 .video{
     margin-top: 5px;
@@ -26,13 +23,14 @@
     min-height: 160px;
     border-radius: 10px;
     object-fit: cover;
-    border: 2px solid #1A1A1A;
+    
     box-sizing: border-box;
     background-color: transparent;
 }
 
-.info{
+.user{
     margin-top: 5px;
+    margin-bottom: 5px;
     width: 95%;
     height: auto;
     display: flex;
@@ -44,9 +42,13 @@
     width: 95%;
     padding-left: 5%;
     padding-right: 5%;
+    padding-bottom: 3px;
     text-align:left;
     font-size: 1.8em;
     color: #1A1A1A;
+    white-space: nowrap; /* Текст не переносится */
+    overflow: hidden; /* Обрезаем всё за пределами блока */
+    text-overflow: ellipsis; /* Добавляем многоточие */
 }
 
 
@@ -64,4 +66,8 @@
     padding-left: 5px;
     text-align:left;
     font-size: 1.2em;
+
+    white-space: nowrap; /* Текст не переносится */
+    overflow: hidden; /* Обрезаем всё за пределами блока */
+    text-overflow: ellipsis; /* Добавляем многоточие */
 }
