@@ -1,7 +1,7 @@
 .spinner_box{
-    position: absolute;
+    position: relative;
     left: 45%;
-    top: 45%;
+    top: 40vh;
 
     width: 200px;
     height: 200px;
