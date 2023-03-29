@@ -21,7 +21,11 @@ export default class VideoCreatorServis{
                     "Authorization" : `Bearer ${token}`,
                     'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data'
-                } 
+                },
+                onUploadProgress: function(progressEvent) {
+                     console.log(parseInt(Math.round(( progressEvent.loaded / progressEvent.total) * 100)));
+                }.bind(this)
+                
         });;
 
         return responce;
