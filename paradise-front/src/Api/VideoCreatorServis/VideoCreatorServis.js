@@ -3,7 +3,7 @@ import ApiConfig from "../ApiConfig";
 
 export default class VideoCreatorServis{
 
-    static async createVideo(data,files,token){
+    static async createVideo(data,files,token,setload){
 
         var file = new FormData();
 
@@ -23,7 +23,7 @@ export default class VideoCreatorServis{
                     'Content-Type': 'multipart/form-data'
                 },
                 onUploadProgress: function(progressEvent) {
-                     console.log(parseInt(Math.round(( progressEvent.loaded / progressEvent.total) * 100)));
+                     setload(parseInt(Math.round(( progressEvent.loaded / progressEvent.total) * 100)));
                 }.bind(this)
                 
         });;

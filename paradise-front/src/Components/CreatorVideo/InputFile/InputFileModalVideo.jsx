@@ -29,7 +29,7 @@ const InputFileModalVideo = (props) => {
             refObj = props.video;
         }
         
-        getUrl(file, refObj);
+        //getUrl(file, refObj);
     }
 
     return (

@@ -1,0 +1,28 @@
+.box{
+    position: absolute;
+    height: 80vh;
+    width: 100vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    position: relative;
+    width: 45vw;
+    height: 60vh;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(26, 26, 26, 0.4);
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+} 
+
+.title{
+    text-align: center;
+    font-size: 4em;
+    padding-top: 20px;
+    margin-top: 20px;
+}

@@ -23,6 +23,7 @@ namespace ParadiseApi.Controllers
         }
 
         [HttpPost("video/create")]
+        [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
         [DisableRequestSizeLimit]
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(VideoDto))]

@@ -10,9 +10,11 @@ import useRefreshToken from '../UserHook/useRefreshToken';
 import useModal from '../UserHook/useModal';
 import images from '../Other/DictonaryImage';
 import ModalInfoWindow from '../Components/ModalWindow/ModalInfoWindow/ModalInfoWindow';
+import LoaderFile from '../Components/LoaderFile/LoaderFile';
 
 const VideoAddPage = () => {
 
+    const [load,setLoad] = useState(0);
     const [video,setVideoData] = useState({
         "name": '',
         "discript": ''
@@ -28,10 +30,12 @@ const VideoAddPage = () => {
 
     const [fetch,isLoading,error] = useFetching(async () =>{
         showModal(images.load,'Загрузка','Не закрывайте эту страницу до появления сообщения об окончании загрузки.');
-        const responceCreator = await VideoCreatorServis.createVideo(video,files,useTokenHook.getAccsesToken());
+        const responceCreator = await VideoCreatorServis.createVideo(video,files,useTokenHook.getAccsesToken(),setLoad);
 
         if(responceCreator.data)
             showModal(images.ok,'Успешно','Видео загружено',handler);
+
+        setLoad(0);
     });
 
     useRefreshToken(fetch,error);
@@ -60,20 +64,29 @@ const VideoAddPage = () => {
             <PageName
                 content = {'Добавить видео'}
             />
-            <CreatorVideoContent
-                setVideoData = {setVideoData}
-                video = {video}
-                files = {files}
-                setFiles = {setFiles}
-            />
-            <div style={{width:'100vw',display:'flex',justifyContent:'center'}}>
-                <CreatorVideoButton
-                    disabled={isLoading ? true : false}
-                    handler={()=> createVideo()}
-                >
-                    Загрузить видео
-                </CreatorVideoButton>
-            </div>
+            {!isLoading &&
+                <LoaderFile
+                    value={load}
+                />
+            }
+            {isLoading &&
+                <>
+                    <CreatorVideoContent
+                        setVideoData = {setVideoData}
+                        video = {video}
+                        files = {files}
+                        setFiles = {setFiles}
+                    />
+                    <div style={{width:'100vw',display:'flex',justifyContent:'center'}}>
+                        <CreatorVideoButton
+                            disabled={isLoading ? true : false}
+                            handler={()=> createVideo()}
+                        >
+                            Загрузить видео
+                        </CreatorVideoButton>
+                    </div>
+                </>
+            }
         </div>
     );
 }
