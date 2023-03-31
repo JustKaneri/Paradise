@@ -64,12 +64,12 @@ const VideoAddPage = () => {
             <PageName
                 content = {'Добавить видео'}
             />
-            {!isLoading &&
+            {isLoading &&
                 <LoaderFile
                     value={load}
                 />
             }
-            {isLoading &&
+            {!isLoading &&
                 <>
                     <CreatorVideoContent
                         setVideoData = {setVideoData}
