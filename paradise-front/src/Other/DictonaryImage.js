@@ -14,6 +14,8 @@ const images = {
     favorite: require("../Assets/Favorite.png"),
     error: require("../Assets/Error.png"),
     defaultAva: require("../Assets/Default-ava.png"),
+    defaultPoster: require('../Assets/DefaultPoster.png'),
+    defaultFon: require('../Assets/DefaultFon.png'),
     ok: require("../Assets/Ok.png"),
     load: require('../Assets/load.gif'),
     history: require('../Assets/History.png')
