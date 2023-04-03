@@ -7,3 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.video-wrapper{
+  width: auto !important; /*This is necessary so as not to rebuild the library*/
+}

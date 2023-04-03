@@ -22,6 +22,7 @@ const InputFileModalVideo = (props) => {
             handler(data => ({...data,poster:file}));
             setFiles({...files,pathPoster: props.reference.current.files[0]});
             refObj = props.poster;
+            getUrl(file, refObj);
         }            
         else{
             handler(data => ({...data, video:file}));
