@@ -9,6 +9,7 @@ import useTokenHook from '../UserHook/useTokensHoouk';
 import useRefreshToken from '../UserHook/useRefreshToken';
 import { useEffect } from 'react';
 import PageName from '../Components/PageName/PageName';
+import NotFoundContent from '../Components/NotFoundContent/NotFoundContent';
 
 const SubscribPage = () => {
 
@@ -35,6 +36,9 @@ const SubscribPage = () => {
                 <ListSubscrib
                     subscribs = {sub}
                 />    
+            }
+            {!isLoading && sub.length == 0 &&
+                <NotFoundContent/>
             }
         </div>
     );

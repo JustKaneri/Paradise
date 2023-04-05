@@ -6,6 +6,7 @@ import useRefreshToken from '../UserHook/useRefreshToken';
 import { useFetching } from '../UserHook/useFeatching';
 import Loader from '../Components/Loader/Loader';
 import HistoryServis from '../Api/HistoryServis/HistoryServis';
+import NotFoundContent from '../Components/NotFoundContent/NotFoundContent';
 
 const HistoryPage = () => {
 
@@ -33,6 +34,9 @@ const HistoryPage = () => {
                 <ListVideoRow
                     video={video}
                 />
+            }
+            {!isLoading && video.length == 0 &&
+                <NotFoundContent/>
             }
         </div>
     );
