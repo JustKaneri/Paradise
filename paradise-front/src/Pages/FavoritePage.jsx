@@ -6,6 +6,7 @@ import useTokenHook from '../UserHook/useTokensHoouk';
 import Loader from '../Components/Loader/Loader';
 import PageName from '../Components/PageName/PageName'
 import ListVideoRow from '../Components/ListVideoRow/ListVideoRow';
+import NotFoundContent from '../Components/NotFoundContent/NotFoundContent';
 
 const FavoritePage = () => {
 
@@ -33,6 +34,9 @@ const FavoritePage = () => {
                 <ListVideoRow
                     video={video}
                 />
+            }
+            {!isLoading && video.length == 0 &&
+                <NotFoundContent/>
             }
         </div>
     );

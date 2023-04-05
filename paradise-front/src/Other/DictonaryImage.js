@@ -18,7 +18,8 @@ const images = {
     defaultFon: require('../Assets/DefaultFon.png'),
     ok: require("../Assets/Ok.png"),
     load: require('../Assets/load.gif'),
-    history: require('../Assets/History.png')
+    history: require('../Assets/History.png'),
+    notFound: require('../Assets/NotFound.png')
 };
 
 export default images;
