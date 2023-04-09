@@ -5,3 +5,6 @@ global using ParadiseApi.Interfaces;
 global using ParadiseApi.Repository;
 global using ParadiseApi.Data;
 global using ParadiseApi.Dto;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using System.Net.Http.Headers;
+global using System.Net.Http.Json;
