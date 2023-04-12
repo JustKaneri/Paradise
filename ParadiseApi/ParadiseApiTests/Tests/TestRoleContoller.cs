@@ -1,6 +1,4 @@
-
-
-namespace ParadiseApiTests
+namespace ParadiseApiTests.Tests
 {
     public class TestRoleContoller
     {
@@ -10,7 +8,7 @@ namespace ParadiseApiTests
         {
             _client = TestServer.GetClient();
         }
-        
+
         [Fact]
         public async void TestNotAuth()
         {
@@ -22,7 +20,7 @@ namespace ParadiseApiTests
         [Fact]
         public async void TestAuthJustUser()
         {
-            var tokens = await Authorize.GetTokens(_client,Authorize.TypeUser.User);
+            var tokens = await Authorize.GetTokens(_client, Authorize.TypeUser.User);
 
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens.Token);
             var response = await _client.GetAsync("api/v1/user-role/roles");

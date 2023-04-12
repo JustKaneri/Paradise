@@ -1,6 +1,6 @@
 ﻿using static ParadiseApiTests.Authorize;
 
-namespace ParadiseApiTests
+namespace ParadiseApiTests.Tests
 {
     public class TestAuthController
     {
@@ -17,7 +17,7 @@ namespace ParadiseApiTests
             UserLoginDto userLoginDto = new UserLoginDto();
             userLoginDto.Login = "1";
             userLoginDto.Password = "1";
-   
+
 
             JsonContent content = JsonContent.Create(userLoginDto);
 
@@ -57,7 +57,7 @@ namespace ParadiseApiTests
         [Fact]
         public async void TestRefreshValidTokens()
         {
-            var tokens = await Authorize.GetTokens(_client,TypeUser.User);
+            var tokens = await GetTokens(_client, TypeUser.User);
 
             JsonContent content = JsonContent.Create(tokens);
 
@@ -69,7 +69,7 @@ namespace ParadiseApiTests
         [Fact]
         public async void TestRefreshNotValidTokens()
         {
-            var tokens = await Authorize.GetTokens(_client, TypeUser.User);
+            var tokens = await GetTokens(_client, TypeUser.User);
 
             tokens.Token += "123";
 
@@ -83,7 +83,7 @@ namespace ParadiseApiTests
         [Fact]
         public async void TestRevokedhValidTokens()
         {
-            var tokens = await Authorize.GetTokens(_client, TypeUser.User);
+            var tokens = await GetTokens(_client, TypeUser.User);
 
             JsonContent content = JsonContent.Create(tokens);
 
@@ -95,7 +95,7 @@ namespace ParadiseApiTests
         [Fact]
         public async void TestRevokedhNotValidTokens()
         {
-            var tokens = await Authorize.GetTokens(_client, TypeUser.User);
+            var tokens = await GetTokens(_client, TypeUser.User);
 
             tokens.Token += "123";
 

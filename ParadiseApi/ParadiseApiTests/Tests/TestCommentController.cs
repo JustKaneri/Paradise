@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParadiseApiTests
+namespace ParadiseApiTests.Tests
 {
     public class TestCommentController
     {
@@ -19,7 +19,7 @@ namespace ParadiseApiTests
         [InlineData(0)]
         public async void TestGetAllCommentNotExistVideo(int id)
         {
-            var result = await _client.GetAsync("api/v1/comment/comments?idVideo="+id);
+            var result = await _client.GetAsync("api/v1/comment/comments?idVideo=" + id);
 
             Assert.Equal(400, (double)result.StatusCode);
         }
