@@ -24,7 +24,7 @@
 > [first list task](Tasks/Task1.md)
 
 - [x] Update UI for Paradie front
-- [ ] unit test coverage of ~50% of controllers
+- [x] Unit test coverage of ~50% of controllers
 - [ ] Create Admin Panel (Asp.net MVC)
 - [ ] Admin Panel: Auth
 - [ ] Admin Panel: block video and user
