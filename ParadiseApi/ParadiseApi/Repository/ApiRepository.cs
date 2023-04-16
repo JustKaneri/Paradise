@@ -1,6 +1,5 @@
-﻿using ParadiseApi.Data;
+﻿using Paradise.Data.Data;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 
 namespace ParadiseApi.Repository
 {

@@ -28,7 +28,7 @@ namespace ParadiseApi.Controllers
         {
             var resutl = await _repository.GetUserInfo(idUser);
 
-            if (resutl.Status == Models.StatusRequest.Error)
+            if (resutl.Status == StatusRequest.Error)
                return  BadRequest(resutl.Error);
 
             return Ok(resutl.Result);

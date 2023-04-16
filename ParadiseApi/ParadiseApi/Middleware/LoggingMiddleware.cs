@@ -1,5 +1,4 @@
 ﻿using ParadiseApi.Data;
-using ParadiseApi.Models;
 
 namespace ParadiseApi.Middleware
 {

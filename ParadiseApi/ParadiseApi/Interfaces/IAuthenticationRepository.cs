@@ -1,6 +1,6 @@
-﻿using ParadiseApi.Configurations;
+﻿using Paradise.Model.Models;
+using ParadiseApi.Configurations;
 using ParadiseApi.Dto;
-using ParadiseApi.Models;
 
 namespace ParadiseApi.Interfaces
 {

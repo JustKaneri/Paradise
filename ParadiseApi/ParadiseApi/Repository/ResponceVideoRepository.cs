@@ -1,10 +1,7 @@
-﻿using Azure;
-using Azure.Core;
-using Microsoft.EntityFrameworkCore;
-using ParadiseApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Paradise.Data.Data;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository

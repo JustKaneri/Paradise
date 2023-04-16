@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using ParadiseApi.Data;
+using Paradise.Data.Data;
+using Paradise.Model.Models;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 
 namespace ParadiseApi.Repository
 {

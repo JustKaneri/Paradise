@@ -1,6 +1,4 @@
-﻿using ParadiseApi.Models;
-
-namespace ParadiseApi.Dto
+﻿namespace ParadiseApi.Dto
 {
     public class VideoDto
     {

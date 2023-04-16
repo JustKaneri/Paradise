@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Paradise.Data.Data;
+using Paradise.Model.Models;
 using ParadiseApi.Configurations;
-using ParadiseApi.Data;
 using ParadiseApi.Dto;
 using ParadiseApi.Helper;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository

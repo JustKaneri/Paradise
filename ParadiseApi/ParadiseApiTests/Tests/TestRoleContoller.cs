@@ -1,3 +1,5 @@
+using Paradise.Model.Models;
+
 namespace ParadiseApiTests.Tests
 {
     public class TestRoleContoller

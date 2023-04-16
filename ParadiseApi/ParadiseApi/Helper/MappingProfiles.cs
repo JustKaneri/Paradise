@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Paradise.Model.Models;
 using ParadiseApi.Dto;
-using ParadiseApi.Models;
 using ParadiseApi.Other;
 using MapProfile = AutoMapper.Profile;
 

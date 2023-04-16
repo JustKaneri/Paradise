@@ -1,5 +1,4 @@
 ﻿using ParadiseApi.Dto;
-using ParadiseApi.Models;
 
 namespace ParadiseApi.Interfaces
 {

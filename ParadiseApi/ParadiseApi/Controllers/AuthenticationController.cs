@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using ParadiseApi.Models;
 using AutoMapper;
 using ParadiseApi.Interfaces;
 using ParadiseApi.Dto;
 using ParadiseApi.Helper;
 using Microsoft.AspNetCore.Authorization;
+using Paradise.Model.Models;
 
 namespace ParadiseApi.Controllers
 {

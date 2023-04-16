@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Paradise.Model.Models;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 using System.Data;
 
 namespace ParadiseApi.Controllers

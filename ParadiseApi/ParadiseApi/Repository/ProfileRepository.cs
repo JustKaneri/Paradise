@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ParadiseApi.Data;
+using Paradise.Data.Data;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 using ParadiseApi.Other;
 
 namespace ParadiseApi.Repository

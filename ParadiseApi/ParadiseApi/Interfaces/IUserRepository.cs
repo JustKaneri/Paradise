@@ -1,5 +1,5 @@
-﻿using ParadiseApi.Dto;
-using ParadiseApi.Models;
+﻿using Paradise.Model.Models;
+using ParadiseApi.Dto;
 
 namespace ParadiseApi.Interfaces
 {

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
@@ -39,7 +38,7 @@ namespace ParadiseApi.Controllers
 
             var result = await _repository.GetHistory(idUser);
 
-            if(result.Status == Models.StatusRequest.Error)
+            if(result.Status == StatusRequest.Error)
                 return BadRequest(result.Error);
 
             if (result.Result.Count == 0)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Paradise.Model.Models;
 using ParadiseApi.Configurations;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

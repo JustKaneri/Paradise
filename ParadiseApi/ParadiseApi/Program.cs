@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using ParadiseApi.Middleware;
 using ParadiseApi.Other;
 using Azure.Core;
+using Paradise.Data.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

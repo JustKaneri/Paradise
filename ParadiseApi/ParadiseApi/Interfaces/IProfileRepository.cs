@@ -1,6 +1,4 @@
-﻿using ParadiseApi.Models;
-
-namespace ParadiseApi.Interfaces
+﻿namespace ParadiseApi.Interfaces
 {
     public interface IProfileRepository
     {

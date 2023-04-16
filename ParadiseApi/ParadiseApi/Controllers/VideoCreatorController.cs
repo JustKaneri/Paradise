@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Paradise.Model.Models;
 using ParadiseApi.Dto;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 using ParadiseApi.Other;
 using System.Security.Claims;
 

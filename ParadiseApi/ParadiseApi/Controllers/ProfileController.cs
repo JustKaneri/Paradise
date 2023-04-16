@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParadiseApi.Interfaces;
-using ParadiseApi.Models;
 using System.Data;
 using System.Security.Claims;
 
