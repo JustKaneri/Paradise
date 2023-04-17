@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Paradise.Authorize.Interfaces;
 using Paradise.Data.Data;
 using Paradise.Model.Models;
-using ParadiseApi.Interfaces;
 
-namespace ParadiseApi.Repository
+namespace Paradise.Authorize.Servis
 {
     public class RefreshTokenRepository : IRefreshTokenRepository
     {

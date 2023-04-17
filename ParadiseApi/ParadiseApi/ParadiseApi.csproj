@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Paradise.Authorize\Paradise.Authorize.csproj" />
     <ProjectReference Include="..\Paradise.Data\Paradise.Data.csproj" />
     <ProjectReference Include="..\Paradise.Model\Paradise.Model.csproj" />
   </ItemGroup>

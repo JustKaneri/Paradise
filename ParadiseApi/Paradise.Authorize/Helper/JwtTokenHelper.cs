@@ -1,21 +1,22 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Paradise.Authorize.Interfaces;
 using Paradise.Model.Models;
-using ParadiseApi.Configurations;
-using ParadiseApi.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ParadiseApi.Helper
+namespace Paradise.Authorize.Helper
 {
     public class JwtTokenHelper
     {
-        private readonly IConfiguration _configuration;
+        private readonly string _key;
+        private readonly string _time;
         private readonly IRefreshTokenRepository _tokenRepository;
 
-        public JwtTokenHelper(IConfiguration configuration, IRefreshTokenRepository tokenRepository)
+        public JwtTokenHelper(string Key,string time, IRefreshTokenRepository tokenRepository)
         {
-            _configuration = configuration;
+            _key = Key;
+            _time = time;
             _tokenRepository = tokenRepository;
         }
 
@@ -23,7 +24,7 @@ namespace ParadiseApi.Helper
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
-            var key = Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:Secret").Value);
+            var key = Encoding.UTF8.GetBytes(_key);
 
             //Token descriptor
 
@@ -37,7 +38,7 @@ namespace ParadiseApi.Helper
                     new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToUniversalTime().ToString())
                 });
-            tokenDescriptor.Expires = DateTime.UtcNow.Add(TimeSpan.Parse(_configuration.GetSection("JwtConfig:ExpireTimeFrame").Value));
+            tokenDescriptor.Expires = DateTime.UtcNow.Add(TimeSpan.Parse(_time));
             tokenDescriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
@@ -73,7 +74,7 @@ namespace ParadiseApi.Helper
                 ValidateAudience = false, 
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:Secret").Value)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key)),
                 ValidateLifetime = false
             };
 
@@ -163,7 +164,7 @@ namespace ParadiseApi.Helper
                 ValidateAudience = false, 
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtConfig:Secret").Value)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key)),
                 ValidateLifetime = false
             };
 

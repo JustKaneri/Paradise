@@ -1,4 +1,6 @@
-﻿using ParadiseApi.Interfaces;
+﻿using Paradise.Authorize.Interfaces;
+using Paradise.Authorize.Servis;
+using ParadiseApi.Interfaces;
 using ParadiseApi.Repository;
 
 namespace ParadiseApi.Configurations

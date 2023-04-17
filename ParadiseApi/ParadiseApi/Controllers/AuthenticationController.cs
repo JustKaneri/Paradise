@@ -6,6 +6,8 @@ using ParadiseApi.Dto;
 using ParadiseApi.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Paradise.Model.Models;
+using Paradise.Authorize.Helper;
+using Paradise.Authorize.Interfaces;
 
 namespace ParadiseApi.Controllers
 {
@@ -50,7 +52,10 @@ namespace ParadiseApi.Controllers
             if (request.Status == StatusRequest.Error)
                 return BadRequest(request.Error);
 
-            JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
+            string key = _configuration.GetSection("JwtConfig:Secret").Value;
+            string time = _configuration.GetSection("JwtConfig:ExpireTimeFrame").Value;
+
+            JwtTokenHelper tokenHelper = new JwtTokenHelper(key,time, _tokenRepository);
 
             var token = await tokenHelper.GenerateJwtToken(request.Result);
 
@@ -75,7 +80,10 @@ namespace ParadiseApi.Controllers
             if (userAut.Status == StatusRequest.Error)
                 return BadRequest(userAut.Error);
 
-            JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
+            string key = _configuration.GetSection("JwtConfig:Secret").Value;
+            string time = _configuration.GetSection("JwtConfig:ExpireTimeFrame").Value;
+
+            JwtTokenHelper tokenHelper = new JwtTokenHelper(key, time, _tokenRepository);
 
             var token = await tokenHelper.GenerateJwtToken(userAut.Result);
 
@@ -94,7 +102,10 @@ namespace ParadiseApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
+                string key = _configuration.GetSection("JwtConfig:Secret").Value;
+                string time = _configuration.GetSection("JwtConfig:ExpireTimeFrame").Value;
+
+                JwtTokenHelper tokenHelper = new JwtTokenHelper(key, time, _tokenRepository);
 
                 var result = await tokenHelper.VerifyAndGenerareToken(tokenRequest);
 
@@ -119,7 +130,10 @@ namespace ParadiseApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                JwtTokenHelper tokenHelper = new JwtTokenHelper(_configuration, _tokenRepository);
+                string key = _configuration.GetSection("JwtConfig:Secret").Value;
+                string time = _configuration.GetSection("JwtConfig:ExpireTimeFrame").Value;
+
+                JwtTokenHelper tokenHelper = new JwtTokenHelper(key, time, _tokenRepository);
 
                 var result = await tokenHelper.RevokedToken(tokenRequest);
 

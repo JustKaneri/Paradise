@@ -1,6 +1,6 @@
 ﻿using Paradise.Model.Models;
 
-namespace ParadiseApi.Interfaces
+namespace Paradise.Authorize.Interfaces
 {
     public interface IRefreshTokenRepository
     {
