@@ -31,6 +31,9 @@
 (Auth) = Authorization required
 
 
+[host-name] = example localhost:7077
+
+
 ### Api controller
 
 | Name | Discript| Url | Parameters | Body request |Responce |
@@ -70,3 +73,23 @@
 | get_profile |  Get profile current user  | https://[host-name]/api/v1/profile/user/{Parameters}/profile |integer - idUser| - | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
 | upload_avatar(`Auth`) |  Upload avatar for auth user | https://[host-name]/api/v1/profile/user/profile/upload-avatar|-| multipart/form-data File, type image | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
 | upload_fon(`Auth`)|  Upload fon for auth user   | https://[host-name]/api/v1/profile/user/profile/upload-fon|-| multipart/form-data File, type image | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
+
+
+### Responce video controller
+
+| Name | Discript| Url | Parameters | Body request |Responce |
+| :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
+| get_count_responce |  Get count like and dislike for current video  | https://[host-name]/api/v1/responce-video/video/{Parameters}/count-responce |integer - idVideo| - | `{ "countLike": 0,  "countDisLike": 0}` |
+| get_info_responce |  Get responce for auth user  | https://[host-name]/api/v1/responce-video/video/{Parameters}/info-responce | integer - idVideo| - | `{ "id": 0, "userId": 0,"videoId": 0,  "isLike": true, "isDisLike": true, "dateResponce": "2023-05-05T17:03:49.615Z"}` |
+| set_like(`Auth`) |  Set like for current video  | https://[host-name]/api/v1/responce-video/like?idVideo={Parameters}| integer - idVideo| - | `{ "id": 0, "userId": 0,"videoId": 0,  "isLike": true, "isDisLike": true, "dateResponce": "2023-05-05T17:03:49.615Z"}` |
+| set_dislike(`Auth`) |  Set dislike for current video  | https://[host-name]/api/v1/responce-video/dislike?idVideo={Parameters}| integer - idVideo| - | `{ "id": 0, "userId": 0,"videoId": 0,  "isLike": true, "isDisLike": true, "dateResponce": "2023-05-05T17:03:49.615Z"}` |
+| reset_responce(`Auth`) |  Set dislike for current video  | https://[host-name]/api/v1/responce-video/reset?idVideo={Parameters}| integer - idVideo| - | `{ "id": 0, "userId": 0,"videoId": 0,  "isLike": true, "isDisLike": true, "dateResponce": "2023-05-05T17:03:49.615Z"}` |
+
+### Subscription controller
+
+| Name | Discript| Url | Parameters | Body request |Responce |
+| :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
+| get_subscriptions(`Auth`) |  Get list subscription current user | https://[host-name]/api/v1/subscription/subscriptions |-| - | `[  { "id": 0, "subscriber": { "id": 0, "name": "string",     "profile": { "id": 0, "idUser": 0,"pathFon": "string",       "pathAvatar": "string" } }}]` |
+| get_subscription_status(`Auth`) |  Get inforamation about subscription | https://[host-name]/api/v1/subscription/user/{Parameters}/subscription/status| integer - idUser | - | `Boolean` |
+| subscrib(`Auth`) |  subscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/subscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0,  "name": "string", "profile": { "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
+| unsubscrib(`Auth`) |  Unsubscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/unsubscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0,  "name": "string", "profile": { "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
