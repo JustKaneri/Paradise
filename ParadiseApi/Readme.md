@@ -93,3 +93,16 @@
 | get_subscription_status(`Auth`) |  Get inforamation about subscription | https://[host-name]/api/v1/subscription/user/{Parameters}/subscription/status| integer - idUser | - | `Boolean`|
 | subscrib(`Auth`) |  subscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/subscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0, "name": "string","profile": { "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
 | unsubscrib(`Auth`) |  Unsubscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/unsubscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0,"name":"string","profile":{ "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
+
+### User info controller
+
+| Name | Discript| Url | Parameters | Body request |Responce |
+| :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
+| get_user_info |  Get total count watch and total subscriber | https://[host-name]/api/v1/user-information/user/{Parameters}/detailed-information | integer - idUser| - | `{"countWatch": 0,  "countSubscrib": 0}` |
+
+
+### User role controller
+
+| Name | Discript| Url | Parameters | Body request |Responce |
+| :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
+| get_roles(`Auth`)(`Admin`) |  Get list roles | https://[host-name]/api/v1/user-role/roles | - | - | `[{"id": 0,    "name": "string"}]` |
