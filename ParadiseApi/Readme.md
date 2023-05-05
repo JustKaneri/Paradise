@@ -89,7 +89,7 @@
 
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
-| get_subscriptions(`Auth`) |  Get list subscription current user | https://[host-name]/api/v1/subscription/subscriptions |-| - | `[  { "id": 0, "subscriber": { "id": 0, "name": "string",     "profile": { "id": 0, "idUser": 0,"pathFon": "string",       "pathAvatar": "string" } }}]` |
-| get_subscription_status(`Auth`) |  Get inforamation about subscription | https://[host-name]/api/v1/subscription/user/{Parameters}/subscription/status| integer - idUser | - | `Boolean` |
-| subscrib(`Auth`) |  subscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/subscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0,  "name": "string", "profile": { "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
-| unsubscrib(`Auth`) |  Unsubscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/unsubscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0,  "name": "string", "profile": { "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
+| get_subscriptions(`Auth`) | Get list subscription current user | https://[host-name]/api/v1/subscription/subscriptions |- | - | `[  { "id": 0, "subscriber": { "id": 0, "name": "string","profile": { "id": 0, "idUser": 0,"pathFon": "string","pathAvatar": "string" } }}]` |
+| get_subscription_status(`Auth`) |  Get inforamation about subscription | https://[host-name]/api/v1/subscription/user/{Parameters}/subscription/status| integer - idUser | - | `Boolean`|
+| subscrib(`Auth`) |  subscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/subscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0, "name": "string","profile": { "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
+| unsubscrib(`Auth`) |  Unsubscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/unsubscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0,"name":"string","profile":{ "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
