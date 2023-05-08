@@ -2,11 +2,24 @@
 
 ## Version:
 
-> 1.0
+> 1.0 
 
 ## Description: 
 
-> Small video hosting
+> Paradise is a video hosting service that provides users with video storage, delivery and display services
+
+
+> This project has an open Api, on the basis of which anyone can make their own mobile, desktop, web application.
+
+## Screenshot
+
+<p align="center">
+  <img src="Ресурсы_изображения/Screen_main_page.jpg" width="350" title="Main page">
+  <img src="Ресурсы_изображения/Screen_profile_page.jpg" width="350" title="Profle page">
+  <img src="Ресурсы_изображения/Screen_favorite_page.jpg" width="350" title="Favorite page">
+  <img src="Ресурсы_изображения/Screen_subscrib_page.jpg" width="350" title="Subscrib page">
+  <img src="Ресурсы_изображения/Screen_found_page.jpg" width="350" title="Found page">
+</p>
 
 ## Stack technology
 
