@@ -55,24 +55,24 @@
 
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
-| get_comment |  Get list comments   | https://[host-name]/api/v1/comment/comments?idVideo=[Parameters]   | integer - id video  | - | `[{ "id": 0, "videoId": 0, "content": "string", "createdDate": "2023-05-04T17:53:20.793Z","user": {"id": 0,"name": "string",      "profile": { "id": 0, "idUser": 0, "pathFon": "string",      "pathAvatar": "string" }}}]` |
-| new_comment`(Auth)` |  Create new comment   | https://[host-name]/api/v1/comment/new-comment   |-| {"videoId": 0, "content": string"} | `{ "id": 0, "videoId": 0, "content": "string", "createdDate": "2023-05-04T17:53:20.793Z","user": {"id": 0,"name": "string",      "profile": { "id": 0, "idUser": 0, "pathFon": "string",      "pathAvatar": "string" }}}` |
+| get_comment |  Get list comments   | https://[host-name]/api/v1/comments?idVideo=[Parameters]   | integer - id video  | - | `[{ "id": 0, "videoId": 0, "content": "string", "createdDate": "2023-05-04T17:53:20.793Z","user": {"id": 0,"name": "string",      "profile": { "id": 0, "idUser": 0, "pathFon": "string",      "pathAvatar": "string" }}}]` |
+| new_comment`(Auth)` |  Create new comment   | https://[host-name]/api/v1/comment |-| {"videoId": 0, "content": string"} | `{ "id": 0, "videoId": 0, "content": "string", "createdDate": "2023-05-04T17:53:20.793Z","user": {"id": 0,"name": "string",      "profile": { "id": 0, "idUser": 0, "pathFon": "string",      "pathAvatar": "string" }}}` |
 
 ### History controller
 
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
 | get_history(`Auth`) |  Get list history watch video   | https://[host-name]/api/v1/history  |- | - | `[{"id": 0,"name": "string", "discript": "string", "dateCreate": "2023-05-05T16:49:08.913Z",    "countWatch": 0, "pathVideo": "string",  "pathPoster": "string",  "user": { "id": 0, "name": "string", "profile": {"id": 0,       "idUser": 0, "pathFon": "string", "pathAvatar": "string"  } }}]` |
-| create_history(`Auth`) |  Create new enity history watch video   | https://[host-name]/api/v1/history/create?idVideo={Parameters}  |int-idVideo | - | `{"id": 0,"dateWath": "2023-05-05T16:51:38.456Z", "userId": 0, "videoId": 0}` |
+| create_history(`Auth`) |  Create new enity history watch video   | https://[host-name]/api/v1/history?idVideo={Parameters}  |int-idVideo | - | `{"id": 0,"dateWath": "2023-05-05T16:51:38.456Z", "userId": 0, "videoId": 0}` |
 
 
 ### Profile controller
 
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
-| get_profile |  Get profile current user  | https://[host-name]/api/v1/profile/user/{Parameters}/profile |integer - idUser| - | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
-| upload_avatar(`Auth`) |  Upload avatar for auth user | https://[host-name]/api/v1/profile/user/profile/upload-avatar|-| multipart/form-data File, type image | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
-| upload_fon(`Auth`)|  Upload fon for auth user   | https://[host-name]/api/v1/profile/user/profile/upload-fon|-| multipart/form-data File, type image | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
+| get_profile |  Get profile current user  | https://[host-name]/api/v1/user/{Parameters}/profile |integer - idUser| - | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
+| upload_avatar(`Auth`) |  Upload avatar for auth user | https://[host-name]/api/v1/user/profile/upload-avatar|-| multipart/form-data File, type image | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
+| upload_fon(`Auth`)|  Upload fon for auth user   | https://[host-name]/api/v1/user/profile/upload-fon|-| multipart/form-data File, type image | `{ "id": 0, "idUser": 0,   "pathFon": "string",  "pathAvatar": string"}` |
 
 
 ### Responce video controller
@@ -89,23 +89,23 @@
 
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
-| get_subscriptions(`Auth`) | Get list subscription current user | https://[host-name]/api/v1/subscription/subscriptions |- | - | `[  { "id": 0, "subscriber": { "id": 0, "name": "string","profile": { "id": 0, "idUser": 0,"pathFon": "string","pathAvatar": "string" } }}]` |
-| get_subscription_status(`Auth`) |  Get inforamation about subscription | https://[host-name]/api/v1/subscription/user/{Parameters}/subscription/status| integer - idUser | - | `Boolean`|
-| subscrib(`Auth`) |  subscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/subscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0, "name": "string","profile": { "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
-| unsubscrib(`Auth`) |  Unsubscrib on current canal| https://[host-name]/api/v1/subscription/user/{Parameters}/unsubscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0,"name":"string","profile":{ "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
+| get_subscriptions(`Auth`) | Get list subscription current user | https://[host-name]/api/v1/subscriptions |- | - | `[  { "id": 0, "subscriber": { "id": 0, "name": "string","profile": { "id": 0, "idUser": 0,"pathFon": "string","pathAvatar": "string" } }}]` |
+| get_subscription_status(`Auth`) |  Get inforamation about subscription | https://[host-name]/api/v1/user/{Parameters}/subscription/status| integer - idUser | - | `Boolean`|
+| subscrib(`Auth`) |  subscrib on current canal| https://[host-name]/api/v1/user/{Parameters}/subscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0, "name": "string","profile": { "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
+| unsubscrib(`Auth`) |  Unsubscrib on current canal| https://[host-name]/api/v1/user/{Parameters}/unsubscribe| integer - idUser | - | `{"id": 0, "subscriber": { "id": 0,"name":"string","profile":{ "id": 0, "idUser": 0, "pathFon": "string", "pathAvatar": "string"}}}` |
 
 ### User info controller
 
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
-| get_user_info |  Get total count watch and total subscriber | https://[host-name]/api/v1/user-information/user/{Parameters}/detailed-information | integer - idUser| - | `{"countWatch": 0,  "countSubscrib": 0}` |
+| get_user_info |  Get total count watch and total subscriber | https://[host-name]/api/v1/user/{Parameters}/detailed-information | integer - idUser| - | `{"countWatch": 0,  "countSubscrib": 0}` |
 
 
 ### User role controller
 
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
-| get_roles(`Auth`)(`Admin`) |  Get list roles | https://[host-name]/api/v1/user-role/roles | - | - | `[{"id": 0,    "name": "string"}]` |
+| get_roles(`Auth`)(`Admin`) |  Get list roles | https://[host-name]/api/v1/roles | - | - | `[{"id": 0,    "name": "string"}]` |
 
 ### User controller
 
@@ -114,20 +114,20 @@
 | get_users(`Auth`)(`Admin`) |  Get list users | https://[host-name]/api/v1/users | - | - | `[{"id": 0,"name": "string",   "profile": {"id": 0,"idUser": 0,"pathFon": "string",   "pathAvatar": "string"}}]` |
 | get_user  |  Get selection user | https://[host-name]/api/v1/users/{Parameters} | integer - IdUser | - | `{"id": 0,"name": "string",   "profile": {"id": 0,"idUser": 0,"pathFon": "string",   "pathAvatar": "string"}}` |
 | get_user(`Auth`)  |  Get auth user by token| https://[host-name]/api/v1/users/auth | integer - IdUser | - | `{"id": 0,"name": "string",   "profile": {"id": 0,"idUser": 0,"pathFon": "string",   "pathAvatar": "string"}}` |
-| check_login |  Checked is exist login | https://[host-name]/api/v1/users/user/{Parameters}/check-exist-login | string - Login | - | `Boolean` |
-| check_name|  Checked is exist name| https://[host-name]/api/v1/users/user/{Parameters}/check-exist-name | string - Login | - | `Boolean` |
+| check_login |  Checked is exist login | https://[host-name]/api/v1/users/{Parameters}/check-exist-login | string - Login | - | `Boolean` |
+| check_name|  Checked is exist name| https://[host-name]/api/v1/users/{Parameters}/check-exist-name | string - Login | - | `Boolean` |
 
 ### Video controller
 
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
-| get_video |  Get list video | https://[host-name]/api/v1/video/videos | - | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
-| get_video |  Get current video | https://[host-name]7/api/v1/video/video/{Parameters} | integer - IdVideo | - | `{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
-| get_favorite_video |  Get favorite video auth user | https://[host-name]/api/v1/video/video/favorite | - | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
-| get_user_video |  Get list video by user | https://[host-name]/api/v1/video/user/{Parameters}/video | integer - idUser | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
-| get_video |  Get list video by page| https://[host-name]/api/v1/video/video-page?page={Parameters}&count={Parameters} | integer - page, integer - count | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
-| get_video |  Get list video by page with search| https://[host-name]/api/v1/video/video-page-search?page={Parameters}&count={Parameters}&search={Parameters}| integer - page, integer - count, sting - search| - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
-| create_view| Increase count view video| https://[host-name]/api/v1/video/video/{Parameters}/add-views| integer - idVideo| - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
+| get_video |  Get list video | https://[host-name]/api/v1/videos | - | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| get_video |  Get current video | https://[host-name]7/api/v1/video/{Parameters} | integer - IdVideo | - | `{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
+| get_favorite_video |  Get favorite video auth user | https://[host-name]/api/v1/video/favorite | - | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| get_user_video |  Get list video by user | https://[host-name]/api/v1/user/{Parameters}/video | integer - idUser | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| get_video |  Get list video by page| https://[host-name]/api/v1/video-page?page={Parameters}&count={Parameters} | integer - page, integer - count | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| get_video |  Get list video by page with search| https://[host-name]/api/v1/video-page-search?page={Parameters}&count={Parameters}&search={Parameters}| integer - page, integer - count, sting - search| - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| create_view| Increase count view video| https://[host-name]/api/v1/video/{Parameters}/add-views| integer - idVideo| - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
 
 
 ### Video creator controller
@@ -135,5 +135,5 @@
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
 | create_video(`Auth`) | Create new video | https://[host-name]/api/v1/video/videos | 1) multipart/form-data File, type video, 2)multipart/form-data File, type image | {"name": "string","discript": "string"} | `{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
-| upload_video(`Auth`) | replace exist video| https://[host-name]/api/v1/creator-video/video/{Parameters}/upload-video | integer - idVideo, multipart/form-data File, type video |  - | `{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
-| upload_poster(`Auth`) | replace poster for video| https://[host-name]/api/v1/creator-video/video/{Parameters}/upload-poster | integer - idVideo, multipart/form-data File - type image |  - | `{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
+| upload_video(`Auth`) | replace exist video| https://[host-name]/api/v1/video/{Parameters}/upload-video | integer - idVideo, multipart/form-data File, type video |  - | `{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
+| upload_poster(`Auth`) | replace poster for video| https://[host-name]/api/v1/video/{Parameters}/upload-poster | integer - idVideo, multipart/form-data File - type image |  - | `{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |

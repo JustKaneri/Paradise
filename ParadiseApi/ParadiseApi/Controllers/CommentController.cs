@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/comment")]
+    [Route("api/v1/")]
     [ApiController]
     public class CommentController : Controller
     {
@@ -52,7 +52,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="commentDt"></param>
         /// <returns></returns>
-        [HttpPost("new-comment")]
+        [HttpPost("comment")]
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(201, Type = typeof(CommentDto))]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

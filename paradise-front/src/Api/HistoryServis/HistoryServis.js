@@ -16,7 +16,7 @@ export default class HistoryServis{
     }
 
     static async createEnityHistory(idVideo,token){
-        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/history/create?idVideo=${idVideo}`,null,
+        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/history?idVideo=${idVideo}`,null,
         { 
             headers: 
                 {

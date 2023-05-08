@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/video")]
+    [Route("api/v1/")]
     [ApiController]
     public class VideoController : Controller 
     {
@@ -190,14 +190,5 @@ namespace ParadiseApi.Controllers
 
             return Ok(video);
         }
-
-        /// <summary>
-        /// Create video
-        /// </summary>
-        /// <param name="videoInfo"></param>
-        /// <param name="files"></param>
-        /// <returns></returns>
-
-
     }
 }

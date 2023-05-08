@@ -9,7 +9,7 @@ export default class ProfileServis{
 
         file.append("file", data);
 
-        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/profile/user/profile/upload-avatar`,file,
+        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/user/profile/upload-avatar`,file,
         { 
             headers: 
                 {
@@ -27,7 +27,7 @@ export default class ProfileServis{
 
         file.append("file", data);
 
-        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/profile/user/profile/upload-fon`,file,
+        const responce = await axios.post(`${ApiConfig.mainPath}/api/v1/user/profile/upload-fon`,file,
         { 
             headers: 
                 {

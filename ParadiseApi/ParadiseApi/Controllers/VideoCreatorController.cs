@@ -10,7 +10,7 @@ using System.Security.Claims;
 namespace ParadiseApi.Controllers
 {
     [ApiController]
-    [Route("api/v1/creator-video")]
+    [Route("api/v1/")]
     public class VideoCreatorController :Controller
     {
         private readonly IVideoCreaterRepository _createrRepository;
@@ -22,7 +22,7 @@ namespace ParadiseApi.Controllers
             _mapper = mapper;   
         }
 
-        [HttpPost("video/create")]
+        [HttpPost("video")]
         [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
         [DisableRequestSizeLimit]
         [Authorize(Roles = "Administrator,User")]

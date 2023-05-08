@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/subscription")]
+    [Route("api/v1/")]
     [ApiController]
     public class SubscriptionController : Controller
     {

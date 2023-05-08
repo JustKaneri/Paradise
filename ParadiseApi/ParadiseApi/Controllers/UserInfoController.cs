@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/user-information")]
+    [Route("api/v1/")]
     [ApiController]
     public class UserInfoController : Controller
     {

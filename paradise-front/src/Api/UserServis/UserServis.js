@@ -22,7 +22,7 @@ export default class UserServis{
     }
 
     static async getUserInfo(id){
-        const response = axios.get(ApiConfig.mainPath + `/api/v1/user-information/user/${id}/detailed-information`);
+        const response = axios.get(ApiConfig.mainPath + `/api/v1/user/${id}/detailed-information`);
 
         return response;
     }

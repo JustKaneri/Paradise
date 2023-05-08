@@ -4,21 +4,21 @@ import ApiConfig from "../ApiConfig";
 export default class SubscribServis{
 
     static async getSubscrib(token){
-        const responce =  axios.get(ApiConfig.mainPath + '/api/v1/subscription/subscriptions', 
+        const responce =  axios.get(ApiConfig.mainPath + '/api/v1/subscriptions', 
                                     { headers: { "Authorization" : `Bearer ${token}`} });
 
         return responce;
     }
 
     static async subscribsStatus(idCanal,token){
-        const responce =  axios.get(ApiConfig.mainPath + `/api/v1/subscription/user/${idCanal}/subscription/status`,  
+        const responce =  axios.get(ApiConfig.mainPath + `/api/v1/user/${idCanal}/subscription/status`,  
                                     { headers: { "Authorization" : `Bearer ${token}`} });
 
         return responce;
     }
 
     static async subscribs(idCanal,token){
-        const responce =  axios.post(ApiConfig.mainPath + `/api/v1/subscription/user/${idCanal}/subscribe`,null, 
+        const responce =  axios.post(ApiConfig.mainPath + `/api/v1/user/${idCanal}/subscribe`,null, 
                                     { headers: { "Authorization" : `Bearer ${token}`} });
 
         return responce;

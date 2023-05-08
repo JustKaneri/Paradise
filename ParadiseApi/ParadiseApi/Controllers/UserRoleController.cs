@@ -6,7 +6,7 @@ using System.Data;
 
 namespace ParadiseApi.Controllers
 {
-    [Route("api/v1/user-role")]
+    [Route("api/v1/")]
     [ApiController]
     public class UserRoleController : Controller
     {

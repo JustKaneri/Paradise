@@ -3,38 +3,38 @@ import ApiConfig from "../ApiConfig";
 
 export default class VideoServis{
     static async getAll(page,count){
-        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/video-page?page=${page}&count=${count}`);
+        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video-page?page=${page}&count=${count}`);
 
         return responce;
     }
 
     static async findVideo(page,count,search){
-        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/video-page-search?page=${page}&count=${count}&search=${search}`);
+        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video-page-search?page=${page}&count=${count}&search=${search}`);
 
         return responce;
     }
 
     static async getCurrentVideo(id){
-        const responce = await axios.get(ApiConfig.mainPath + '/api/v1/video/video/' + id);
+        const responce = await axios.get(ApiConfig.mainPath + '/api/v1/video/' + id);
 
         return responce;
     }
 
     static async getVideoSelectUser(idUser){
-        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/user/${idUser}/video`);
+        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/user/${idUser}/video`);
 
         return responce;
     }
 
     static async postAddView(idVideo){
-        const responce = await axios.post(ApiConfig.mainPath + `/api/v1/video/video/${idVideo}/add-views`,null);
+        const responce = await axios.post(ApiConfig.mainPath + `/api/v1/video/${idVideo}/add-views`,null);
 
         return responce;
     }
 
 
     static async getFavoriteVideo(token){
-        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/video/favorite`,{
+        const responce = await axios.get(ApiConfig.mainPath + `/api/v1/video/favorite`,{
             headers:{
                 "Authorization": `Bearer ${token}`
             }

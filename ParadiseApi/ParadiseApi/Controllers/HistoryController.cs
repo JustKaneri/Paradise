@@ -9,7 +9,7 @@ using System.Security.Claims;
 namespace ParadiseApi.Controllers
 {
     [ApiController]
-    [Route("api/v1/history")]
+    [Route("api/v1/")]
     public class HistoryController: Controller
     {
         private readonly IHistoryRepository _repository;
@@ -25,7 +25,7 @@ namespace ParadiseApi.Controllers
         /// Get history for auth user
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("history")]
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200,Type =typeof(IEnumerable<VideoDto>))] 
         public async Task<IActionResult> GetHistory()
@@ -53,7 +53,7 @@ namespace ParadiseApi.Controllers
         /// </summary>
         /// <param name="idVideo"></param>
         /// <returns></returns>
-        [HttpPost("create")]
+        [HttpPost("history")]
         [Authorize(Roles = "Administrator,User")]
         [ProducesResponseType(200, Type = typeof(History))]
         public async Task<IActionResult> CreateHistory(int idVideo)
