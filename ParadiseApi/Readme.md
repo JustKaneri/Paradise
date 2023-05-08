@@ -106,3 +106,26 @@
 | Name | Discript| Url | Parameters | Body request |Responce |
 | :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
 | get_roles(`Auth`)(`Admin`) |  Get list roles | https://[host-name]/api/v1/user-role/roles | - | - | `[{"id": 0,    "name": "string"}]` |
+
+### User controller
+
+| Name | Discript| Url | Parameters | Body request |Responce |
+| :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
+| get_users(`Auth`)(`Admin`) |  Get list users | https://[host-name]/api/v1/users | - | - | `[{"id": 0,"name": "string",   "profile": {"id": 0,"idUser": 0,"pathFon": "string",   "pathAvatar": "string"}}]` |
+| get_user  |  Get selection user | https://[host-name]/api/v1/users/{Parameters} | integer - IdUser | - | `{"id": 0,"name": "string",   "profile": {"id": 0,"idUser": 0,"pathFon": "string",   "pathAvatar": "string"}}` |
+| get_user(`Auth`)  |  Get auth user by token| https://[host-name]/api/v1/users/auth | integer - IdUser | - | `{"id": 0,"name": "string",   "profile": {"id": 0,"idUser": 0,"pathFon": "string",   "pathAvatar": "string"}}` |
+| check_login |  Checked is exist login | https://[host-name]/api/v1/users/user/{Parameters}/check-exist-login | string - Login | - | `Boolean` |
+| check_name|  Checked is exist name| https://[host-name]/api/v1/users/user/{Parameters}/check-exist-name | string - Login | - | `Boolean` |
+
+### Video controller
+
+| Name | Discript| Url | Parameters | Body request |Responce |
+| :---         |     :---:      | :---         |     :---:      |          ---: |          ---: |
+| get_video |  Get list video | https://[host-name]/api/v1/video/videos | - | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| get_video |  Get current video | https://[host-name]7/api/v1/video/video/{Parameters} | integer - IdVideo | - | `{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
+| get_favorite_video |  Get favorite video auth user | https://[host-name]/api/v1/video/video/favorite | - | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| get_user_video |  Get list video by user | https://[host-name]/api/v1/video/user/{Parameters}/video | integer - idUser | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| get_video |  Get list video by page| https://[host-name]/api/v1/video/video-page?page={Parameters}&count={Parameters} | integer - page, integer - count | - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| get_video |  Get list video by page with search| https://[host-name]/api/v1/video/video-page-search?page={Parameters}&count={Parameters}&search={Parameters}| integer - page, integer - count, sting - search| - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}]` |
+| create_view| Increase count view video| https://[host-name]/api/v1/video/video/{Parameters}/add-views| integer - idVideo| - | `[{"id": 0,"name": "string","discript": "string",  "dateCreate": "2023-05-08T11:32:00.711Z","countWatch": 0,   "pathVideo": "string","pathPoster": "string","user": {"id": 0,    "name": "string","profile": {"id": 0,"idUser": 0,"pathFon": "string","pathAvatar": "string"}}}` |
+
