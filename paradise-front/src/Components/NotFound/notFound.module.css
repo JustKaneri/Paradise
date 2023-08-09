@@ -30,7 +30,7 @@
     font-family: 'Caveat', cursive;
     cursor: pointer;
     background: rgb(26, 26, 26);
-    border: 1px solid #00dfa2; 
+    border: 1px solid var(--border-bt-color);
     color: white;
 }
 

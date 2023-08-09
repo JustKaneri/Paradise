@@ -23,7 +23,7 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    border: 10px solid #1a1a1a;
+    border: 10px solid var(--border-color);
     box-shadow:0 0 20px #1a1a1a;
     z-index: 1;
 
@@ -40,7 +40,7 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    border: 10px solid #00DFA2;
+    border: 10px solid var(--border-bt-color);
     box-shadow:0 0 20px #00DFA2;
     z-index: 2;
 

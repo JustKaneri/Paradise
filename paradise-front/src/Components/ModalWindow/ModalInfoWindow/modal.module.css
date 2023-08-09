@@ -52,12 +52,12 @@
     transition: all 0.3s ease;
     font-family: 'Caveat', cursive;
     cursor: pointer;
-    background: #1A1A1A;
+    background: var(--main-bg-color);
     border: 1px solid #00DFA2; 
     color: white;
 }
 
 .button:hover{
-    background-color: #00DFA2;
-    border: 1px solid #1A1A1A;
+    background-color: var(--second-bg-color);
+    border: 1px solid var(--border-color);
 }

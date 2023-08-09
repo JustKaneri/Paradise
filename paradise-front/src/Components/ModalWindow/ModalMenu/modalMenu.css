@@ -16,7 +16,7 @@
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 25px;
-    background: #1A1A1A;
+    background: var(--main-bg-color);
     border-radius: 10px;
     border: 2px solid #00DFA2;
     width: 284px;

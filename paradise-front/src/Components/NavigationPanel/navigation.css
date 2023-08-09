@@ -3,7 +3,7 @@
     position: fixed;
     width: 100vw;
     height: 9vh;
-    background-color: #1a1a1a;
+    background-color: var(--main-bg-color);
     display: flex;
     align-items: center;
     justify-items: center;

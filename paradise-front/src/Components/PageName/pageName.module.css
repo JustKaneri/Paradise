@@ -8,8 +8,8 @@
     color: white;
     text-align: center;
 
-    background: #1A1A1A;
-    border-bottom: 2px solid #00DFA2;
+    background: var(--main-bg-color);
+    border-bottom: 2px solid var(--border-bt-color);
     box-shadow: 0px 4px 4px rgba(0, 223, 162, 0.5);
     border-radius: 0px 0px 15px 15px;
 

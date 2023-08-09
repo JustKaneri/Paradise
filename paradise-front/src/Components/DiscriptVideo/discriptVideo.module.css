@@ -3,7 +3,7 @@
     height: 95%;
     border-width: 5px 0px;
     border-style: solid;
-    border-color: #1A1A1A;
+    border-color: var(--border-color);
     border-radius: 10px;
 
     box-sizing: border-box;

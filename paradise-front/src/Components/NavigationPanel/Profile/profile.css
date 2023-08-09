@@ -7,7 +7,7 @@
 }
 
 .profile-img{
-    border: 2px solid  #00DFA2;
+    border: 2px solid  var(--border-bt-color);
     cursor: pointer;
     border-radius: 50%;
     object-fit: cover;

@@ -1,6 +1,6 @@
 .auth_button{
     height: 40%;
-    background: #00DFA2;
+    background: var(--main-bg-color);
     border-radius: 10px;
     color: white;
     border: 0;

@@ -8,8 +8,8 @@
     transition: all 0.3s ease;
     font-family: 'Caveat', cursive;
     cursor: pointer;
-    background: #1A1A1A;
-    border: 3px solid #00DFA2; 
+    background: var(--main-bg-color);
+    border: 3px solid var(--border-bt-color);
     color: white;
 }
 

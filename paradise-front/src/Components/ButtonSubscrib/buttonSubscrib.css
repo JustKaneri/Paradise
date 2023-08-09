@@ -9,25 +9,25 @@
 }
 
 .btn-not-sub{
-    background: #1A1A1A;
-    border: 3px solid #00DFA2; 
+    background: var(--main-bt-color);
+    border: 3px solid var(--border-bt-color);
     color: white;
 }
 
 .btn-not-sub:hover{
-    color: #00DFA2;
+    color: var(--border-bt-color);
     transform: scale(1.05,1.05);
 }
 
 .btn-sub:hover{
-    background-color: #00DFA2;
-    border: 3px solid #1A1A1A;
+    background-color: var(--second-bt-color);
+    border: 3px solid var(--border-color);
     transform: scale(1.08,1.08);
 }
 
 .btn-sub{
     background: #ffffff;
-    border: 3px solid #00DFA2;
-    color: #1A1A1A;
+    border: 3px solid var(--border-bt-color);
+    color: var(--main-bt-color);
 
 }

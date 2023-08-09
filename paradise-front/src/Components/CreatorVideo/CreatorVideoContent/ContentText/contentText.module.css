@@ -23,7 +23,7 @@
     resize: none;
     line-height: 90%;
     height: 50%;
-    border: 2px solid #1A1A1A;
+    border: 2px solid var(--border-color);
     padding: 2%;
     border-radius: 10px;
     outline-style: none;
