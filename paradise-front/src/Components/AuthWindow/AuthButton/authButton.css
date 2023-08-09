@@ -11,8 +11,9 @@
 }
 
 .auth_button:hover{
+    border: 2px solid var(--border-bt-color);
     box-sizing: border-box;
-    box-shadow: inset 0px 0px 5px 0px rgba(255,255, 255,1);
+   /* box-shadow: inset 0px 0px 5px 0px rgba(255,255, 255,1); */
 }
 
 .button_small{

@@ -25,7 +25,7 @@ export default class SubscribServis{
     }
 
     static async unSubscribs(idCanal,token){
-        const responce =  axios.delete(ApiConfig.mainPath + `/api/v1/subscription/user/${idCanal}/unsubscribe`,  
+        const responce =  axios.delete(ApiConfig.mainPath + `/api/v1/user/${idCanal}/unsubscribe`,  
                                        { headers: { "Authorization" : `Bearer ${token}`} });
 
         return responce;

@@ -39,6 +39,10 @@ const AuthRegestry = () => {
     });
 
     const regestry = ()=>{
+        if(user.name == '' || user.login == '' || user.password == ''){
+            showModal(images.error, 'Упссс...', 'Вы не заполнили все поля');
+        }
+
         setUser(user => ({
             ...user,
             name: nameRef.current.value.trim(),
@@ -54,7 +58,7 @@ const AuthRegestry = () => {
         }
 
         if(user.password != user.confirmPassword){
-            showModal(images.error, 'Упссс...', 'Passwords dont match');
+            showModal(images.error, 'Упссс...', 'Пароли не совпадают');
             return;
         }
         console.log('fetch')

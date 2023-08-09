@@ -35,6 +35,12 @@ const AuthLogIn = () => {
     });
     
     const logInSystem = ()=>{
+        if(user.login == '' || user.password == '')
+        {
+            showModal(images.error,'Упссс...',"Вы не заполнили все поля");
+            return;
+        }
+
         setUser(user => ({
             ...user,
             login:refLogin.current.value.trim(),
@@ -44,7 +50,10 @@ const AuthLogIn = () => {
 
     useEffect(()=>{
         if(user.login == '' || user.password == '')
+        {
             return;
+        }
+            
         fetch();
     },[user])
 
