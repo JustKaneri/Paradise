@@ -1,0 +1,65 @@
+.alert{
+    width: 400px;
+    height: 100px;
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    color:white;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
+
+    transform-origin: 0% 50%;
+    animation: spawn 1s;
+}
+
+.success{
+    border: 2px solid var(--border-bt-color);
+}
+
+.warning{
+    border: 2px solid #DFC900;
+}
+
+.error{
+    border: 2px solid #DF0000;
+}
+
+.icon-succes{
+    background: url("../../../Assets/Success.png");
+}
+
+.icon-error{
+    background: url("../../../Assets/Error.png");
+}
+
+.icon-warning{
+    background: url("../../../Assets/Warning.png");
+}
+
+.alert-icon{
+    width: 80px;
+    height: 80px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 10px;
+}
+
+.alert-content{
+    font-size: 1.35em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@keyframes spawn{
+    
+    from{
+      opacity: 0;
+    }
+
+    to{
+      opacity: 100;
+    }
+}
