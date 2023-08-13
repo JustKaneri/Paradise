@@ -11,12 +11,14 @@ import ModalInfoWindow from '../../ModalWindow/ModalInfoWindow/ModalInfoWindow';
 import useModal from '../../../UserHook/useModal';
 import images from '../../../Other/DictonaryImage';
 import { useNavigate } from 'react-router-dom';
-import {AuthContext} from '../../../Context';
+import {AlertContext, AuthContext} from '../../../Context';
 
 const AuthLogIn = () => {
 
     const router = useNavigate();
     const {IsAuth,setIsAuth} = useContext(AuthContext);
+    const {Alert,setAlert} = useContext(AuthContext);
+
     const [user,setUser] = useState({
         "login": "",
         "password": ""
@@ -37,7 +39,12 @@ const AuthLogIn = () => {
     const logInSystem = ()=>{
         if(user.login == '' || user.password == '')
         {
-            showModal(images.error,'Упссс...',"Вы не заполнили все поля");
+            setAlert(Alert => ({
+                ...Alert,
+                content: "Вы не заполнили все поля",
+                type: "warning"
+            }));
+            //showModal(images.error,'Упссс...',"Вы не заполнили все поля");
             return;
         }
 

@@ -1,11 +1,10 @@
 import React,{useState,useEffect} from 'react'
-import Loader from './Components/Loader/Loader'
 import Navigation from './Components/NavigationPanel/Navigation'
-import { BrowserRouter as Router, Routes, Route, Link, RouterProvider, Navigate } from "react-router-dom";
+import { BrowserRouter as Router} from "react-router-dom";
 import AppRouter from './Components/Router/AppRouter';
 import { AuthContext, AlertContext } from './Context';
 import { useMemo } from 'react';
-import AlertItem from './Components/AlertManager/AlerItem/AlertItem';
+import AlertManager from './Components/AlertManager/AlertManager';
 
 const App = () => {
 
@@ -28,14 +27,16 @@ const App = () => {
         IsAuth,
         setIsAuth,
         IsUpdate,
-        setIsUpdate
+        setIsUpdate,
+        Alert,
+        setAlert
       }}>
       <AlertContext.Provider value={{
-
+          
       }}>
       </AlertContext.Provider>
-    <AlertItem
-      type = "warning"
+    <AlertManager
+      value = {Alert}
     />
      <Router>
         <Navigation/>
