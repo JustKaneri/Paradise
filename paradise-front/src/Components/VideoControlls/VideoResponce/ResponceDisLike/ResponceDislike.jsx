@@ -7,10 +7,12 @@ import VideoResponceServis from '../../../../Api/VideoResponceServis/VideoRespon
 import useRefreshToken from '../../../../UserHook/useRefreshToken';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../Context';
+import CreateAlert from '../../../../UserHook/useAlert';
 
 const ResponceDislike = (props) => {
 
     const {IsAuth,setIsAuth} = useContext(AuthContext);
+    const [showAlert] = CreateAlert();
     const [stateResponce,setStateResponce] = useState(images.dislike);
     const[fethSetDisLike,errorDisLike] = useFetching(async () =>{
         const responce = await VideoResponceServis.setDisLikeResponce(props.id, useTokenHook.getAccsesToken());
@@ -22,6 +24,7 @@ const ResponceDislike = (props) => {
 
     const dislikeClick = () =>{
         if(!IsAuth){
+            showAlert("Необходима авторизация","warning");
             return;
         }
 

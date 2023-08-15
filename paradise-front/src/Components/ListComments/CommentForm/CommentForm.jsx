@@ -7,10 +7,12 @@ import useRefreshToken from '../../../UserHook/useRefreshToken';
 import useTokenHook from '../../../UserHook/useTokensHoouk';
 import styles from './commentForm.module.css'
 import CommentSend from './CommentSend/CommentSend';
+import CreateAlert from '../../../UserHook/useAlert';
 
 const CommentForm = ({id,updateComments}) => {
 
     const inputRef = useRef(null);
+    const [showAlert] = CreateAlert();
     const [comment,setComment] = useState({
         "videoId": id,
         "content": "",
@@ -25,8 +27,14 @@ const CommentForm = ({id,updateComments}) => {
     });
 
     const sendComment = ()=>{
-        if(comment.content != '')
-            fetch();
+        if(comment.content == '')
+        {
+            showAlert("Вы ничего не написали","warning");
+            return;
+        }
+            
+        
+        fetch();
     }
 
     useRefreshToken(fetch,error);

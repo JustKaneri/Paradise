@@ -7,10 +7,12 @@ import VideoResponceServis from '../../../../Api/VideoResponceServis/VideoRespon
 import useRefreshToken from '../../../../UserHook/useRefreshToken';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../Context';
+import CreateAlert from '../../../../UserHook/useAlert';
 
 const ResponceLike = (props) => {
 
     const {IsAuth,setIsAuth} = useContext(AuthContext);
+    const [showAlert] = CreateAlert();
     const [stateResponce,setStateResponce] = useState(images.like);
     const[fethSetLike,errorLike] = useFetching(async () =>{
         const responce = await VideoResponceServis.setLikeResponce(props.id, useTokenHook.getAccsesToken());
@@ -22,7 +24,11 @@ const ResponceLike = (props) => {
     const likeClik = () =>{
 
         if(!IsAuth)
+        {
+            showAlert("Необходима авторизация","warning");
             return;
+        }
+            
 
         if(props.isLike){
             props.handlerReset();

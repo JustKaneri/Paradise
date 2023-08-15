@@ -5,10 +5,12 @@ import { useFetching } from '../../UserHook/useFeatching';
 import SubscribServis from '../../Api/SubscribServis/SubscribServis';
 import useTokensHook from '../../UserHook/useTokensHoouk';
 import useRefreshToken from '../../UserHook/useRefreshToken';
+import CreateAlert from '../../UserHook/useAlert';
 
 const ButtonSubscrib = ({id}) => {
 
     const {IsAuth,setIsAuth} = useContext(AuthContext);
+    const [showAlert] = CreateAlert();
     const[isSub,setIsSub] = useState(false);
 
     const [fetch,isLoading,error] = useFetching(async()=>{
@@ -32,8 +34,11 @@ const ButtonSubscrib = ({id}) => {
     useRefreshToken(fetchUnSub,errorUnSub);
 
     const subscribe = () =>{
-        if(!IsAuth)
+        if(!IsAuth){
+            showAlert("Для подписки необходимо авторизоваться","warning");
             return;
+        }
+           
 
         if(!isSub){
             fetchSub();

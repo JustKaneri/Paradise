@@ -7,10 +7,12 @@ import useTokenHook from '../../../UserHook/useTokensHoouk';
 import ResponceLike from './ResponceLike/ResponceLike';
 import styles from './videoResponce.module.css'
 import ResponceDislike from '../VideoResponce/ResponceDisLike/ResponceDislike';
+import CreateAlert from '../../../UserHook/useAlert';
 
 const VideoResponce = ({idVideo}) => {
 
     const {IsAuth,setIsAuth} = useContext(AuthContext);
+    const [showAlert] = CreateAlert();
     const [counterResponce,setCounterResponce] = useState({
         "countLike": 0,
         "countDisLike": 0
