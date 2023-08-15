@@ -4,27 +4,31 @@ import AlertItem from './AlerItem/AlertItem';
 
 const AlertManager = ({value}) => {
 
-    const [list,setList] = useState([ ])
+    const [list,setList] = useState([]);
 
     useEffect(() => {
         if(value.content == "" || value.type == ""){
             return;
         }
 
-        setList([...list,list.push(value)]);
+        setList([...list,value]);
 
-        setTimeout(()=>{
-            setList(...list,list.shift());
-        },5000);
+        let id = value.id;
+        setTimeout(function(id){
+            setList(list=> list.filter(a=>a.id != id));
+        },4500,id);
 
     }, [value]);
 
     return (
         <div className={styles.box}>
-            {list.length > 0 && list.map((value)=>
+            {list.length > 0 && list.map((value,index)=>
                 <AlertItem
+                    id = {value.id}
+                    key = {index}
                     content={value.content}
                     type = {value.type}
+                    time = {3500}
                 />
             )}
         </div>

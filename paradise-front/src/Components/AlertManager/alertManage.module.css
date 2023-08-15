@@ -4,11 +4,14 @@
     left: 5px;
     width: auto;
     height:auto;
-    max-height: 70vh;
+    max-height: 60vh;
     z-index: 100;
     
+    overflow: hidden;
+
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     flex-direction: column;
     row-gap: 20px;
 }

@@ -7,44 +7,37 @@ import AuthInput from '../AuthInput/AuthInput';
 import AuthName from '../AuthName/AuthName';
 import { useFetching } from '../../../UserHook/useFeatching';
 import useTokenHook from '../../../UserHook/useTokensHoouk';
-import ModalInfoWindow from '../../ModalWindow/ModalInfoWindow/ModalInfoWindow';
-import useModal from '../../../UserHook/useModal';
-import images from '../../../Other/DictonaryImage';
 import { useNavigate } from 'react-router-dom';
-import {AlertContext, AuthContext} from '../../../Context';
+import { AuthContext} from '../../../Context';
+import CreateAlert from '../../../UserHook/useAlert';
 
 const AuthLogIn = () => {
 
     const router = useNavigate();
     const {IsAuth,setIsAuth} = useContext(AuthContext);
-    const {Alert,setAlert} = useContext(AuthContext);
+    const [showAlert] = CreateAlert();
 
     const [user,setUser] = useState({
         "login": "",
         "password": ""
     });
 
-    const[modal,closeModal,showModal] = useModal();
     const refLogin = useRef(null);
     const refPassword = useRef(null);
     const [fetch,isLoading,error] = useFetching(async () =>{
         const responce = await AuthServis.login(user);
 
         if(responce.data){
-            showModal(images.ok,'Успешно','Вы авторизовались в системе', handler);
             useTokenHook.saveTokens(responce.data);
+            showAlert("Вы авторизовались в системе","success")
+            handler();
         }
     });
     
     const logInSystem = ()=>{
-        if(user.login == '' || user.password == '')
+        if(refLogin.current.value.trim() == '' || refPassword.current.value.trim() == '')
         {
-            setAlert(Alert => ({
-                ...Alert,
-                content: "Вы не заполнили все поля",
-                type: "warning"
-            }));
-            //showModal(images.error,'Упссс...',"Вы не заполнили все поля");
+            showAlert("Вы не заполнили все поля","warning");
             return;
         }
 
@@ -57,9 +50,7 @@ const AuthLogIn = () => {
 
     useEffect(()=>{
         if(user.login == '' || user.password == '')
-        {
             return;
-        }
             
         fetch();
     },[user])
@@ -67,7 +58,7 @@ const AuthLogIn = () => {
     useEffect(()=>{
         if(error.response != null ){
             if(error.response.data != null)
-                showModal(images.error,'Упссс...',error.response.data);
+                showAlert(error.response.data,"error");
         }
     },[error.response])
 
@@ -78,10 +69,6 @@ const AuthLogIn = () => {
 
     return (
         <>
-            <ModalInfoWindow
-                modal = {modal}
-                handler = {closeModal}
-            />
             <AuthName name = {'Paradise'}/>
             <AuthInput 
                 nameLabel={'Логин'}

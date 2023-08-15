@@ -10,8 +10,17 @@
     align-items: center;
     column-gap: 20px;
 
+    opacity: 0;
     transform-origin: 0% 50%;
-    animation: spawn 1s;
+    animation-name: spawn,remove;
+    animation-fill-mode: forwards,forwards;
+    animation-duration: 2s,3s;
+    animation-timing-function: ease-in-out;
+}
+
+.remove {
+    animation-delay: 4s;
+    animation: remove 1s  forwards;
 }
 
 .success{
@@ -49,8 +58,7 @@
 
 .alert-content{
     font-size: 1.35em;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow:ellipsis;
 }
 
 @keyframes spawn{
@@ -61,5 +69,16 @@
 
     to{
       opacity: 100;
+    }
+}
+
+@keyframes remove{
+    
+    from{
+      opacity: 100;
+    }
+
+    to{
+      opacity: 0;
     }
 }

@@ -11,6 +11,7 @@ const App = () => {
   const [IsAuth,setIsAuth] = useState(false);
   const [IsUpdate,setIsUpdate] = useState(false);
   const [Alert,setAlert] = useState({
+     id: "",
      content: "",
      type: ""
   })//3 type: error,warning, success
@@ -31,10 +32,6 @@ const App = () => {
         Alert,
         setAlert
       }}>
-      <AlertContext.Provider value={{
-          
-      }}>
-      </AlertContext.Provider>
     <AlertManager
       value = {Alert}
     />
